@@ -1,7 +1,7 @@
 {
-  "name": "xhwl4hr",
+  "name": "xhwl",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "website of xhwl",
   "author": "",
   "private": true,
   "scripts": {
@@ -13,13 +13,17 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "element": "^0.1.4",
+    "element-ui": "^2.3.3",
+    "less": "^3.0.1",
+    "less-loader": "^4.1.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
-    "babel-eslint": "^8.2.1",
+    "babel-eslint": "^8.2.2",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-jest": "^21.0.2",
     "babel-loader": "^7.1.1",

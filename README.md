@@ -1,27 +1,29 @@
-# xhwl4hr
+# 招娉网站对管理员前端项目日志
+## 运行步骤：
+- npm install
+- npm run dev
 
-> A Vue.js project
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
+**请前端人员在更改项目时以如下格式写明自己正在做以及做完的组件或者其他文件**
+```markdown
+### 18年03月31日08时-18年03月31日09时 
+  
+  更新内容：创建项目 
+  
+  更新人员：李新阳
 ```
+## 4月日志
+ 
+ ### 18年04月12日12时-18年04月12日22时 
+  
+  更新内容：添加部分路由，组件以及页面
+  - 其中更新的组件（同时也更新了路由）有：
+    + 用户界面的页面头部（XhwlHeader）
+    + 登录页面（Home）
+    + 招聘中（Now）
+    + 发布招聘（Release）
+    + 职位详情（Details）
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+  
+  更新人员：李新阳
+  
+ 
