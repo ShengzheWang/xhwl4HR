@@ -1,7 +1,7 @@
 <template>
-  <div id="app" style="min-width: 1366pt">
+  <div id="app" style="">
     <el-container>
-      <el-header>
+      <el-header style="">
         <XhwlHeader></XhwlHeader>
       </el-header>
         <router-view></router-view>

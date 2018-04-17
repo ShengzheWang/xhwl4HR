@@ -7,6 +7,8 @@ import Home from './components/Home.vue'
 import Now from './components/Now.vue'
 import Release from './components/Release.vue'
 import Details from './components/Details.vue'
+import ResumeDetails from './components/ResumeDetails.vue'
+import Authority from './components/Authority.vue'
 
 import Router from 'vue-router'
 import './components/XhwlHeader.vue'
@@ -22,7 +24,9 @@ const routes = [
   { path: '', component: Home },
   { path: '/Now', component: Now},
   { path: '/Release', component: Release},
-  { path: '/Details', component: Details}
+  { path: '/Details', component: Details},
+  { path: '/ResumeDetails', component: ResumeDetails},
+  { path: '/Authority', component: Authority}
 ]
 const router = new Router({
   routes // （缩写）相当于 routes: routes

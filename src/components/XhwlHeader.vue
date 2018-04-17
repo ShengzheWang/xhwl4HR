@@ -1,5 +1,5 @@
 <template>
-  <div id="Xhwlheader" style="height:50px">
+  <div id="Xhwlheader" style="height:50px;border-bottom: solid 1px #dddddd;">
 
       <el-menu  class="el-menu-demo" mode="horizontal" @select="handleSelect"
                :router='true'
@@ -7,13 +7,14 @@
                background-color="#f6f6f6"
                active-text-color='#1476C1'
                active-background-color="#f6f6f6"
-               style="width:450px;margin:0 auto;top:-40px;height:90px">
+               :style="'width:'+(isSuperAdmin?560:450)+'px;margin:0 auto;top:-40px;height:90px'">
         <el-menu-item index="1" style="border: none" route="/Now">招聘中</el-menu-item>
         <el-menu-item index="2" style="border: none" route="/History">历史招聘</el-menu-item>
         <el-menu-item index="3" style="border: none" route="/Release" >发布招聘</el-menu-item>
         <el-menu-item index="4" style="border: none" route="/Message">消息中心</el-menu-item>
+        <el-menu-item v-if="isSuperAdmin" index="5" style="border: none" route="/Authority">权限审核</el-menu-item>
       </el-menu>
-    <div style="position:absolute;top: 2.5%;left: 1500px" v-if="Need2Login">
+    <div style="position:absolute;top: 40px;right: 5%" v-if="Need2Login">
       <div>
         <el-button plain round @click="dialogFormVisible = true" class="button4plain"
                    style="border: 2px solid #909399;border-radius:28px;color:#909399;font-size: 16px">注册</el-button>
@@ -21,23 +22,21 @@
                    style="border: 2px solid #909399;;border-radius:28px;color: #909399;font-size: 16px">登录</el-button>
       </div>
     </div>
-      <div style="position:absolute;top: 2.5%;left: 1600px" v-else>
+      <div style="position:absolute;top: 30px;right: 10%" v-else>
       <el-dropdown >
       <el-button  type="text" ><img
         src="../../static/Default.png"><i class="el-icon-arrow-down el-icon--right"></i></el-button>
         <el-dropdown-menu slot="dropdown" >
           <el-dropdown-item v-for="item in mine">
             <router-link style="color: #333333" :to="item.path">
-              <el-badge :value="item.messageNum" class="item">
               {{item.text}}
-              </el-badge>
             </router-link>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       </div>
-      <a style="position: absolute;top: 2.5%;left: 188px;font-size: 32px;"><img
-        src="../assets/logoMain.png"></a>
+      <a style="position: absolute;top: 25px;left: 5%;font-size: 32px;"><img
+        src="../assets/logoMain.png" style="height:auto;width:100%;"></a>
 
     <div class="line"></div>
 
@@ -56,6 +55,8 @@ export default {
       labelPosition: 'left',
       labelPosition1: 'left',
       Need2Login: false,
+      isHighAdmin: true,
+      isSuperAdmin: true,
       mine: [{path: '', text: '注销'}]
 
     }

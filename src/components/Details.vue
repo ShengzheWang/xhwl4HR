@@ -47,13 +47,18 @@
                 <el-form-item label="截至日期：" style="">
                   <el-date-picker type="date" placeholder="选择日期" v-model="form.date1"></el-date-picker>
                 </el-form-item>
-
+                <el-form-item>
+                  <el-button icon="el-icon-upload" type="primary"  style="width:20%;margin-left:80%">修改此招聘信息</el-button>
+                </el-form-item>
               </el-form>
             </el-tab-pane>
             <el-tab-pane label="工作职责">
               <el-form ref="form" :model="form" label-width="120px" style="width: 80%;;display: inline-block;margin-left: 7%;margin-top:5%">
                 <el-form-item label="工作职责：">
                   <el-input type="textarea" v-model="form.desc" :rows="15"></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button icon="el-icon-upload" type="primary"  style="width:20%;margin-left:80%">修改此招聘信息</el-button>
                 </el-form-item>
               </el-form>
             </el-tab-pane>
@@ -68,7 +73,147 @@
               </el-form>
             </el-tab-pane>
             <el-tab-pane label="应召人员">
-
+              <h2>待审核</h2>
+              <div style="width:100%;margin: 1% auto 0% auto">
+                <el-table
+                  :data="tableData1"
+                  stripe
+                  style="width: 100%">
+                  <el-table-column
+                    prop="name"
+                    label="姓名"
+                    width="140">
+                  </el-table-column>
+                  <el-table-column
+                    prop="sex"
+                    label="性别"
+                    width="140">
+                  </el-table-column>
+                  <el-table-column
+                    prop="age"
+                    label="年龄"
+                    width="140">
+                  </el-table-column>
+                  <el-table-column
+                    prop="degree"
+                    label="最高学历"
+                    width="140">
+                  </el-table-column>
+                  <el-table-column
+                    prop="date"
+                    label="投递时间"
+                    width="140">
+                  </el-table-column>
+                  <el-table-column
+                    label="操作"
+                    fixed="right"
+                    width="400"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="resumeDetails(scope.row)" type="primary" size="middle">查看详情
+                      </el-button>
+                      <el-button  @click="handleClick(scope.row)" type="info" size="middle">下载简历
+                      </el-button>
+                      <el-button  @click="handleClick(scope.row)" type="danger" size="middle">投递进度
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <h2>已通过</h2>
+              <div style="width:100%;margin: 1% auto 0% auto">
+                <el-table
+                  :data="tableData2"
+                  stripe
+                  style="width: 100%">
+                  <el-table-column
+                    prop="name"
+                    label="姓名"
+                    width="140">
+                  </el-table-column>
+                  <el-table-column
+                    prop="sex"
+                    label="性别"
+                    width="140">
+                  </el-table-column>
+                  <el-table-column
+                    prop="age"
+                    label="年龄"
+                    width="140">
+                  </el-table-column>
+                  <el-table-column
+                    prop="degree"
+                    label="最高学历"
+                    width="140">
+                  </el-table-column>
+                  <el-table-column
+                    prop="date"
+                    label="投递时间"
+                    width="140">
+                  </el-table-column>
+                  <el-table-column
+                    label="操作"
+                    fixed="right"
+                    width="400"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="resumeDetails(scope.row,scope.$index)" type="primary" size="middle">查看详情
+                      </el-button>
+                      <el-button  @click="handleClick(scope.row)" type="info" size="middle">下载简历
+                      </el-button>
+                      <el-button  @click="handleClick(scope.row)" type="danger" size="middle" disabled>投递进度
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <h2>已回绝</h2>
+              <div style="width:100%;margin: 1% auto 0% auto">
+                <el-table
+                  :data="tableData3"
+                  stripe
+                  style="width: 100%">
+                  <el-table-column
+                    prop="name"
+                    label="姓名"
+                    width="140">
+                  </el-table-column>
+                  <el-table-column
+                    prop="sex"
+                    label="性别"
+                    width="140">
+                  </el-table-column>
+                  <el-table-column
+                    prop="age"
+                    label="年龄"
+                    width="140">
+                  </el-table-column>
+                  <el-table-column
+                    prop="degree"
+                    label="最高学历"
+                    width="140">
+                  </el-table-column>
+                  <el-table-column
+                    prop="date"
+                    label="投递时间"
+                    width="140">
+                  </el-table-column>
+                  <el-table-column
+                    label="操作"
+                    fixed="right"
+                    width="400"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="resumeDetails(scope.row)" type="primary" size="middle">查看详情
+                      </el-button>
+                      <el-button  @click="handleClick(scope.row)" type="info" size="middle">下载简历
+                      </el-button>
+                      <el-button  @click="handleClick(scope.row)" type="danger" size="middle" disabled>投递进度
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
             </el-tab-pane>
           </el-tabs>
 
@@ -90,10 +235,23 @@ export default {
   name: 'Details',
   data () {
     return {
-       form: ''
+      form: '',
+      tableData1: [
+        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'}
+      ],
+      tableData2: [
+        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'}
+      ],
+      tableData3: [
+        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'}
+      ]
     }
   },
-  method: {}
+  methods: {
+    resumeDetails (num) {
+      this.$router.push('/ResumeDetails')
+    }
+  }
 }
 </script>
 <style>
