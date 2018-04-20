@@ -73,7 +73,7 @@ export default {
       top:-6px;
     }
     .el-slider__button{
-      background:url("../assets/arrow.png") no-repeat center #ffffff;
+      background:url("../../../static/img/arrow.png") no-repeat center #ffffff;
       width: 40px;
       height: 25px;
       border-radius: 20px;

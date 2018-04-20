@@ -75,10 +75,10 @@
 </template>
 
 <script>
-import ElFormItem from '../../node_modules/element-ui/packages/form/src/form-item.vue'
-import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
-import ElForm from '../../node_modules/element-ui/packages/form/src/form.vue'
-import ElIcon from '../../node_modules/element-ui/packages/icon/src/icon.vue'
+import ElFormItem from '../../../node_modules/element-ui/packages/form/src/form-item.vue'
+import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
+import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
+import ElIcon from '../../../node_modules/element-ui/packages/icon/src/icon.vue'
 
 export default {
   components: {

@@ -4,9 +4,9 @@
       <el-menu  class="el-menu-demo" mode="horizontal" @select="handleSelect"
                :router='true'
                text-color="#444444"
-               background-color="#f6f6f6"
+               background-color="#ffffff"
                active-text-color='#1476C1'
-               active-background-color="#f6f6f6"
+               active-background-color="#ffffff"
                :style="'width:'+(isSuperAdmin?560:450)+'px;margin:0 auto;top:-40px;height:90px'">
         <el-menu-item index="1" style="border: none" route="/Now">招聘中</el-menu-item>
         <el-menu-item index="2" style="border: none" route="/History">历史招聘</el-menu-item>
@@ -25,7 +25,7 @@
       <div style="position:absolute;top: 30px;right: 10%" v-else>
       <el-dropdown >
       <el-button  type="text" ><img
-        src="../../static/Default.png"><i class="el-icon-arrow-down el-icon--right"></i></el-button>
+        src="../../static/img/Default.png"><i class="el-icon-arrow-down el-icon--right"></i></el-button>
         <el-dropdown-menu slot="dropdown" >
           <el-dropdown-item v-for="item in mine">
             <router-link style="color: #333333" :to="item.path">
@@ -36,7 +36,7 @@
       </el-dropdown>
       </div>
       <a style="position: absolute;top: 25px;left: 5%;font-size: 32px;"><img
-        src="../assets/logoMain.png" style="height:auto;width:100%;"></a>
+        src="../../static/img/logoMain.png" style="height:auto;width:100%;"></a>
 
     <div class="line"></div>
 

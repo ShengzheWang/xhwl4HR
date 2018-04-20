@@ -3,19 +3,19 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App.vue'
-import Home from './components/Home.vue'
-import Now from './components/Now.vue'
-import Release from './components/Release.vue'
-import Details from './components/Details.vue'
-import ResumeDetails from './components/ResumeDetails.vue'
-import Authority from './components/Authority.vue'
+import Home from './components/headerRouters/Home.vue'
+import Now from './components/headerRouters/Now.vue'
+import Release from './components/headerRouters/Release.vue'
+import Details from './components/headerRouters/nowRouters/Details.vue'
+import ResumeDetails from './components/headerRouters/nowRouters/detailsRouters/ResumeDetails.vue'
+import Authority from './components/headerRouters/Authority.vue'
 
 import Router from 'vue-router'
 import './components/XhwlHeader.vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import '../static/animate.css'
-import '../static/main.css'
+import '../static/css/animate.css'
+import '../static/css/main.css'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

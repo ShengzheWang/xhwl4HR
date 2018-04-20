@@ -74,8 +74,8 @@
   </div>
 </template>
 <script>
-import ElFormItem from '../../node_modules/element-ui/packages/form/src/form-item.vue'
-import ElTabPane from '../../node_modules/element-ui/packages/tabs/src/tab-pane.vue'
+import ElFormItem from '../../../node_modules/element-ui/packages/form/src/form-item.vue'
+import ElTabPane from '../../../node_modules/element-ui/packages/tabs/src/tab-pane.vue'
 
 export default{
   components: {

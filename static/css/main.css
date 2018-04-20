@@ -5,7 +5,7 @@ body {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     flex-direction: column;
-    background: #f6f6f6;
+    background: #ffffff;
     line-height: 1.4;
     color: #333;
     font-size: 12px
@@ -15,7 +15,7 @@ a:link {
 }
 .el-header,.el-footer{
     color:#333;
-    background: #f6f6f6;
+    background: #ffffff;
 }
 
 ol, ul {
@@ -30,7 +30,7 @@ ol, ul {
 }
 
 .button4plain{
-  background: #f6f6f6;
+  background: #ffffff;
 }
 .radio4forms {
   border-radius: 26px !important;
@@ -93,7 +93,7 @@ ol, ul {
     padding-top: 10px;
     padding-bottom: 12px;
     border-top: 1px solid #E6E9EE;
-    background: #f6f6f6 ;
+    background: #ffffff ;
     line-height: 40px
 }
 
@@ -195,4 +195,7 @@ ol, ul {
 }
 .input-date{
   width:40.3%;
+}
+.table{
+  border-top:2px solid #1476C1;
 }
