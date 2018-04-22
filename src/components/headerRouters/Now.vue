@@ -28,7 +28,7 @@
             <el-col style="width: 2%">
               <div style="width: 100%"><p> </p></div>
             </el-col>
-            <el-col style="width: 15%">
+            <el-col style="width: 20%">
               <el-button class="button4choose">筛选</el-button>
             </el-col>
           </el-form-item>
@@ -44,44 +44,58 @@
           <el-table-column
             prop="name"
             label="职位名称"
-            width="140">
+            width="160">
           </el-table-column>
           <el-table-column
             prop="department"
-            label="部门"
-            width="140">
+            label="所在部门"
+            width="160">
           </el-table-column>
           <el-table-column
             prop="type"
-            label="类型"
-            width="140">
+            label="招聘类型"
+            width="160">
           </el-table-column>
           <el-table-column
             prop="place"
-            label="地点"
-            width="140">
+            label="工作地点"
+            width="160">
           </el-table-column>
           <el-table-column
             prop="dateBegin"
             label="发布时间"
-            width="140">
+            width="160">
           </el-table-column>
           <el-table-column
             prop="dateEnd"
             label="截止时间"
-            width="140">
+            width="160">
           </el-table-column>
           <el-table-column
-            label="操作"
+            label="查看详情"
             fixed="right"
-            width="240"
+            width="160"
           >
             <template slot-scope="scope">
-              <el-button plain @click="handleClick(scope.row)" type="primary" size="middle">查看详情
+              <el-button class="button4details" @click="handleClick(scope.row)" type="primary" size="middle">详情
               </el-button>
             </template>
           </el-table-column>
         </el-table>
+        <div class="el-pagination__total page-total">
+          共<a>{{total}}</a>条
+        </div>
+        <div class="page-select">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage4"
+            :page-sizes="[5, 10, 20, 30]"
+            :page-size="5"
+            layout="sizes, prev, pager, next, jumper"
+            :total="400">
+          </el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -102,10 +116,11 @@ export default {
   name: 'Now',
   data () {
     return {
+      total:'400',
       form: '',
       tableData: [
-        {name: 'WEB前端设计师', department: '技术部', place: '深圳', type: '校园招聘', dateBegin: '2018-1-1', dateEnd: '2018-2-2'},
-        {name: 'WEB前端设计师', department: '技术部', place: '深圳', type: '校园招聘', dateBegin: '2018-1-1', dateEnd: '2018-2-2'}
+        {name: 'WEB前端设计师', department: '技术部', place: '深圳', type: '校园招聘', dateBegin: '2018-01-01', dateEnd: '2018-02-02'},
+        {name: 'WEB前端设计师', department: '技术部', place: '深圳', type: '校园招聘', dateBegin: '2018-01-01', dateEnd: '2018-02-02'}
       ]
     }
   },
@@ -127,10 +142,54 @@ export default {
     color: #2c3e50;
     margin-top: -20px;
     font-size: 18px;
+    .page-total{
+      width: 30%;
+      display: inline-block;
+      margin-top: 3%;
+      margin-right: 0;
+      vertical-align: top;
+      font-size: 13px;
+      a{
+        font-weight: bolder;
+        font-size: 16px;
+      }
+    }
+    .page-select{
+      display: inline-block;
+      margin: 3% auto;
+      text-align: right;
+      width: 69%;
+    }
     i{
       display: inline-block;
       vertical-align: middle;
       width: 27px;
+    }
+    .button4details{
+      border-radius: 40px !important;
+      border:solid 1px #2480C3;
+      background: inherit;
+      color:#2480C3;
+      width:80px
+    }
+    .el-table__header{
+      font-size: 15px;
+      .cell{
+        font-weight: 900;
+        color:#2c3e50;
+      }
+    }
+    .el-table__body{
+      font-size: 15px;
+      .el-table__row{
+        background: #F6F7FB;
+      }
+      .el-table__row--striped{
+        background: #ffffff !important;
+        td{
+          background: #ffffff !important;
+        }
+      }
     }
     .button4choose{
       background: #E01B2F;
@@ -147,28 +206,28 @@ export default {
     .input-classes{
       border-radius: 50px;
     }
-    .el-input{
-      border:#1476C1 solid 2px;
-      width: 100%;
-      font-size: 20px;
+    .el-form{
+      .el-input{
+        border:#1476C1 solid 2px;
+        width: 100%;
+        font-size: 20px;
+      }
+      .el-input__prefix{
+        display: inline-block;
+        width: 50px;
+      }
+      .el-input__inner{
+        height:50px;
+        border:none;
+        background: inherit;
+        padding-left:50px;
+      }
     }
-    .el-select{
-      width: 100%;
-    }
-    .el-input__prefix{
-      display: inline-block;
-      width: 50px;
-    }
-    .el-input__inner{
-      height:50px;
-      border:none;
-      background: inherit;
-      padding-left:50px;
-    }
+
     .end-time{
       height:50px !important;
       border-radius:0 50px 50px 0;
-      border-left:none;
+      border-left:none !important;
     }
     .end-time-icon{
       height: 25px;
@@ -182,7 +241,7 @@ export default {
     .start-time{
       height:50px !important;
       border-radius:50px 0 0 50px;
-      border-right: none;
+      border-right: none !important;
     }
     .start-time-icon::before{
       content:url("../../../static/img/startTime.jpg");

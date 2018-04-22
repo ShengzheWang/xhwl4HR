@@ -2,83 +2,55 @@
     <div id="Details">
       <div class="block">
         <div style="width:60%;margin: 2% auto 0 auto">
-          <el-tabs>
-            <el-tab-pane label="基本信息">
-              <el-form ref="form" :model="form" label-width="120px" style="width: 80%;;display: inline-block;margin-left: 7%;margin-top:5%">
-                <el-form-item label="职位名称：" style="width: 50%">
-                  <el-input v-model="form.name"></el-input>
-                </el-form-item>
-                <el-form-item label="所属部门：" style="">
-                  <el-select v-model="form.region" placeholder="请选择">
-                    <el-option  v-for="item in departments" :label="item.name" :value="item.name"></el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="简历审核部门：" style="">
-                  <el-select v-model="form.region" placeholder="请选择">
-                    <el-option  v-for="item in departments" :label="item.name" :value="item.name"></el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="考核部门：" style="">
-                  <el-select v-model="form.region" placeholder="请选择">
-                    <el-option  v-for="item in departments" :label="item.name" :value="item.name"></el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="招聘类型：" style="">
-                  <el-select v-model="form.region" placeholder="请选择招聘类型">
-                    <el-option label="社会招聘" value="shanghai"></el-option>
-                    <el-option label="校园招聘" value="beijing"></el-option>
-                    <el-option label="实习生招聘" value="beijing"></el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="工作地点：" style="width: 220px">
-                  <el-input v-model="form.name"></el-input>
-                </el-form-item>
-                <el-form-item label="学历要求：" style="">
-                  <el-select v-model="form.region" placeholder="请选择">
-                    <el-option label="本科" value="shanghai"></el-option>
-                    <el-option label="硕士" value="beijing"></el-option>
-                    <el-option label="博士" value="beijing"></el-option>
-                    <el-option label="不做要求" value="beijing"></el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="招聘人数：" style="">
-                  <el-input-number @change="handleChange" :min="1" :max="10"></el-input-number>
-                </el-form-item>
-                <el-form-item label="截至日期：" style="">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="form.date1"></el-date-picker>
-                </el-form-item>
-                <el-form-item>
-                  <el-button icon="el-icon-upload" type="primary"  style="width:20%;margin-left:80%">修改此招聘信息</el-button>
-                </el-form-item>
-              </el-form>
-            </el-tab-pane>
-            <el-tab-pane label="工作职责">
-              <el-form ref="form" :model="form" label-width="120px" style="width: 80%;;display: inline-block;margin-left: 7%;margin-top:5%">
-                <el-form-item label="工作职责：">
-                  <el-input type="textarea" v-model="form.desc" :rows="15"></el-input>
-                </el-form-item>
-                <el-form-item>
-                  <el-button icon="el-icon-upload" type="primary"  style="width:20%;margin-left:80%">修改此招聘信息</el-button>
-                </el-form-item>
-              </el-form>
-            </el-tab-pane>
-            <el-tab-pane label="职位要求">
-              <el-form ref="form" :model="form" label-width="120px" style="width: 80%;;display: inline-block;margin-left: 7%;margin-top:5%">
-                <el-form-item label="职位要求：">
-                  <el-input type="textarea" v-model="form.desc" :rows="15"></el-input>
-                </el-form-item>
-                <el-form-item>
-                  <el-button icon="el-icon-upload" type="primary"  style="width:20%;margin-left:80%">修改此招聘信息</el-button>
-                </el-form-item>
-              </el-form>
-            </el-tab-pane>
-            <el-tab-pane label="应召人员">
-              <h2>待审核</h2>
-              <div style="width:100%;margin: 1% auto 0% auto">
+          <el-breadcrumb separator="/">
+            <el-breadcrumb-item :to="{ path: '/Now' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>职位详情</el-breadcrumb-item>
+          </el-breadcrumb>
+          <div class="position-details">
+            <div style="text-align: left;display: inline-block;width: 50%">
+            <h1 class="name">{{form.name}}</h1><h2 class="classes">{{form.classes}}</h2>
+            </div>
+            <div style="text-align: right;display: inline-block;width: 49%">
+            <h4 class="info-already-got">已收到简历数</h4>
+            <div class="already-got">{{form.num}}</div>
+            </div>
+            <div style="width: 100%">
+              <el-row>
+                <el-col :span="6">
+                  <h3 class="label">工作地点：</h3>
+                  <h3 class="info">{{form.place}}</h3>
+                </el-col>
+                <el-col :span="6">
+                  <h3 class="label">学历要求：</h3>
+                  <h3 class="info">{{form.education}}</h3>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="6">
+                  <h3 class="label">所属部门：</h3>
+                  <h3 class="info">{{form.department}}</h3>
+                </el-col>
+                <el-col :span="6">
+                  <h3 class="label">工作类型：</h3>
+                  <h3 class="info">{{form.kind}}</h3>
+                </el-col>
+              </el-row>
+            </div>
+            <h1 style="color: #707070;margin-top: 3%">岗位职责
+            </h1>
+              <h3>{{form.responsibilities}}</h3>
+            <h1 style="color: #707070;margin-top: 1%">职位要求
+            </h1>
+            <h3>{{form.requirement}}</h3>
+          </div>
+          <el-tabs type="card"  v-model="activeTab" @tab-click="handleClick">
+            <div class="line" v-bind:style="'border-color:'+borderColor"></div>
+            <el-tab-pane label="待审核" name="0">
+              <div style="width:100%;margin: 0% auto 0 auto">
                 <el-table
                   :data="tableData1"
                   stripe
-                  style="width: 100%">
+                  style="width: 100%" class="table0">
                   <el-table-column
                     prop="name"
                     label="姓名"
@@ -105,27 +77,58 @@
                     width="140">
                   </el-table-column>
                   <el-table-column
-                    label="操作"
-                    fixed="right"
-                    width="400"
+                    label="查看详情"
+                    width="144"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="resumeDetails(scope.row)" type="primary" size="middle">查看详情
+                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-chakanxiangqing"></i>
                       </el-button>
-                      <el-button  @click="handleClick(scope.row)" type="info" size="middle">下载简历
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="下载简历"
+                    width="144"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-xiazaijianli"></i>
                       </el-button>
-                      <el-button  @click="handleClick(scope.row)" type="danger" size="middle">投递进度
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="投递状态"
+                    width="144"
+                  >
+                  <template slot-scope="scope">
+                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
                   </el-table-column>
                 </el-table>
               </div>
-              <h2>已通过</h2>
-              <div style="width:100%;margin: 1% auto 0% auto">
+              <div class="el-pagination__total page-total">
+                共<a style="width: 40px;display: inline-block;text-align: center">{{400}}</a>条
+              </div>
+              <div class="page-select">
+                <el-pagination
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page="currentPage4"
+                  :page-sizes="[5, 10, 20, 30]"
+                  :page-size="5"
+                  layout="sizes, prev, pager, next, jumper"
+                  :total="400">
+                </el-pagination>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane label="已通过" name="1">
+              <div style="width:100%;margin: 0% auto 0% auto">
                 <el-table
                   :data="tableData2"
                   stripe
-                  style="width: 100%">
+                  style="width: 100%" class="table1">
                   <el-table-column
                     prop="name"
                     label="姓名"
@@ -152,27 +155,58 @@
                     width="140">
                   </el-table-column>
                   <el-table-column
-                    label="操作"
-                    fixed="right"
-                    width="400"
+                    label="查看详情"
+                    width="144"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="resumeDetails(scope.row,scope.$index)" type="primary" size="middle">查看详情
+                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-chakanxiangqing"></i>
                       </el-button>
-                      <el-button  @click="handleClick(scope.row)" type="info" size="middle">下载简历
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="下载简历"
+                    width="144"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-xiazaijianli"></i>
                       </el-button>
-                      <el-button  @click="handleClick(scope.row)" type="danger" size="middle" disabled>投递进度
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="投递状态"
+                    width="144"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
                   </el-table-column>
                 </el-table>
+                <div class="el-pagination__total page-total">
+                  共<a style="width: 40px;display: inline-block;text-align: center">{{400}}</a>条
+                </div>
+                <div class="page-select">
+                  <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage4"
+                    :page-sizes="[5, 10, 20, 30]"
+                    :page-size="5"
+                    layout="sizes, prev, pager, next, jumper"
+                    :total="400">
+                  </el-pagination>
+                </div>
               </div>
-              <h2>已回绝</h2>
-              <div style="width:100%;margin: 1% auto 0% auto">
+            </el-tab-pane>
+              <el-tab-pane label="已回绝" name="2">
+              <div style="width:100%;margin: 0% auto 0% auto">
                 <el-table
                   :data="tableData3"
                   stripe
-                  style="width: 100%">
+                  style="width: 100%" class="table2">
                   <el-table-column
                     prop="name"
                     label="姓名"
@@ -199,20 +233,50 @@
                     width="140">
                   </el-table-column>
                   <el-table-column
-                    label="操作"
-                    fixed="right"
-                    width="400"
+                    label="查看详情"
+                    width="144"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="resumeDetails(scope.row)" type="primary" size="middle">查看详情
+                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-chakanxiangqing"></i>
                       </el-button>
-                      <el-button  @click="handleClick(scope.row)" type="info" size="middle">下载简历
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="下载简历"
+                    width="144"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-xiazaijianli"></i>
                       </el-button>
-                      <el-button  @click="handleClick(scope.row)" type="danger" size="middle" disabled>投递进度
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="投递状态"
+                    width="144"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
                   </el-table-column>
                 </el-table>
+                <div class="el-pagination__total page-total">
+                  共<a style="width: 40px;display: inline-block;text-align: center">{{400}}</a>条
+                </div>
+                <div class="page-select">
+                  <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage4"
+                    :page-sizes="[5, 10, 20, 30]"
+                    :page-size="5"
+                    layout="sizes, prev, pager, next, jumper"
+                    :total="400">
+                  </el-pagination>
+                </div>
               </div>
             </el-tab-pane>
           </el-tabs>
@@ -226,8 +290,12 @@ import ElFormItem from '../../../../node_modules/element-ui/packages/form/src/fo
 import ElButton from '../../../../node_modules/element-ui/packages/button/src/button.vue'
 import ElForm from '../../../../node_modules/element-ui/packages/form/src/form.vue'
 import ElIcon from '../../../../node_modules/element-ui/packages/icon/src/icon.vue'
+import ElRow from 'element-ui/packages/row/src/row'
+import ElCol from 'element-ui/packages/col/src/col'
 export default {
   components: {
+    ElCol,
+    ElRow,
     ElIcon,
     ElForm,
     ElButton,
@@ -235,14 +303,35 @@ export default {
   name: 'Details',
   data () {
     return {
-      form: '',
+      form: {
+        name: '前端工程师',
+        classes: '校园招聘',
+        num: 5,
+        place: '深圳',
+        education: '本科',
+        kind: '研发',
+        department: '技术部',
+        responsibilities: '要乖',
+        requirement: '要乖',
+      },
+      borderColor: '#1476C1',
+      activeTab: 0,
       tableData1: [
+        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
+        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
+        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
         {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'}
       ],
       tableData2: [
+        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
+        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
+        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
         {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'}
       ],
       tableData3: [
+        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
+        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
+        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
         {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'}
       ]
     }
@@ -250,9 +339,206 @@ export default {
   methods: {
     resumeDetails (num) {
       this.$router.push('/ResumeDetails')
+    },
+    handleClick () {
+      switch (this.$data.activeTab) {
+        case '0':this.$data.borderColor = '#1476C1'
+          break
+        case '1':this.$data.borderColor = '#E01B2F'
+          break
+        case '2':this.$data.borderColor = '#707070'
+          break
+      }
     }
   }
 }
 </script>
-<style>
+<style lang="less">
+  #Details{
+    .page-total{
+      width: 30%;
+      display: inline-block;
+      margin-top: 3%;
+      margin-right: 0;
+      vertical-align: top;
+      font-size: 13px;
+      a{
+        font-weight: bolder;
+        font-size: 16px;
+      }
+    }
+    .page-select{
+      display: inline-block;
+      margin: 3% auto;
+      text-align: right;
+      width: 69%;
+    }
+    .iconfont{
+      font-size: 26px;
+    }
+    .line{
+      border: solid 1px #1476C1;
+      margin-top: 0;
+    }
+    .el-button{
+      padding:8px 30px
+    }
+    .el-row{
+      margin-bottom: 0;
+    }
+    .el-col{
+      margin-bottom: 0;
+      height:30px
+    }
+    .el-table th{
+      text-align: center;
+    }
+    .el-table__row{
+      text-align: center;
+    }
+    .table0{
+      .el-table__header-wrapper th{
+        background: #ECF1F7 !important;
+      }
+      .el-table__row--striped td{
+        background: #F6F7FB;
+      }
+      .iconfont{
+        color:#1476C1
+      }
+    }
+    .table1{
+      .el-table__header-wrapper th{
+        background: #FFEFF0 !important;
+      }
+      .el-table__row--striped td{
+        background: #FFF9F9;
+      }
+      .iconfont{
+        color:#E01B2F
+      }
+    }
+    .table2{
+      .el-table__header-wrapper th{
+        background: #EAEAEA !important;
+      }
+      .el-table__row--striped td{
+        background: #F4F4F4;
+      }
+      .iconfont{
+        color:#707070
+      }
+    }
+    .el-tabs__nav {
+      width: 100%;
+      border: none;
+    }
+    .el-tabs__header{
+      margin-bottom: 0;
+    }
+    .el-tabs__item{
+      height:50px;
+      border-radius:20px 20px 0 0 ;
+      border: 2px solid;
+      width: 15%;
+      text-align: center;
+      vertical-align: middle;
+      font-weight: bold;
+      font-size: 18px;
+      line-height:45px;
+      background: #ffffff;
+      border-bottom: none;
+    }
+    #tab-0{
+      z-index: 997;
+      border:solid 1px #1476C1;
+      color:#1476C1;
+      border-bottom: none;
+    }
+    #tab-0.is-active{
+      z-index: 999;
+      background: #1476C1;
+      color:#ffffff
+    }
+    #tab-1{
+      position: absolute;
+      left:14%;
+      z-index: 998;
+      border:solid 1px #E01B2F;
+      color: #E01B2F;
+      border-bottom: none;
+    }
+    #tab-1.is-active{
+      z-index: 999;
+      background: #E01B2F;
+      color:#ffffff
+    }
+    #tab-2{
+      position: absolute;
+      left:28%;
+      z-index: 996;
+      border:solid 1px #707070;
+      color: #707070;
+      border-bottom: none;
+    }
+    #tab-2.is-active{
+      z-index: 999;
+      background: #707070;
+      color:#ffffff
+    }
+    .position-details{
+      border-top: #1476C1 solid 1px;
+      border-bottom: #1476C1 solid 1px;
+      width: 100%;
+      margin:2% auto ;
+      .info-already-got{
+        display: inline-block;
+        font-size: 15px;
+        margin-right: 1%;
+      }
+      .name{
+        font-size: 24px;
+        display: inline-block;
+        vertical-align: middle;
+        height:32px;
+      }
+      .already-got{
+        margin-top:25px;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+        height:60px;
+        width: 60px;
+        background: #E01B2F ;
+        font-size: 50px;
+        line-height:60px;
+        color: #ffffff;
+        border-radius: 5px;
+      }
+      .classes{
+        display: inline-block;
+        margin-left: 1%;
+        vertical-align: middle;
+        text-align: center;
+        height:32px;
+        width: 100px;
+        color: #ffffff;
+        background: #1476C1 ;
+        line-height: 32px;
+        border-radius: 32px;
+      }
+      .label{
+        display: inline-block;
+        color: #707070;
+        line-height: 17px;
+        font-size: 15px;
+      }
+      .info{
+        display: inline-block;
+        line-height: 17px;
+        font-size: 15px;
+      }
+    }
+
+  }
 </style>
