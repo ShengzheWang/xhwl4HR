@@ -1,45 +1,53 @@
 <template>
-  <div id="Xhwlheader" style="height:50px;border-bottom: solid 1px #dddddd;">
-
+  <div id="Xhwlheader" style="height:120px;border-bottom: solid 1px #dddddd;">
+    <div style="display: inline-block;width: 26%;height: 160px;text-align: center;vertical-align: middle">
+      <div style="display: block;margin: 4% auto">
+        <img
+          src="../../static/img/logoMain.png" style="height:auto;width: 70%;">
+      </div>
+    </div>
+    <div style="display: inline-block;width: 48%;text-align: center;height: 60px">
       <el-menu  class="el-menu-demo" mode="horizontal" @select="handleSelect"
                :router='true'
                text-color="#444444"
                background-color="#ffffff"
                active-text-color='#1476C1'
                active-background-color="#ffffff"
-               :style="'width:'+(isSuperAdmin?560:450)+'px;margin:0 auto;top:-40px;height:90px'">
+               :style="'width:'+(isSuperAdmin?560:450)+'px;margin:0 auto;height:60px;display: inline-block'">
         <el-menu-item index="1" style="border: none" route="/Now">招聘中</el-menu-item>
         <el-menu-item index="2" style="border: none" route="/History">历史招聘</el-menu-item>
         <el-menu-item index="3" style="border: none" route="/Release" >发布招聘</el-menu-item>
         <el-menu-item index="4" style="border: none" route="/Message">消息中心</el-menu-item>
         <el-menu-item v-if="isSuperAdmin" index="5" style="border: none" route="/Authority">权限审核</el-menu-item>
       </el-menu>
-    <div style="position:absolute;top: 40px;right: 5%" v-if="Need2Login">
-      <div>
-        <el-button plain round @click="dialogFormVisible = true" class="button4plain"
-                   style="border: 2px solid #909399;border-radius:28px;color:#909399;font-size: 16px">注册</el-button>
-        <el-button plain round @click="dialogFormVisible1 = true" class="button4plain"
-                   style="border: 2px solid #909399;;border-radius:28px;color: #909399;font-size: 16px">登录</el-button>
+    </div>
+    <div style="width:25%;display: inline-block;height: 120px;text-align: center;vertical-align: middle" v-if="Need2Login">
+      <div style="margin: 4% auto">
+        <el-button plain @click="dialogFormVisible = true" class="button4plain"
+                   style="">注册</el-button>
+        <el-button plain @click="dialogFormVisible1 = true" class="button4plain"
+                   style="">登录</el-button>
       </div>
     </div>
-      <div style="position:absolute;top: 30px;right: 10%" v-else>
-      <el-dropdown >
-      <el-button  type="text" ><img
-        src="../../static/img/Default.png"><i class="el-icon-arrow-down el-icon--right"></i></el-button>
-        <el-dropdown-menu slot="dropdown" >
-          <el-dropdown-item v-for="item in mine">
-            <router-link style="color: #333333" :to="item.path">
-              {{item.text}}
-            </router-link>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+
+    <div style="width:25%;display:inline-block;height: 100px;text-align: center;vertical-align: top" v-else>
+      <div style="margin-top:20px">
+        <el-dropdown >
+          <el-button  type="text" ><img
+            src="../../static/img/Default.png"><i class="el-icon-arrow-down el-icon--right"></i></el-button>
+          <el-dropdown-menu slot="dropdown" >
+            <el-dropdown-item v-for="item in mine">
+              <router-link style="color: #333333" :to="item.path">
+                {{item.text}}
+              </router-link>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <el-button type="text" @click="Need2Login=true">注销</el-button>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
-      <a style="position: absolute;top: 25px;left: 5%;font-size: 32px;"><img
-        src="../../static/img/logoMain.png" style="height:auto;width:100%;"></a>
-
-    <div class="line"></div>
-
+    </div>
   </div>
 </template>
 

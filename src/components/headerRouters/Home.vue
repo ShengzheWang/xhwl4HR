@@ -16,7 +16,6 @@
             </el-form>
 
             <div slot="footer" class="dialog-footer">
-              <el-button type="text" @click="this.$router.push('/SuperAdmin')">超级管理员入口...</el-button>
               <el-button type="primary" @click="value4login=0">确 定</el-button>
             </div>
           </el-dialog>
