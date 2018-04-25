@@ -10,6 +10,8 @@ import Details from './components/headerRouters/nowRouters/Details.vue'
 import ResumeDetails from './components/headerRouters/nowRouters/detailsRouters/ResumeDetails.vue'
 import Authority from './components/headerRouters/Authority.vue'
 
+import axios from 'axios'
+import qs from 'qs'
 import Router from 'vue-router'
 import './components/XhwlHeader.vue'
 import ElementUI from 'element-ui'
@@ -18,9 +20,13 @@ import '../static/css/animate.css'
 import '../static/css/main.css'
 import '../static/css/iconfont.css'
 
+
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(Router)
+
+Vue.prototype.$axios = axios
+Vue.prototype.$qs = qs
 const routes = [
   { path: '', component: Home },
   { path: '/Now', component: Now},
@@ -35,6 +41,9 @@ const router = new Router({
 new Vue({
   el: '#app',
   router,
+  created () {
+    this.$axios.defaults.baseURL = 'http://119.29.16.250:8080/'
+  },
   components: { App },
   template: '<App/>'
 })
