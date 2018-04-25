@@ -6,17 +6,17 @@
         <div style="height: 300px;text-align: center">
           <el-dialog title="登录"  :visible="value4login==100" style="margin:auto auto;width: 50%" :lock-scroll="false"
                      @close="handleClose">
-            <el-form :label-position="right" label-width="60px" >
-              <el-form-item label="用户名">
-                <el-input></el-input>
+            <el-form :label-position="right" label-width="60px" :model="user" ref="user" :rules="rules">
+              <el-form-item label="用户名" prop="username">
+                <el-input v-model="user.username" placeholder="请输入用户名"></el-input>
               </el-form-item>
-              <el-form-item label="密码">
-                <el-input></el-input>
+              <el-form-item label="密码" prop="password">
+                <el-input v-model="user.password" placeholder="请输入密码" type="password"></el-input>
               </el-form-item>
             </el-form>
 
             <div slot="footer" class="dialog-footer">
-              <el-button type="primary" @click="value4login=0">确 定</el-button>
+              <el-button type="primary" @click="login('user')">确 定</el-button>
             </div>
           </el-dialog>
         </div>
@@ -34,9 +34,60 @@
 export default {
   name: 'Home',
   data () {
+
+    var checkLogUser=(rule,value,callback)=>{
+      if(!value){
+        callback(new Error('请输入用户名'))
+      }else{
+        callback();
+      }
+    }
+
+    var checkLogPass=(rule,value,callback)=>{
+      if(!value){
+        callback(new Error('请输入密码'))
+      }else{
+        callback();
+      }
+    }
+
     return {
       dialogFormVisible1: false,
-      value4login: 0
+      value4login: 0,
+      user:{
+        username:'',
+        password:''
+      },
+      type:'',
+      rules:{
+        username:[
+          {validator:checkLogUser,trigger:'change'}
+        ],
+        password:[
+          {validator:checkLogPass,trigger:'change'}
+        ]
+      }
+    }
+  },
+  beforeMount () {
+    const token = document.cookie.split(';')[0]
+    console.log(token)
+    if (token) {
+      this.$axios.defaults.headers.Authorization = token
+      let _this = this
+      this.$axios({
+        method: 'get',
+        url: '/tokenCheck',
+      }).then(function (response) {
+        _this.$message('欢迎回来')
+        _this.$data.Need2Login = false
+      }).catch(function(error) {
+        _this.$message('用户凭证已过期，请重新登陆')
+        delete _this.$axios.defaults.headers['Authorization']
+        document.cookie = ''
+        _this.$data.Need2Login = true
+        _this.$router.push('/')
+      })
     }
   },
   methods: {
@@ -45,6 +96,51 @@ export default {
     },
     handleClose () {
       this.$data.value4login = 0
+    },
+
+    login(formName){
+      this.$refs[formName].validate((valid)=>{
+        if(valid){
+          let _this=this;
+          this.$axios({
+            method:'post',
+            url:'/adminLogin',
+            data:this.$qs.stringify(this.$data.user)
+          }).then(function (response) {
+            switch(response.data.code){
+              case 200:
+
+                const token=response.data.data;
+                _this.$axios.defaults.headers.Authorization = token
+                _this.$data.value4login=1;
+                _this.$data.dialogFormVisible1=true;
+                document.cookie=token;
+                _this.$message({
+                  message:'登录成功',
+                  type:'success'
+                });
+                break
+              case 500:
+                _this.$message({
+                  message:'登录密码错误！',
+                  type:'warning'
+                });
+                _this.$data.user.password='';
+                break;
+              case 401:
+                break;
+            }
+
+          }).catch(function (error) {
+            console.log(error)
+            _this.$message({
+              message: '用户名或密码错误，请重试',
+              type: 'warning'})
+
+          })
+        }
+      })
+
     }
   }
 }

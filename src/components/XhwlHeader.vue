@@ -42,7 +42,7 @@
               </router-link>
             </el-dropdown-item>
             <el-dropdown-item>
-              <el-button type="text" @click="Need2Login=true">注销</el-button>
+              <el-button type="text" @click="logout">注销</el-button>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -65,14 +65,25 @@ export default {
       Need2Login: false,
       isHighAdmin: true,
       isSuperAdmin: true,
-      mine: [{path: '', text: '注销'}]
+      mine: [{path: '', text: '注销'}],
+
 
     }
   },
   methods: {
     handleSelect (key, keyPath) {
       console.log(key, keyPath)
-    }
+    },
+    logout() {
+      //this.$data.Need2Login = true
+      delete this.$axios.defaults.headers['Authorization']
+      document.cookie = ''
+      this.$message({
+        message: '注销成功，已返回首页，请重新登录',
+        type: 'success'
+      })
+      this.$router.push('/')
+    },
   }
 }
 </script>
