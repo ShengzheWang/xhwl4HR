@@ -53,6 +53,7 @@ export default {
 
     return {
       dialogFormVisible1: false,
+      State: true,
       value4login: 0,
       user:{
         username:'',

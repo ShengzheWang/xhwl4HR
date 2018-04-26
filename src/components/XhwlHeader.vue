@@ -23,24 +23,16 @@
     </div>
     <div style="width:25%;display: inline-block;height: 120px;text-align: center;vertical-align: middle" v-if="Need2Login">
       <div style="margin: 4% auto">
-        <el-button plain @click="dialogFormVisible = true" class="button4plain"
-                   style="">注册</el-button>
         <el-button plain @click="dialogFormVisible1 = true" class="button4plain"
                    style="">登录</el-button>
       </div>
     </div>
-
     <div style="width:25%;display:inline-block;height: 100px;text-align: center;vertical-align: top" v-else>
       <div style="margin-top:20px">
         <el-dropdown >
           <el-button  type="text" ><img
             src="../../static/img/Default.png"><i class="el-icon-arrow-down el-icon--right"></i></el-button>
           <el-dropdown-menu slot="dropdown" >
-            <el-dropdown-item v-for="item in mine">
-              <router-link style="color: #333333" :to="item.path">
-                {{item.text}}
-              </router-link>
-            </el-dropdown-item>
             <el-dropdown-item>
               <el-button type="text" @click="logout">注销</el-button>
             </el-dropdown-item>
@@ -48,6 +40,20 @@
         </el-dropdown>
       </div>
     </div>
+    <el-dialog  id="form4login" :visible.sync="dialogFormVisible1" style="width: 50%;margin:auto auto" :lock-scroll="false">
+      <el-form :label-position="labelPosition1"  :model="user" ref="user" :rules="rules" style="width: 80%;margin: 3% auto" :status-icon="true">
+        <el-form-item  prop="username" class="item4login">
+          <el-input v-model="user.username" placeholder="请输入工号" prefix-icon="iconfont icon-shoujihao icon4form" ></el-input>
+        </el-form-item>
+        <el-form-item  prop="password" class="item4login">
+          <el-input v-model="user.password" type="password"  placeholder="请输入密码" prefix-icon="iconfont icon-mima icon4form"></el-input>
+        </el-form-item>
+      </el-form>
+      <div class="foot4login" style="margin: 3% auto;width: 80%">
+        <el-button v-bind:class="'button4login now'+(State == true?'Login':'Register')+'-register'" @click="dialogFormVisible1=false">取消</el-button>
+        <el-button v-bind:class="'button4login now'+(State == true?'Login':'Register')+'-login'" @click="login('user');">登录</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -55,22 +61,112 @@
 export default {
   name: 'XhwlHeader',
   data () {
+    var checkLogUser=(rule,value,callback)=>{
+      if(!value){
+        callback(new Error('请输入用户名'))
+      }else{
+        callback();
+      }
+    }
+
+    var checkLogPass=(rule,value,callback)=>{
+      if(!value){
+        callback(new Error('请输入密码'))
+      }else{
+        callback();
+      }
+    }
     return {
       activeIndex: '1',
-      dialogFormVisible: false,
       dialogFormVisible1: false,
       formLabelWidth: '14%',
       labelPosition: 'left',
       labelPosition1: 'left',
-      Need2Login: false,
+      Need2Login: true,
       isHighAdmin: true,
       isSuperAdmin: true,
+      user:{
+        username:'',
+        password:''
+      },
+      State: true,
+      rules:{
+        username:[
+          {validator:checkLogUser,trigger:'change'}
+        ],
+        password:[
+          {validator:checkLogPass,trigger:'change'}
+        ]
+      },
       mine: [{path: '', text: '注销'}],
-
 
     }
   },
+  beforeMount () {
+    const token = document.cookie.split(';')[0]
+    console.log(token)
+    if (token) {
+      this.$axios.defaults.headers.Authorization = token
+      let _this = this
+      this.$axios({
+        method: 'get',
+        url: '/tokenCheck',
+      }).then(function (response) {
+        _this.$message('欢迎回来')
+        _this.$data.Need2Login = false
+      }).catch(function(error) {
+        _this.$message('用户凭证已过期，请重新登陆')
+        delete _this.$axios.defaults.headers['Authorization']
+        document.cookie = ''
+        _this.$data.Need2Login = true
+        _this.$router.push('/')
+      })
+    }
+  },
   methods: {
+    login(formName){
+      this.$refs[formName].validate((valid)=>{
+        if(valid){
+          let _this=this;
+          this.$axios({
+            method:'post',
+            url:'/adminLogin',
+            data:this.$qs.stringify(this.$data.user)
+          }).then(function (response) {
+            switch(response.data.code){
+              case 200:
+
+                const token=response.data.data;
+                _this.$axios.defaults.headers.Authorization = token
+                _this.$data.value4login=1;
+                _this.$data.dialogFormVisible1=true;
+                document.cookie=token;
+                _this.$message({
+                  message:'登录成功',
+                  type:'success'
+                });
+                break
+              case 500:
+                _this.$message({
+                  message:'登录密码错误！',
+                  type:'warning'
+                });
+                _this.$data.user.password='';
+                break;
+              case 401:
+                break;
+            }
+
+          }).catch(function (error) {
+            console.log(error)
+            _this.$message({
+              message: '用户名或密码错误，请重试',
+              type: 'warning'})
+
+          })
+        }
+      })
+    },
     handleSelect (key, keyPath) {
       console.log(key, keyPath)
     },
@@ -90,6 +186,108 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
+  #form4login{
+    .is-error{
+      .icon4form{
+        color:#f56c6c;
+      }
+    }
+    .is-success{
+      .icon4form{
+        color:#67c23a;
+      }
+    }
+    .el-input__inner{
+      height:54px;
+      padding-left:48px;
+    }
+    .el-input__prefix{
+      height:54px;
+      width: 48px;
+    }
+    .button4login{
+      transition: all 0.2s;
+      letter-spacing: 2px!important;
+      border-radius: 46px!important;
+      font-size: 20px!important;
+    }
+    .button4login{
+      transition: all 0.2s;
+      letter-spacing: 2px!important;
+      border-radius: 46px!important;
+      font-size: 20px!important;
+    }
+    .item4login{
+      height:54px;
+      transition: all 0.6s;
+      &:hover {
+        transform: scale(1.05);
+      }
+      &:focus {
+        transform: scale(1.05);
+      }
+    }
+    .nowLogin-login{
+      margin-left: 3% !important;
+      width: 65% !important;
+      font-weight: 500;
+      background: #E01B2F!important ;
+      color:#ffffff  !important;
+      border:solid 2px #E01B2F !important;
+      &:hover {
+        transform: scale(1.05);
+        background: #E01B2F;
+        color:#ffffff  ;
+        border:solid 2px #E01B2F;
+      }
+    }
+    .nowRegister-login{
+      margin-left: 3% !important;
+      width: 30% !important;
+      background: #ffffff !important;
+      color:#E01B2F !important ;
+      border:solid 2px #E01B2F!important;
+      font-weight: 500;
+      &:hover {
+        transform: scale(1.05);
+        background: #E01B2F!important;;
+        color:#ffffff!important;  ;
+        border:solid 2px #E01B2F!important;;
+      }
+    }
+    .nowLogin-register{
+      margin-left: 0 !important;
+      width: 30% !important;
+      background: #ffffff !important;
+      color:#a4a4a4 !important ;
+      border:solid 2px #a4a4a4 !important;
+      font-weight: 500;
+      &:hover {
+        transform: scale(1.05);
+        background: #a4a4a4!important;;
+        color:#ffffff !important; ;
+        border:solid 2px #ffffff!important;;
+      }
+    }
+    .nowRegister-register{
+      margin-left: 0 !important;
+      width: 65% !important;
+      color:#ffffff  !important;
+      border:solid 2px #a4a4a4 !important;
+      background: #a4a4a4 !important;
+      font-weight: 500;
+      &:hover {
+        transform: scale(1.05);
+        color:#ffffff;
+        border:solid 2px #a4a4a4;
+        background: #a4a4a4;
+      }
+    }
+  }
+  .icon4form{
+    color:#1476C1;
+    font-size: 30px;
+  }
   #XhwlHeader {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
