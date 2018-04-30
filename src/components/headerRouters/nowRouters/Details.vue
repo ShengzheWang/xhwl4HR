@@ -8,7 +8,7 @@
           </el-breadcrumb>
           <div class="position-details">
             <div style="text-align: left;display: inline-block;width: 50%">
-            <h1 class="name">{{form.name}}</h1><h2 class="classes">{{form.classes}}</h2>
+            <h1 class="name">{{form.positionName}}</h1><h2 class="classes">{{form.recruitmentType}}</h2>
             </div>
             <div style="text-align: right;display: inline-block;width: 49%">
             <h4 class="info-already-got">已收到简历数</h4>
@@ -18,7 +18,7 @@
               <el-row>
                 <el-col :span="6">
                   <h3 class="label">工作地点：</h3>
-                  <h3 class="info">{{form.place}}</h3>
+                  <h3 class="info">{{form.workPlace}}</h3>
                 </el-col>
                 <el-col :span="6">
                   <h3 class="label">学历要求：</h3>
@@ -32,54 +32,39 @@
                 </el-col>
                 <el-col :span="6">
                   <h3 class="label">工作类型：</h3>
-                  <h3 class="info">{{form.kind}}</h3>
+                  <h3 class="info">{{form.positionType}}</h3>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="6">
+                  <h3 class="label">招聘人数：</h3>
+                  <h3 class="info">{{form.recruitingNumbers}}</h3>
                 </el-col>
               </el-row>
             </div>
             <h1 style="color: #707070;margin-top: 3%">岗位职责
             </h1>
-              <h3>{{form.responsibilities}}</h3>
+              <h3>{{form.jobResponsibilities}}</h3>
             <h1 style="color: #707070;margin-top: 1%">职位要求
             </h1>
-            <h3>{{form.requirement}}</h3>
+            <h3>{{form.jobRequirements}}</h3>
           </div>
           <el-tabs type="card"  v-model="activeTab" @tab-click="handleClick">
             <div class="line" v-bind:style="'border-color:'+borderColor"></div>
             <el-tab-pane label="待审核" name="0">
               <div style="width:100%;margin: 0% auto 0 auto">
-                <el-table
-                  :data="tableData1"
-                  stripe
-                  style="width: 100%" class="table0">
-                  <el-table-column
-                    prop="name"
-                    label="姓名"
-                    width="140">
+                <el-table :data="tableData1" stripe style="width: 100%" class="table0">
+                  <el-table-column prop="name" label="姓名" width="140">
                   </el-table-column>
-                  <el-table-column
-                    prop="sex"
-                    label="性别"
-                    width="140">
+                  <el-table-column prop="sex" label="性别" width="140">
                   </el-table-column>
-                  <el-table-column
-                    prop="age"
-                    label="年龄"
-                    width="140">
+                  <el-table-column prop="age" label="年龄" width="140">
                   </el-table-column>
-                  <el-table-column
-                    prop="degree"
-                    label="最高学历"
-                    width="140">
+                  <el-table-column prop="degree" label="最高学历" width="140">
                   </el-table-column>
-                  <el-table-column
-                    prop="date"
-                    label="投递时间"
-                    width="140">
+                  <el-table-column prop="date" label="投递时间" width="140">
                   </el-table-column>
-                  <el-table-column
-                    label="查看详情"
-                    width="144"
-                  >
+                  <el-table-column label="查看详情" width="144">
                     <template slot-scope="scope">
                       <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-chakanxiangqing"></i>
@@ -125,39 +110,18 @@
             </el-tab-pane>
             <el-tab-pane label="已通过" name="1">
               <div style="width:100%;margin: 0% auto 0% auto">
-                <el-table
-                  :data="tableData2"
-                  stripe
-                  style="width: 100%" class="table1">
-                  <el-table-column
-                    prop="name"
-                    label="姓名"
-                    width="140">
+                <el-table :data="tableData2" stripe style="width: 100%" class="table1">
+                  <el-table-column prop="name" label="姓名" width="140">
                   </el-table-column>
-                  <el-table-column
-                    prop="sex"
-                    label="性别"
-                    width="140">
+                  <el-table-column prop="sex" label="性别" width="140">
                   </el-table-column>
-                  <el-table-column
-                    prop="age"
-                    label="年龄"
-                    width="140">
+                  <el-table-column prop="age" label="年龄" width="140">
                   </el-table-column>
-                  <el-table-column
-                    prop="degree"
-                    label="最高学历"
-                    width="140">
+                  <el-table-column prop="degree" label="最高学历" width="140">
                   </el-table-column>
-                  <el-table-column
-                    prop="date"
-                    label="投递时间"
-                    width="140">
+                  <el-table-column prop="date" label="投递时间" width="140">
                   </el-table-column>
-                  <el-table-column
-                    label="查看详情"
-                    width="144"
-                  >
+                  <el-table-column label="查看详情" width="144">
                     <template slot-scope="scope">
                       <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-chakanxiangqing"></i>
@@ -189,7 +153,7 @@
                   共<a style="width: 40px;display: inline-block;text-align: center">{{400}}</a>条
                 </div>
                 <div class="page-select">
-                  <el-pagination
+                 <el-pagination
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="currentPage4"
@@ -207,35 +171,17 @@
                   :data="tableData3"
                   stripe
                   style="width: 100%" class="table2">
-                  <el-table-column
-                    prop="name"
-                    label="姓名"
-                    width="140">
+                  <el-table-column prop="name" label="姓名" width="140">
                   </el-table-column>
-                  <el-table-column
-                    prop="sex"
-                    label="性别"
-                    width="140">
+                  <el-table-column prop="sex" label="性别" width="140">
                   </el-table-column>
-                  <el-table-column
-                    prop="age"
-                    label="年龄"
-                    width="140">
+                  <el-table-column prop="age" label="年龄" width="140">
                   </el-table-column>
-                  <el-table-column
-                    prop="degree"
-                    label="最高学历"
-                    width="140">
+                  <el-table-column prop="degree" label="最高学历" width="140">
                   </el-table-column>
-                  <el-table-column
-                    prop="date"
-                    label="投递时间"
-                    width="140">
+                  <el-table-column prop="date" label="投递时间" width="140">
                   </el-table-column>
-                  <el-table-column
-                    label="查看详情"
-                    width="144"
-                  >
+                  <el-table-column label="查看详情" width="144">
                     <template slot-scope="scope">
                       <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-chakanxiangqing"></i>
@@ -263,6 +209,7 @@
                     </template>
                   </el-table-column>
                 </el-table>
+
                 <div class="el-pagination__total page-total">
                   共<a style="width: 40px;display: inline-block;text-align: center">{{400}}</a>条
                 </div>
@@ -304,15 +251,21 @@ export default {
   data () {
     return {
       form: {
-        name: '前端工程师',
-        classes: '校园招聘',
+        id:'',
+        positionName: '',
+        recruitmentType: '',
         num: 5,
-        place: '深圳',
-        education: '本科',
-        kind: '研发',
-        department: '技术部',
-        responsibilities: '要乖',
-        requirement: '要乖',
+        workPlace: '',
+        education: '',
+        assessmentDepartment: '',
+        department: '',
+        jobResponsibilities: '',
+        jobRequirements: '',
+        deadline:'',
+        positionType:'',
+        resumeAuditDepartment:'',
+        recruitingNumbers:''
+
       },
       borderColor: '#1476C1',
       activeTab: 0,
@@ -335,6 +288,27 @@ export default {
         {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'}
       ]
     }
+  },
+  created(){
+    console.log(this.$route.query.id);
+    let that=this
+    this.$axios({
+      method:'get',
+      url:'/admin/position/'+this.$route.query.id,
+    }).then(function (response) {
+        that.$data.form=response.data;
+    })
+  },
+  updated(){
+
+      if(this.$data.form.recruitmentType==='1'){
+        this.$data.form.recruitmentType='校园招聘'
+      }else if(this.$data.form.recruitmentType==='2'){
+        this.$data.form.recruitmentType='社会招聘'
+      }else if(this.$data.form.recruitmentType==='3'){
+        this.$data.form.recruitmentType='实习生招聘'
+      }
+
   },
   methods: {
     resumeDetails (num) {
