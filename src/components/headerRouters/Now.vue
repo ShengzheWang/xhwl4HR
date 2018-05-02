@@ -37,64 +37,39 @@
 
       </div>
       <div style="width:60%;margin: 2% auto 0% auto">
-        <el-table
-          :data="tableData"
-          stripe
-          class="table"
-          style="width: 100%">
-          <el-table-column
-            prop="name"
-            label="职位名称"
-            width="160">
+        <el-table :data="tableData" stripe class="table" style="width: 100%">
+          <el-table-column prop="positionName" label="职位名称" width="180">
           </el-table-column>
-          <el-table-column
-            prop="department"
-            label="所在部门"
-            width="160">
+          <el-table-column prop="department" label="所在部门" width="160">
           </el-table-column>
-          <el-table-column
-            prop="type"
-            label="招聘类型"
-            width="160">
+          <el-table-column prop="recruitmentType" label="招聘类型" width="160">
           </el-table-column>
-          <el-table-column
-            prop="place"
-            label="工作地点"
-            width="160">
+          <el-table-column prop="workPlace" label="工作地点" width="160">
           </el-table-column>
-          <el-table-column
-            prop="dateBegin"
-            label="发布时间"
-            width="160">
+          <el-table-column prop="publishDate" label="发布时间" width="160">
           </el-table-column>
-          <el-table-column
-            prop="dateEnd"
-            label="截止时间"
-            width="160">
+          <el-table-column prop="deadline" label="截止时间" width="160">
           </el-table-column>
-          <el-table-column
-            label="查看详情"
-            fixed="right"
-            width="160"
-          >
+          <el-table-column label="查看详情" fixed="right" width="140">
             <template slot-scope="scope">
-              <el-button class="button4details" @click="handleClick(scope.row)" type="primary" size="middle">详情
+              <el-button class="button4details" @click="handleClick(scope.$index)" type="primary" size="middle">详情
               </el-button>
             </template>
           </el-table-column>
         </el-table>
+
         <div class="el-pagination__total page-total">
           共<a>{{total}}</a>条
         </div>
         <div class="page-select">
           <el-pagination
             @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="currentPage4"
+            @current-change="handlePageChange"
+            :current-page="currentPage"
             :page-sizes="[5, 10, 20, 30]"
-            :page-size="5"
+            :page-size="pageSize"
             layout="sizes, prev, pager, next, jumper"
-            :total="400">
+            :total="total">
           </el-pagination>
         </div>
       </div>
@@ -117,17 +92,74 @@ export default {
   name: 'Now',
   data () {
     return {
-      total:'400',
-      form: '',
-      tableData: [
-        {name: 'WEB前端设计师', department: '技术部', place: '深圳', type: '校园招聘', dateBegin: '2018-01-01', dateEnd: '2018-02-02'},
-        {name: 'WEB前端设计师', department: '技术部', place: '深圳', type: '校园招聘', dateBegin: '2018-01-01', dateEnd: '2018-02-02'}
-      ]
+      currentPage: 1,
+      total: 0,
+      pageSize: 20,
+      form: {},
+      tableData: [{positionName: '', department: '', workPlace: '', publishDate: '', deadline: '',recruitmentType:''
+      }]
+    }
+  },
+  created(){
+    let _this=this
+    this.$axios({
+      method: 'post',
+      data: _this.$qs.stringify({
+        size: 20,
+        page: 1
+      }),
+      url:'/admin/positions'
+    }).then(function (response) {
+      _this.$data.tableData=response.data.content;
+      _this.$data.total=response.data.totalElements;
+    })
+
+  },
+  updated(){
+    for(let index=0;index<this.$data.tableData.length;index++){
+      if(this.$data.tableData[index].recruitmentType==='1'){
+        this.$data.tableData[index].recruitmentType='校园招聘'
+      }else if(this.$data.tableData[index].recruitmentType==='2'){
+        this.$data.tableData[index].recruitmentType='社会招聘'
+      }else if(this.$data.tableData[index].recruitmentType==='3'){
+        this.$data.tableData[index].recruitmentType='实习生招聘'
+      }
     }
   },
   methods: {
+    handleSizeChange (val) {
+      this.$data.pageSize = val
+      let _this=this
+      this.$axios({
+        method: 'post',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize,
+          page: _this.$data.currentPage
+        }),
+        url:'/admin/positions'
+      }).then(function (response) {
+        _this.$data.tableData=response.data.content;
+        _this.$data.total=response.data.totalElements;
+      })
+    },
+    handlePageChange (val) {
+      this.$data.currentPage = val
+      let _this=this
+      this.$axios({
+        method: 'post',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize,
+          page: _this.$data.currentPage
+        }),
+        url:'/admin/positions'
+      }).then(function (response) {
+        _this.$data.tableData=response.data.content;
+        _this.$data.total=response.data.totalElements;
+      })
+    },
     handleClick (row) {
-      this.$router.push('/Details')
+      //console.log(row);
+      this.$router.push({path:'/Details',query:{id:row+1}})
     }
   }
 }
@@ -143,6 +175,31 @@ export default {
     color: #2c3e50;
     margin-top: -20px;
     font-size: 18px;
+    .el-table th {
+      text-align: center;
+    }
+    .el-table__row {
+      text-align: center;
+    }
+    .el-table__header {
+      font-size: 15px;
+      .cell {
+        font-weight: 900;
+        color: #2c3e50;
+      }
+    }
+    .el-table__body {
+      font-size: 15px;
+      .el-table__row {
+        background: #F6F7FB;
+      }
+      .el-table__row--striped {
+        background: #ffffff !important;
+        td {
+          background: #ffffff !important;
+        }
+      }
+    }
     .page-total{
       width: 30%;
       display: inline-block;

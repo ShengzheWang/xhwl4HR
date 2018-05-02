@@ -41,7 +41,7 @@
         </el-dropdown>
       </div>
     </div>
-    <el-dialog  id="form4login" :visible.sync="dialogFormVisible1" style="width: 50%;margin:auto auto" :lock-scroll="false">
+    <el-dialog  id="form4login" :visible.sync="dialogFormVisible1" style="width: 50%;margin:auto auto" :lock-scroll="false" :append-to-body="true">
       <el-form :label-position="labelPosition1"  :model="user" ref="user" :rules="rules" style="width: 80%;margin: 3% auto" :status-icon="true">
         <el-form-item  prop="username" class="item4login">
           <el-input v-model="user.username" placeholder="请输入工号" prefix-icon="iconfont icon-shoujihao icon4form" ></el-input>
@@ -139,8 +139,8 @@ export default {
 
                 const token=response.data.data;
                 _this.$axios.defaults.headers.Authorization = token
-                _this.$data.value4login=1;
-                _this.$data.dialogFormVisible1=true;
+                _this.$data.Need2Login = false
+                _this.$data.dialogFormVisible1=false;
                 document.cookie=token;
                 _this.$message({
                   message:'登录成功',

@@ -50,30 +50,30 @@
               <el-form-item label="招聘人数" style="" prop="recruitingNumbers">
                 <el-input-number @change="handleChange" :min="1" :max="10" v-model="form.recruitingNumbers"></el-input-number>
               </el-form-item>
+              <el-form-item label="招聘人数：" style="" prop="recruitingNumbers">
+                <el-input-number :min="1" :max="10" v-model="form.recruitingNumbers"></el-input-number>
+              </el-form-item>
               <el-form-item label="截至日期" style="" prop="deadline">
                 <el-date-picker type="date" placeholder="选择日期" v-model="form.deadline"></el-date-picker>
               </el-form-item>
 
             </el-form>
 
-
         <h2> 工作职责</h2>
         <div class="line"></div>
-            <el-form label-width="40px" ref="form" :rules="rules" :model="form" style="width: 80%;;display: inline-block;margin-left: 7%;margin-top:5%">
-            <el-form-item label="" prop="jobResponsibilities">
-              <el-input type="textarea" v-model="form.jobResponsibilities" :rows="15"></el-input>
-            </el-form-item>
-            </el-form>
+        <el-form label-width="40px" style="width: 80%;;display: inline-block;margin-left: 7%;margin-top:5%" :rules="rules" ref="form2" :model="form2">
+          <el-form-item label="" prop="jobResponsibilities">
+            <el-input type="textarea" v-model="form2.jobResponsibilities" :rows="15"></el-input>
+          </el-form-item>
+        </el-form>
         <h2> 职位要求</h2>
         <div class="line"></div>
             <el-form ref="form" :model="form" :rules="rules" label-width="40px" style="width: 80%;;display: inline-block;margin-left: 7%;margin-top:5%">
               <el-form-item label="" prop="jobRequirements">
                 <el-input type="textarea" v-model="form.jobRequirements" :rows="15"></el-input>
               </el-form-item>
-              <el-form-item>
-                <el-button icon="el-icon-upload" type="primary"  style="width:20%;margin-left:80%" @click="ReleaseJob">发布招聘</el-button>
-              </el-form-item>
             </el-form>
+                <el-button icon="el-icon-upload" type="primary" @click="ReleaseJob"  style="width:20%;margin-left:80%">发布招聘</el-button>
 
       </div>
     </div>
@@ -106,61 +106,154 @@ export default {
         workPlace:'',
         education:'',
         recruitingNumbers:'',
-        deadline:'',
+        deadline:null,
+      },
+      form2:{
+        jobResponsibilities:''
+      },
+      form3:{
+        jobRequirements:''
+      },
+      formRelease:{
+        id:'',
+        positionName:'',
+        department:'',
+        resumeAuditDepartment:'',
+        assessmentDepartment:'',
+        positionType:'',
+        recruitmentType:'',
+        workPlace:'',
+        education:'',
+        recruitingNumbers:'',
+        deadline:null,
         jobResponsibilities:'',
         jobRequirements:''
       },
       departments: [{name: '研发'},{name: '设计'},{name: '人事'}],
       rules:{
           positionName:[
-            {required:true,message:'请输入职位名称',trigger:'change'},
-            {pattern: /[^x00-xff]/ ,message:'请输入中文名称',trigger:"change"}
+            {required:true,message:'请输入职位名称',trigger:'blur'},
+            {pattern: /[^x00-xff]/ ,message:'请输入中文名称',trigger:'blur'}
           ],
         departments:[
-          {required:true,message:'请选择部门',trigger:'change'}
+          {required:true,message:'请选择部门',trigger:'blur'}
         ],
         resumeAuditDepartment:[
-          {required:true,message:'请选择部门',trigger:'change'}
+          {required:true,message:'请选择部门',trigger:'blur'}
         ],
         assessmentDepartment:[
-          {required:true,message:'请选择部门',trigger:'change'}
+          {required:true,message:'请选择部门',trigger:'blur'}
         ],
         positionType:[
-          {required:true,message:'请选择部门',trigger:'change'}
+          {required:true,message:'请选择部门',trigger:'blur'}
         ],
         recruitmentType:[
-          {required:true,message:'请选择部门',trigger:'change'}
+          {required:true,message:'请选择部门',trigger:'blur'}
         ],
         workPlace:[
-          {required:true,message:'请输入工作地点',trigger:'change'}
+          {required:true,message:'请输入工作地点',trigger:'blur'}
         ],
         education:[
-          {required:true,message:'请选择学历',trigger:'change'}
+          {required:true,message:'请选择学历',trigger:'blur'}
         ],
         recruitingNumbers:[
-          {required:true,message:'请输入职位数量',trigger:'change'}
+          {required:true,message:'请输入职位数量',trigger:'blur'}
         ],
         deadline:[
-          {required:true,message:'请选择截止日期',trigger:'change'}
+          {required:true,message:'请选择截止日期',trigger:'blur'}
         ],
         jobRequirements:[
-          {required:true,message:'请输入职位要求',trigger:'change'},
-          {max:500,message:'职位描述超过限制字数',trigger:'change'}
+          {required:true,message:'请输入职位要求',trigger:'blur'},
+          {max:500,message:'职位描述超过限制字数',trigger:'blur'}
         ],
         jobResponsibilities:[
-          {required:true,message:'请输入职位职责',trigger:'change'},
-          {max:500,message:'职位描述超过限制字数',trigger:'change'}
+          {required:true,message:'请输入职位职责',trigger:'blur'},
+          {max:500,message:'职位描述超过限制字数',trigger:'blur'}
         ]
       }
     }
   },
   methods: {
-    ReleaseJob(formName){
+    ReleaseJob(){
 
+      if(this.$data.form.deadline!==null){
       this.$data.form.deadline=new Date(this.$data.form.deadline);
-      this.$data.form.deadline.setTime(this.$data.form.deadline.getTime()+8*3600*1000);
+      this.$data.form.deadline.setTime(this.$data.form.deadline.getTime()+8*3600*1000);}
 
-      this.$refs[formName].validate((valid)=>{
+      let flag1=false;
+      let flag2=false;
+      let flag3=false;
+
+      this.$refs['form'].validate((valid)=>{
+        if(valid){
+          flag1=true;
+        }else{
+
+        }
+      })
+
+      this.$refs['form2'].validate((valid)=>{
+        if(valid){
+          flag2=true;
+        }else{
+
+        }
+      })
+
+      this.$refs['form3'].validate((valid)=>{
+        if(valid){
+          flag3=true;
+        }else{
+        }
+      })
+
+
+      if(flag1===false){
+        this.$message({
+          message:'好像基本信息处的填写有错误哦',
+          type:"error"
+        })
+      }else if(flag2===false){
+        this.$message({
+          message:'好像工作职责处的填写有错误哦',
+          type:'error'
+        })
+      }else if(flag3===false){
+        this.$message({
+          message:'好像工作要求处的填写有问题哦',
+          type:'error'
+        })
+      }else if(flag1===true&&flag2===true&&flag3===true){
+        this.$data.formRelease.positionName=this.$data.form.positionName;
+        this.$data.formRelease.positionType=this.$data.form.positionType;
+        this.$data.formRelease.department=this.$data.form.department;
+        this.$data.formRelease.deadline=this.$data.form.deadline;
+        this.$data.formRelease.assessmentDepartment=this.$data.form.assessmentDepartment;
+        this.$data.formRelease.resumeAuditDepartment=this.$data.form.resumeAuditDepartment;
+        this.$data.formRelease.recruitingNumbers=this.$data.form.recruitingNumbers;
+        this.$data.formRelease.recruitmentType=this.$data.form.recruitmentType;
+        this.$data.formRelease.education=this.$data.form.education;
+        this.$data.formRelease.workPlace=this.$data.form.workPlace;
+        this.$data.formRelease.jobRequirements=this.$data.form3.jobRequirements;
+        this.$data.formRelease.jobResponsibilities=this.$data.form2.jobResponsibilities;
+
+
+        let that=this;
+        this.$axios({
+          method:'post',
+          url:'/admin/position',
+          data:that.$data.formRelease
+        }).then(function (response) {
+          that.message({
+            message:'提交成功！',
+            type:'success'
+          })
+        })
+
+        this.$router.push('/Now');
+      }
+
+      /*this.$refs['form'].validate((valid)=>{
         if(valid){
           let _this=this;
           this.$axios({
@@ -176,16 +269,14 @@ export default {
           })
           this.$router.push('/Now');
         }else{
-          this.$message(
-            {
-              message:'还有尚未填写完成的项目哦！',
-              type:'error'
-            }
-          )
+          this.$message({
+            type:'error',
+            message:'出错了！'
+          })
         }
-      })
+      })*/
 
-    }
+    },
   }
 }
 </script>
