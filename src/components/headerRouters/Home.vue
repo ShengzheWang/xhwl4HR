@@ -1,28 +1,8 @@
 <template>
   <div id="Home">
     <div class="blockDiv"></div>
-    <div class="block">
-      <div style="width:30%;margin: 10% auto 0% auto">
-        <el-collapse-transition>
-        <div style="height: 300px;text-align: center">
-          <el-dialog title="登录"  :visible="dialogFormVisible1" style="margin:auto auto;width: 50%" :lock-scroll="false"
-                     @close="handleClose">
-            <el-form :label-position="right" label-width="60px" :model="user" ref="user" :rules="rules">
-              <el-form-item label="用户名" prop="username">
-                <el-input v-model="user.username" placeholder="请输入用户名"></el-input>
-              </el-form-item>
-              <el-form-item label="密码" prop="password">
-                <el-input v-model="user.password" placeholder="请输入密码" type="password"></el-input>
-              </el-form-item>
-            </el-form>
+    <div class="block" style="height: 500px">
 
-            <div slot="footer" class="dialog-footer">
-              <el-button type="primary" @click="login('user')">确 定</el-button>
-            </div>
-          </el-dialog>
-        </div>
-        </el-collapse-transition>
-      </div>
     </div>
   </div>
 </template>

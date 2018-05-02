@@ -73,8 +73,9 @@
                 <el-input type="textarea" v-model="form.jobRequirements" :rows="15"></el-input>
               </el-form-item>
             </el-form>
-                <el-button icon="el-icon-upload" type="primary" @click="ReleaseJob"  style="width:20%;margin-left:80%">发布招聘</el-button>
-
+        <div style="text-align: center">
+                <el-button class="button4forms" @click="ReleaseJob"  style="width:20%;">发布招聘</el-button>
+        </div>
       </div>
     </div>
   </div>
@@ -287,6 +288,25 @@ export default {
     .line{
       border: solid 1px #1476C1;
       margin-top: 0;
+    }
+    .button4forms{
+      display: inline-block;
+      background: #E01B2F;
+      border: 1px solid #E01B2F;
+      /* 保存并进行下一步: */
+      font-family: MicrosoftYaHei-Bold;
+      color: #FFFFFF;
+      letter-spacing: 2px;
+      border-radius: 46px;
+      font-size: 20px;
+
+    }
+    .button4forms:hover {
+      background: #E01B2F;
+      border: 1px solid #E01B2F;
+      /* 保存并进行下一步: */
+      font-family: MicrosoftYaHei-Bold;
+      color: #FFFFFF;
     }
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

@@ -15,11 +15,11 @@
                active-text-color='#1476C1'
                active-background-color="#ffffff"
                :style="'width:'+(isSuperAdmin?560:450)+'px;margin:0 auto;height:60px;display: inline-block'">
-        <el-menu-item index="1" style="border: none" route="/Now">招聘中</el-menu-item>
-        <el-menu-item index="2" style="border: none" route="/History">历史招聘</el-menu-item>
-        <el-menu-item index="3" style="border: none" route="/Release" >发布招聘</el-menu-item>
-        <el-menu-item index="4" style="border: none" route="/Message">消息中心</el-menu-item>
-        <el-menu-item v-if="isSuperAdmin" index="5" style="border: none" route="/Authority">权限审核</el-menu-item>
+        <el-menu-item index="1" style="border: none" class="item4menu" route="/Now">招聘中</el-menu-item>
+        <el-menu-item index="2" style="border: none" class="item4menu" route="/History">历史招聘</el-menu-item>
+        <el-menu-item index="3" style="border: none" class="item4menu" route="/Release" >发布招聘</el-menu-item>
+        <el-menu-item index="4" style="border: none" class="item4menu" route="/Message">消息中心</el-menu-item>
+        <el-menu-item v-if="isSuperAdmin" index="5" class="item4menu" style="border: none" route="/Authority">权限审核</el-menu-item>
       </el-menu>
     </div>
     <div style="width:25%;display: inline-block;height: 120px;text-align: center;vertical-align: middle" v-if="Need2Login">
@@ -140,7 +140,7 @@ export default {
                 const token=response.data.data;
                 _this.$axios.defaults.headers.Authorization = token
                 _this.$data.Need2Login = false
-                _this.$data.dialogFormVisible1=false;
+                _this.$data.dialogFormVisible1=false
                 document.cookie=token;
                 _this.$message({
                   message:'登录成功',
@@ -175,6 +175,7 @@ export default {
       //this.$data.Need2Login = true
       delete this.$axios.defaults.headers['Authorization']
       document.cookie = ''
+      this.$data.Need2Login = true
       this.$message({
         message: '注销成功，已返回首页，请重新登录',
         type: 'success'

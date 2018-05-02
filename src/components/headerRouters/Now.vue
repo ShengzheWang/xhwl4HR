@@ -15,22 +15,28 @@
               <el-date-picker type="date" prefix-icon="end-time-icon" class="end-time" placeholder="发布日期-终" v-model="form.date2" style="width: 100%;"></el-date-picker>
             </el-col>
           </el-form-item>
-          <el-form-item >
+
             <el-col style="width: 38%">
+              <el-form-item >
             <el-input v-model="form.name" prefix-icon="name-icon" placeholder="职位名称" class="input-name" ></el-input>
+              </el-form-item>
             </el-col>
             <el-col style="width: 2%">
               <div style="width: 100%"><p> </p></div>
             </el-col>
             <el-col style="width: 38%;margin-left: -2px">
+              <el-form-item >
               <el-input v-model="form.region" prefix-icon="classes-icon" placeholder="招聘部门" class="input-classes">
               </el-input>
+              </el-form-item>
             </el-col>
             <el-col style="width: 2%">
               <div style="width: 100%"><p> </p></div>
             </el-col>
             <el-col style="width: 20%">
+              <el-form-item >
               <el-button class="button4choose">筛选</el-button>
+              </el-form-item>
             </el-col>
           </el-form-item>
         </el-form>

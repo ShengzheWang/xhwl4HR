@@ -45,10 +45,10 @@
             </div>
             <h1 style="color: #707070;margin-top: 3%">岗位职责
             </h1>
-              <h3>{{form.jobResponsibilities}}</h3>
+              <h3 v-html="form.jobResponsibilities">   </h3>
             <h1 style="color: #707070;margin-top: 1%">职位要求
             </h1>
-            <h3>{{form.jobRequirements}}</h3>
+            <h3 v-html="form.jobRequirements"></h3>
           </div>
           <el-tabs type="card"  v-model="activeTab" @tab-click="handleClick">
             <div class="line" v-bind:style="'border-color:'+borderColor"></div>
@@ -310,6 +310,8 @@ export default {
         this.$data.form.recruitmentType='实习生招聘'
       }
 
+    this.$data.form.jobResponsibilities=this.$data.form.jobResponsibilities.replace("\n","<br>")
+    this.$data.form.jobRequirements=this.$data.form.jobRequirements.replace("\n","<br>")
   },
   methods: {
     resumeDetails (num) {
