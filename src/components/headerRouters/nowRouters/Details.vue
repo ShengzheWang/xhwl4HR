@@ -355,6 +355,10 @@ export default {
 </script>
 <style lang="less">
   #Details{
+    .line{
+      border: solid 1px #1476C1;
+      margin-top: 0;
+    }
     .page-total{
       width: 30%;
       display: inline-block;

@@ -1,44 +1,45 @@
 <template>
   <div id="Release">
+    <div class="blockDiv"></div>
     <div class="block">
       <div style="width:60%;margin: 2% auto 0 auto">
-        <el-tabs>
-          <el-tab-pane label="基本信息">
-            <el-form ref="form" :model="form" :rules="rules" label-width="120px" style="width: 80%;;display: inline-block;margin-left: 7%;margin-top:5%">
-              <el-form-item label="职位名称：" style="width: 50%" prop="positionName">
+            <h2> 基本信息</h2>
+            <div class="line"></div>
+            <el-form ref="form" :model="form" :rules="rules" label-width="120px" style="width: 100%;;display: inline-block;margin-top:5%">
+              <el-form-item label="职位名称" style="width: 30%" prop="positionName">
                 <el-input v-model="form.positionName"></el-input>
               </el-form-item>
-              <el-form-item label="所属部门：" style="" prop="departments">
+              <el-form-item label="所属部门" style="" prop="departments">
                 <el-select v-model="form.departments" placeholder="请选择" prop="department">
                   <el-option  v-for="item in departments" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="简历审核部门：" style="" prop="resumeAuditDepartment">
+              <el-form-item label="简历审核部门" style="" prop="resumeAuditDepartment">
                 <el-select v-model="form.resumeAuditDepartment" placeholder="请选择">
                   <el-option  v-for="item in departments" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="考核部门：" style="" prop="assessmentDepartment">
+              <el-form-item label="考核部门" style="" prop="assessmentDepartment">
                 <el-select v-model="form.assessmentDepartment" placeholder="请选择">
                   <el-option  v-for="item in departments" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="职位类型：" style="" prop="positionType">
+              <el-form-item label="职位类型" style="" prop="positionType">
                 <el-select v-model="form.positionType" placeholder="请选择">
                   <el-option  v-for="item in departments" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="招聘类型：" style="" prop="recruitmentType">
+              <el-form-item label="招聘类型" style="" prop="recruitmentType">
                 <el-select v-model.number="form.recruitmentType" placeholder="请选择招聘类型">
                   <el-option label="社会招聘" :value=1></el-option>
                   <el-option label="校园招聘" :value=2></el-option>
                   <el-option label="实习生招聘" :value=3></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="工作地点：" style="width: 220px" prop="workPlace">
+              <el-form-item label="工作地点" style="width: 220px" prop="workPlace">
                 <el-input v-model="form.workPlace"></el-input>
               </el-form-item>
-              <el-form-item label="学历要求：" style="" prop="education">
+              <el-form-item label="学历要求" style="" prop="education">
                 <el-select v-model="form.education" placeholder="请选择">
                   <el-option label="本科" value="本科"></el-option>
                   <el-option label="硕士" value="硕士"></el-option>
@@ -46,33 +47,33 @@
                   <el-option label="大专" value="大专"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="招聘人数：" style="" prop="recruitingNumbers">
+              <el-form-item label="招聘人数" style="" prop="recruitingNumbers">
                 <el-input-number @change="handleChange" :min="1" :max="10" v-model="form.recruitingNumbers"></el-input-number>
               </el-form-item>
-              <el-form-item label="截至日期：" style="" prop="deadline">
+              <el-form-item label="截至日期" style="" prop="deadline">
                 <el-date-picker type="date" placeholder="选择日期" v-model="form.deadline"></el-date-picker>
               </el-form-item>
 
             </el-form>
-          </el-tab-pane>
-          <el-tab-pane label="工作职责">
-            <el-form label-width="120px" ref="form" :rules="rules" :model="form" style="width: 80%;;display: inline-block;margin-left: 7%;margin-top:5%">
-            <el-form-item label="工作职责：" prop="jobResponsibilities">
+
+
+        <h2> 工作职责</h2>
+        <div class="line"></div>
+            <el-form label-width="40px" ref="form" :rules="rules" :model="form" style="width: 80%;;display: inline-block;margin-left: 7%;margin-top:5%">
+            <el-form-item label="" prop="jobResponsibilities">
               <el-input type="textarea" v-model="form.jobResponsibilities" :rows="15"></el-input>
             </el-form-item>
             </el-form>
-          </el-tab-pane>
-          <el-tab-pane label="职位要求">
-            <el-form ref="form" :model="form" :rules="rules" label-width="120px" style="width: 80%;;display: inline-block;margin-left: 7%;margin-top:5%">
-              <el-form-item label="职位要求：" prop="jobRequirements">
+        <h2> 职位要求</h2>
+        <div class="line"></div>
+            <el-form ref="form" :model="form" :rules="rules" label-width="40px" style="width: 80%;;display: inline-block;margin-left: 7%;margin-top:5%">
+              <el-form-item label="" prop="jobRequirements">
                 <el-input type="textarea" v-model="form.jobRequirements" :rows="15"></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button icon="el-icon-upload" type="primary"  style="width:20%;margin-left:80%" @click="ReleaseJob">发布招聘</el-button>
               </el-form-item>
             </el-form>
-          </el-tab-pane>
-        </el-tabs>
 
       </div>
     </div>
@@ -192,6 +193,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
   #Release {
+    .line{
+      border: solid 1px #1476C1;
+      margin-top: 0;
+    }
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

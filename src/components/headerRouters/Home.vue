@@ -1,10 +1,11 @@
 <template>
   <div id="Home">
+    <div class="blockDiv"></div>
     <div class="block">
       <div style="width:30%;margin: 10% auto 0% auto">
         <el-collapse-transition>
         <div style="height: 300px;text-align: center">
-          <el-dialog title="登录"  :visible="value4login==100" style="margin:auto auto;width: 50%" :lock-scroll="false"
+          <el-dialog title="登录"  :visible="dialogFormVisible1" style="margin:auto auto;width: 50%" :lock-scroll="false"
                      @close="handleClose">
             <el-form :label-position="right" label-width="60px" :model="user" ref="user" :rules="rules">
               <el-form-item label="用户名" prop="username">
@@ -21,10 +22,6 @@
           </el-dialog>
         </div>
         </el-collapse-transition>
-        <div class="block">
-          <span class="demonstration">滑动到指定范围解锁登录表单！</span>
-          <el-slider v-model="value4login"></el-slider>
-        </div>
       </div>
     </div>
   </div>
@@ -52,7 +49,7 @@ export default {
     }
 
     return {
-      dialogFormVisible1: false,
+      dialogFormVisible1: true,
       State: true,
       value4login: 0,
       user:{
@@ -96,7 +93,7 @@ export default {
       console.log(key, keyPath)
     },
     handleClose () {
-      this.$data.value4login = 0
+      this.$data.dialogFormVisible1=false
     },
 
     login(formName){

@@ -1,5 +1,6 @@
 <template>
-  <div id="Xhwlheader" style="height:120px;border-bottom: solid 1px #dddddd;">
+  <div id="Xhwlheader" style="width:100%;min-width:1100px;opacity:0.95;height:110px;border-bottom: solid 1px #dddddd;
+       background: #ffffff;z-index:1;position: fixed;left: 0;top:0;right: 0">
     <div style="display: inline-block;width: 26%;height: 160px;text-align: center;vertical-align: middle">
       <div style="display: block;margin: 4% auto">
         <img
