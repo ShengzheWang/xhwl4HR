@@ -1,74 +1,65 @@
 <template>
   <div id="Authority">
+    <div class="blockDiv"></div>
     <div class="block">
       <div style="width:60%;margin: 2% auto 0 auto">
-       <el-tabs style="">
-         <el-tab-pane label="添加管理员">
-       <el-form style="width: 50%;margin:3% auto" label-width="50px" :label-position="labelPosition">
-         <h2>
-           添加管理员
-         </h2>
-         <el-form-item label="工号">
-           <el-input></el-input>
-         </el-form-item>
-         <el-form-item label="密码">
-           <el-input></el-input>
-         </el-form-item>
-         <el-form-item label="">
-           <el-button>确定添加</el-button>
-         </el-form-item>
-       </el-form>
-         </el-tab-pane>
-         <el-tab-pane label="管理员列表">
-           <el-form style="width: 50%;margin:3% auto auto 0" label-width="50px" :label-position="labelPosition">
-             <h2>
-               管理员列表
-             </h2>
-             <el-form-item label="工号">
-               <el-input class="input-with-select"><el-button slot="append">搜索</el-button></el-input>
-             </el-form-item>
-           </el-form>
-           <el-table
-             :data="tableData"
-             stripe
-             style="width: 100%">
-             <el-table-column
-               prop="department"
-               label="部门"
-               width="240">
-             </el-table-column>
-             <el-table-column
-               prop="wordId"
-               label="工号"
-               width="240">
-             </el-table-column>
-             <el-table-column
-               label="密码"
-               width="240">
-               <template slot-scope="scope">
-                 <el-popover trigger="hover" placement="top">
-                   <p>{{ scope.row.password }}</p>
-                   <div slot="reference" class="name-wrapper">
-                     <el-tag size="large" type="info">鼠标移至此查看密码</el-tag>
-                   </div>
-                 </el-popover>
-               </template>
-             </el-table-column>
-             <el-table-column
-               label="操作"
-               fixed="right"
-               width="340"
-             >
-               <template slot-scope="scope">
-                 <el-button plain @click="handleClick(scope.row)" type="warning" size="middle">收回权限
-                 </el-button>
-                 <el-button plain @click="handleClick(scope.row)" type="primary" size="middle">修改密码
-                 </el-button>
-               </template>
-             </el-table-column>
-           </el-table>
-         </el-tab-pane>
-    </el-tabs>
+        <el-form ref="form" :model="form" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">
+          <el-col style="width: 38%">
+            <el-form-item >
+              <el-input placeholder="请输入工号" v-model="input3" style="font-size: 18px;height: 60px;margin-left: -1%">
+                <el-button slot="append"><img src="../../../static/img/search.png"> </el-button>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col style="width: 40%">
+            <div style="width: 100%"><p> </p></div>
+          </el-col>
+          <el-col style="width: 20%">
+            <el-form-item >
+              <el-button class="button4choose ">添加管理员</el-button>
+            </el-form-item>
+          </el-col>
+        </el-form>
+
+      </div>
+      <div style="width:60%;margin: 2% auto 0% auto">
+        <el-table :data="tableData" stripe class="table" style="width: 100%">
+          <el-table-column prop="positionName" label="姓名" width="200">
+          </el-table-column>
+          <el-table-column prop="department" label="部门" width="200">
+          </el-table-column>
+          <el-table-column prop="recruitmentType" label="工号" width="200">
+          </el-table-column>
+          <el-table-column prop="workPlace" label="密码" width="240">
+          </el-table-column>
+          <el-table-column label="查看详情"  width="140">
+            <template slot-scope="scope">
+              <el-button class="button4details" @click="handleClick(scope.$index)" type="primary" size="middle">详情
+              </el-button>
+            </template>
+          </el-table-column>
+          <el-table-column label="查看详情"  width="140">
+            <template slot-scope="scope">
+              <el-button class="button4details" @click="handleClick(scope.$index)" type="primary" size="middle">详情
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <div class="el-pagination__total page-total">
+          共<a>{{total}}</a>条
+        </div>
+        <div class="page-select">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handlePageChange"
+            :current-page="currentPage"
+            :page-sizes="[5, 10, 20, 30]"
+            :page-size="pageSize"
+            layout="sizes, prev, pager, next, jumper"
+            :total="total">
+          </el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -83,15 +74,172 @@ export default{
     ElFormItem},
   data () {
     return {
-      labelPosition: 'right',
-      tableData: [
-        {department: '人事', wordId: '123', password: '1111'}
-      ]
+      currentPage: 1,
+      total: 0,
+      pageSize: 20,
+      form: {},
+      tableData: [{positionName: 'aa', department: '', workPlace: '', publishDate: '', deadline: '',recruitmentType:''
+      },{positionName: 'aa', department: '', workPlace: '', publishDate: '', deadline: '',recruitmentType:''
+      }]
     }
   },
-  method:{
+  created(){
+//    let _this=this
+//    this.$axios({
+//      method: 'post',
+//      data: _this.$qs.stringify({
+//        size: 20,
+//        page: 1
+//      }),
+//      url:'/admin/positions'
+//    }).then(function (response) {
+//      _this.$data.tableData=response.data.content;
+//      _this.$data.total=response.data.totalElements;
+//    })
+
+  },
+  updated(){
+    for(let index=0;index<this.$data.tableData.length;index++){
+      if(this.$data.tableData[index].recruitmentType==='1'){
+        this.$data.tableData[index].recruitmentType='校园招聘'
+      }else if(this.$data.tableData[index].recruitmentType==='2'){
+        this.$data.tableData[index].recruitmentType='社会招聘'
+      }else if(this.$data.tableData[index].recruitmentType==='3'){
+        this.$data.tableData[index].recruitmentType='实习生招聘'
+      }
+    }
+  },
+  methods: {
+    handleSizeChange (val) {
+      this.$data.pageSize = val
+      let _this=this
+      this.$axios({
+        method: 'post',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize,
+          page: _this.$data.currentPage
+        }),
+        url:'/admin/positions'
+      }).then(function (response) {
+        _this.$data.tableData=response.data.content;
+        _this.$data.total=response.data.totalElements;
+      })
+    },
+    handlePageChange (val) {
+      this.$data.currentPage = val
+      let _this=this
+      this.$axios({
+        method: 'post',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize,
+          page: _this.$data.currentPage
+        }),
+        url:'/admin/positions'
+      }).then(function (response) {
+        _this.$data.tableData=response.data.content;
+        _this.$data.total=response.data.totalElements;
+      })
+    },
+    handleClick (row) {
+      //console.log(row);
+      this.$router.push({path:'/Details',query:{id:row+1}})
+    }
   }
 }
 </script>
-<style>
+<style lang="less">
+  #Authority{
+    .el-table th {
+      text-align: center;
+    }
+    .el-table__row {
+      text-align: center;
+    }
+    .el-table__header {
+      font-size: 15px;
+      .cell {
+        font-weight: 900;
+        color: #2c3e50;
+      }
+    }
+    .el-table__header-wrapper th {
+      background: #ECF1F7 !important;
+    }
+    .page-total{
+      width: 30%;
+      display: inline-block;
+      margin-top: 3%;
+      margin-right: 0;
+      vertical-align: top;
+      font-size: 13px;
+      a{
+        font-weight: bolder;
+        font-size: 16px;
+      }
+    }
+    .page-select{
+      display: inline-block;
+      margin: 3% auto;
+      text-align: right;
+      width: 69%;
+    }
+    i{
+      display: inline-block;
+      vertical-align: middle;
+      width: 27px;
+    }
+    .el-form-item {
+      .el-input__inner {
+        border: 2px solid #1476C1;
+        border-radius: 100px 0 0 100px;
+        height: 60px;
+      }
+      .el-input-group__append {
+        border: 1px solid #1476C1;
+        border-radius: 0px 100px 100px 0;
+        background: #1476C1;
+      }
+    }
+    .button4details{
+      border-radius: 40px !important;
+      border:solid 1px #2480C3;
+      background: inherit;
+      color:#2480C3;
+      width:80px
+    }
+    .el-table__header{
+      font-size: 15px;
+      .cell{
+        font-weight: 900;
+        color:#2c3e50;
+      }
+    }
+    .el-table__body{
+      font-size: 15px;
+      .el-table__row{
+        background: #ffffff;
+      }
+      .el-table__row--striped{
+        background: #F6F7FB !important;
+        td{
+          background: #F6F7FB !important;
+        }
+      }
+    }
+    .button4choose{
+      background: #1476C1;
+      color: #ffffff;
+      width: 100%;
+      height: 54px;
+      border: solid 1px #1476C1;
+      border-radius: 50px;
+      font-size: 20px;
+    }
+    .input-name{
+      border-radius: 50px;
+    }
+    .input-classes{
+      border-radius: 50px;
+    }
+  }
 </style>

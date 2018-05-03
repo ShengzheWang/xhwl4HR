@@ -38,7 +38,6 @@
               <el-button class="button4choose">筛选</el-button>
               </el-form-item>
             </el-col>
-          </el-form-item>
         </el-form>
 
       </div>
