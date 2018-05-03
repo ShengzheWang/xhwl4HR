@@ -13,6 +13,28 @@ body {
 a:link {
     text-decoration: none;
 }
+.item4menu{
+  background: #ffffff !important;
+  color:#484848
+}
+.el-form-item{
+  font-size:16px;
+  transition:all 0.3s;
+}
+
+.el-form-item:focus {
+  transform: scale(1.01);
+}
+.el-form-item:hover  {
+  transform: scale(1.01);
+}
+.item4menu:hover{
+  background: #ffffff !important;
+  color:#1376BE !important;
+}
+.item4menu.is-active{
+  color:#1A72B7 !important;
+}
 .el-header,.el-footer{
     color:#333;
     background: #ffffff;

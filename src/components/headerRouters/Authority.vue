@@ -16,7 +16,7 @@
           </el-col>
           <el-col style="width: 20%">
             <el-form-item >
-              <el-button class="button4choose ">添加管理员</el-button>
+              <el-button class="button4choose " @click="dialogFormVisible1 =true">添加管理员</el-button>
             </el-form-item>
           </el-col>
         </el-form>
@@ -62,6 +62,26 @@
         </div>
       </div>
     </div>
+    <el-dialog  id="form4login" :visible.sync="dialogFormVisible1" style="width: 50%;margin:auto auto" :lock-scroll="false" :append-to-body="true">
+      <el-form :label-position="labelPosition1"   style="width: 80%;margin: 3% auto" :status-icon="true">
+        <el-form-item  prop="username" class="item4login">
+          <el-input  placeholder="请输入工号" prefix-icon="iconfont icon-shoujihao icon4form" ></el-input>
+        </el-form-item>
+        <el-form-item  prop="password" class="item4login">
+          <el-input  type="password"  placeholder="请输入密码" prefix-icon="iconfont icon-mima icon4form"></el-input>
+        </el-form-item>
+        <div style="text-align: right;" class="item4login">
+          <el-checkbox v-model="checked" style="display: inline-block">使用工号作为默认密码</el-checkbox>
+        </div>
+        <el-form-item  prop="password" class="item4login">
+          <el-input  type="password"  placeholder="请选择部门" prefix-icon="iconfont icon-zhiweileixing icon4form"></el-input>
+        </el-form-item>
+      </el-form>
+      <div class="foot4login" style="margin: 3% auto;width: 80%">
+        <el-button v-bind:class="'button4login now'+(State == true?'Login':'Register')+'-register'" @click="dialogFormVisible1=false">取消</el-button>
+        <el-button v-bind:class="'button4login now'+(State == true?'Login':'Register')+'-login'" @click="login('user');">添加</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -76,6 +96,8 @@ export default{
     return {
       currentPage: 1,
       total: 0,
+      State : true,
+      dialogFormVisible1: false,
       pageSize: 20,
       form: {},
       tableData: [{positionName: 'aa', department: '', workPlace: '', publishDate: '', deadline: '',recruitmentType:''
@@ -99,15 +121,7 @@ export default{
 
   },
   updated(){
-    for(let index=0;index<this.$data.tableData.length;index++){
-      if(this.$data.tableData[index].recruitmentType==='1'){
-        this.$data.tableData[index].recruitmentType='校园招聘'
-      }else if(this.$data.tableData[index].recruitmentType==='2'){
-        this.$data.tableData[index].recruitmentType='社会招聘'
-      }else if(this.$data.tableData[index].recruitmentType==='3'){
-        this.$data.tableData[index].recruitmentType='实习生招聘'
-      }
-    }
+
   },
   methods: {
     handleSizeChange (val) {

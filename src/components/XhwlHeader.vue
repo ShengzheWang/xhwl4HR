@@ -15,11 +15,11 @@
                active-text-color='#1476C1'
                active-background-color="#ffffff"
                :style="'width:'+(isSuperAdmin?560:450)+'px;margin:0 auto;height:60px;display: inline-block'">
-        <el-menu-item index="1" style="border: none" route="/Now">招聘中</el-menu-item>
-        <el-menu-item index="2" style="border: none" route="/History">历史招聘</el-menu-item>
-        <el-menu-item index="3" style="border: none" route="/Release" >发布招聘</el-menu-item>
-        <el-menu-item index="4" style="border: none" route="/Message">消息中心</el-menu-item>
-        <el-menu-item v-if="isSuperAdmin" index="5" style="border: none" route="/Authority">权限审核</el-menu-item>
+        <el-menu-item index="1" style="border: none" route="/Now" class="item4menu">招聘中</el-menu-item>
+        <el-menu-item index="2" style="border: none" route="/History" class="item4menu">历史招聘</el-menu-item>
+        <el-menu-item index="3" style="border: none" route="/Release" class="item4menu">发布招聘</el-menu-item>
+        <el-menu-item index="4" style="border: none" route="/Message" class="item4menu">消息中心</el-menu-item>
+        <el-menu-item v-if="isSuperAdmin" index="5" style="border: none" route="/Authority" class="item4menu">权限审核</el-menu-item>
       </el-menu>
     </div>
     <div style="width:25%;display: inline-block;height: 120px;text-align: center;vertical-align: middle" v-if="Need2Login">
