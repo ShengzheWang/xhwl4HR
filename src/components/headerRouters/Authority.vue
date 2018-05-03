@@ -32,15 +32,15 @@
           </el-table-column>
           <el-table-column prop="workPlace" label="密码" width="240">
           </el-table-column>
-          <el-table-column label="查看详情"  width="140">
+          <el-table-column label="删除"  width="140">
             <template slot-scope="scope">
-              <el-button class="button4details" @click="handleClick(scope.$index)" type="primary" size="middle">详情
+              <el-button class="button4delete" @click="handleClick1(scope.$index)" type="text" size="middle" icon="icon iconfont icon-huishouquanxian">
               </el-button>
             </template>
           </el-table-column>
-          <el-table-column label="查看详情"  width="140">
+          <el-table-column label="修改"  width="140">
             <template slot-scope="scope">
-              <el-button class="button4details" @click="handleClick(scope.$index)" type="primary" size="middle">详情
+              <el-button class="button4edit" @click="handleClick2(scope.$index)" type="text" size="middle" icon="icon iconfont icon-xiugai">
               </el-button>
             </template>
           </el-table-column>
@@ -162,6 +162,9 @@ export default{
         color: #2c3e50;
       }
     }
+    .iconfont{
+      font-size: 26px;
+    }
     .el-table__header-wrapper th {
       background: #ECF1F7 !important;
     }
@@ -200,11 +203,15 @@ export default{
         background: #1476C1;
       }
     }
-    .button4details{
-      border-radius: 40px !important;
-      border:solid 1px #2480C3;
+    .button4edit{
       background: inherit;
       color:#2480C3;
+      width:80px
+    }
+    .button4delete{
+
+      background: inherit;
+      color:#E01B2F;
       width:80px
     }
     .el-table__header{
@@ -213,17 +220,27 @@ export default{
         font-weight: 900;
         color:#2c3e50;
       }
+      tr {
+        height: 80px;
+      }
     }
     .el-table__body{
       font-size: 15px;
       .el-table__row{
         background: #ffffff;
+        td{
+          padding: 6px 0;
+        }
       }
       .el-table__row--striped{
         background: #F6F7FB !important;
         td{
           background: #F6F7FB !important;
+          padding: 6px 0;
         }
+      }
+      tr {
+        height: 40px;
       }
     }
     .button4choose{
@@ -241,5 +258,6 @@ export default{
     .input-classes{
       border-radius: 50px;
     }
+
   }
 </style>
