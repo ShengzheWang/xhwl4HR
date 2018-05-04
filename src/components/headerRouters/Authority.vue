@@ -24,14 +24,14 @@
       </div>
       <div style="width:60%;margin: 2% auto 0% auto">
         <el-table :data="formAdmins" v-show="!showSearch" stripe class="table" style="width: 100%">
-          <el-table-column prop="username" label="工号" width="200">
+          <el-table-column prop="username" label="工号" width="280">
           </el-table-column>
-          <el-table-column prop="department" label="部门" width="200">
+          <el-table-column prop="department" label="部门" width="280">
             <template slot-scope="scope">
               {{departments[Number(formAdmins[scope.$index].department)-1].name}}
             </template>
           </el-table-column>
-          <el-table-column prop="password" label="密码" width="240">
+          <el-table-column prop="password" label="密码" width="280">
           </el-table-column>
           <el-table-column label="删除"  width="140">
             <template slot-scope="scope">
@@ -102,7 +102,7 @@
           <el-checkbox  v-model="disabled1" style="display: inline-block">使用工号作为默认密码</el-checkbox>
         </div>
         <el-form-item  prop="department" class="item4login">
-          <el-select v-model="formModify.department" placeholder="请选择部门">
+          <el-select v-model="formModify.department" placeholder="请选择部门" style="width: 100%">
             <el-option
               v-for="item in departments"
               :label="item.name"
