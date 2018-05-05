@@ -50,9 +50,6 @@
               <el-form-item label="招聘人数" style="" prop="recruitingNumbers">
                 <el-input-number @change="handleChange" :min="1" :max="10" v-model="form.recruitingNumbers"></el-input-number>
               </el-form-item>
-              <el-form-item label="招聘人数：" style="" prop="recruitingNumbers">
-                <el-input-number :min="1" :max="10" v-model="form.recruitingNumbers"></el-input-number>
-              </el-form-item>
               <el-form-item label="截至日期" style="" prop="deadline">
                 <el-date-picker type="date" placeholder="选择日期" v-model="form.deadline"></el-date-picker>
               </el-form-item>
