@@ -23,7 +23,7 @@
 
       </div>
       <div style="width:60%;margin: 2% auto 0% auto">
-        <el-table :data="formAdmins" v-show="!showSearch" stripe class="table" style="width: 100%">
+        <el-table :data="formAdmins" v-show="!showSearch" stripe class="table" style="width: 100%" v-loading="loading">
           <el-table-column prop="username" label="工号" width="280">
           </el-table-column>
           <el-table-column prop="department" label="部门" width="280">
@@ -133,6 +133,7 @@ export default{
       disabled1:false,
       search:'',
       input3:'',
+      loading: true,
       currentPage: 1,
       total: 0,
       State : true,
@@ -214,6 +215,7 @@ export default{
     }).then(function (response) {
       _this.$data.formAdmins=response.data.content;
       _this.$data.total=response.data.totalElements;
+      _this.$data.loading = false
       console.log(_this.$data.formAdmins)
     })
   },
