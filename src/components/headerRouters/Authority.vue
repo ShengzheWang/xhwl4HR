@@ -299,6 +299,7 @@ export default{
       })
     },
     handleSizeChange (val) {
+      this.$data.loading  = true
       this.$data.pageSize = val
       let _this=this
       this.$axios({
@@ -311,9 +312,11 @@ export default{
       }).then(function (response) {
         _this.$data.formAdmins=response.data.content;
         _this.$data.total=response.data.totalElements;
+        _this.$data.loading  = false
       })
     },
     handlePageChange (val) {
+      this.$data.loading  = true
       this.$data.currentPage = val
       let _this=this
       this.$axios({
@@ -326,6 +329,7 @@ export default{
       }).then(function (response) {
         _this.$data.formAdmins=response.data.content;
         _this.$data.total=response.data.totalElements;
+        _this.$data.loading  = false
       })
     },
     addAdmin (formName) {
