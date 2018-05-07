@@ -11,22 +11,22 @@
               </el-form-item>
               <el-form-item label="所属部门" style="" prop="departments">
                 <el-select v-model="form.departments" placeholder="请选择" prop="department">
-                  <el-option  v-for="item in departments" :label="item.name" :value="item.name"></el-option>
+                  <el-option  v-for="(item,index) in departments" v-bind:key="index" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="简历审核部门" style="" prop="resumeAuditDepartment">
                 <el-select v-model="form.resumeAuditDepartment" placeholder="请选择">
-                  <el-option  v-for="item in departments" :label="item.name" :value="item.name"></el-option>
+                  <el-option  v-for="(item,index) in departments" v-bind:key="index" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="考核部门" style="" prop="assessmentDepartment">
                 <el-select v-model="form.assessmentDepartment" placeholder="请选择">
-                  <el-option  v-for="item in departments" :label="item.name" :value="item.name"></el-option>
+                  <el-option  v-for="(item,index) in departments" v-bind:key="index" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="职位类型" style="" prop="positionType">
                 <el-select v-model="form.positionType" placeholder="请选择">
-                  <el-option  v-for="item in departments" :label="item.name" :value="item.name"></el-option>
+                  <el-option  v-for="(item,index) in departments" v-bind:key="index" :label="item.name" :value="item.name"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="招聘类型" style="" prop="recruitmentType">

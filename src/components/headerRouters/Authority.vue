@@ -3,7 +3,7 @@
     <div class="blockDiv"></div>
     <div class="block">
       <div style="width:60%;margin: 2% auto 0 auto">
-        <el-form ref="form" :model="form" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">
+        <el-form class="form4search" ref="form" :model="form" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">
           <el-col style="width: 38%">
             <el-form-item >
               <el-input placeholder="请输入工号" v-model="input3" style="font-size: 18px;height: 60px;margin-left: -1%">
@@ -64,7 +64,7 @@
         </div>
       </div>
     </div>
-    <el-dialog  id="form4login" :visible.sync="dialogFormVisible1" style="width: 50%;margin:auto auto" :lock-scroll="false" :append-to-body="true">
+    <el-dialog  class="form4login" :visible.sync="dialogFormVisible1" style="width: 50%;margin:auto auto" :lock-scroll="false" :append-to-body="true">
       <el-form   :model="formAddAdmin" ref="formAddAdmin" style="width: 80%;margin: 3% auto" :status-icon="true" :rules="rules">
         <el-form-item  prop="username" class="item4login">
           <el-input  placeholder="请输入工号" prefix-icon="iconfont icon-shoujihao icon4form" v-model="formAddAdmin.username"></el-input>
@@ -76,17 +76,14 @@
           <el-checkbox  v-model="disabled" style="display: inline-block">使用工号作为默认密码</el-checkbox>
         </div>
         <el-form-item  prop="department" class="item4login">
-          <el-row class="demo-autocomplete">
-            <el-col :span="12">
-              <el-autocomplete
-                class="inline-input"
-                v-model="state1"
-                :fetch-suggestions="querySearch"
-                placeholder="请输入部门"
-                @select="handleSelect2"
-              ></el-autocomplete>
-            </el-col>
-          </el-row>
+          <el-autocomplete
+            class="inline-input"
+            v-model="state1"
+            :fetch-suggestions="querySearch"
+            placeholder="请输入部门"
+            @select="handleSelect2"
+            prefix-icon="iconfont icon-zhiweileixing icon4form"
+          ></el-autocomplete>
         </el-form-item>
       </el-form>
       <div class="foot4login" style="margin: 3% auto;width: 80%">
@@ -94,7 +91,7 @@
         <el-button v-bind:class="'button4login now'+(State == true?'Login':'Register')+'-login'" @click="addAdmin('formAddAdmin')">添加</el-button>
       </div>
     </el-dialog>
-    <el-dialog  id="form4login" :visible.sync="dialogFormVisible2" style="width: 50%;margin:auto auto" :lock-scroll="false" :append-to-body="false">
+    <el-dialog  class="form4login" :visible.sync="dialogFormVisible2" style="width: 50%;margin:auto auto" :lock-scroll="false" :append-to-body="false">
       <el-form   :model="formModify" ref="formModify" style="width: 80%;margin: 3% auto" :status-icon="true" :rules="rules">
         <el-form-item  prop="username" class="item4login">
           <el-input  placeholder="请输入工号" prefix-icon="iconfont icon-shoujihao icon4form" v-model="formModify.username"></el-input>
@@ -106,17 +103,13 @@
           <el-checkbox  v-model="disabled1" style="display: inline-block">使用工号作为默认密码</el-checkbox>
         </div>
         <el-form-item  prop="department" class="item4login">
-          <el-row class="demo-autocomplete">
-            <el-col :span="12">
-              <el-autocomplete
-                class="inline-input"
-                v-model="state1"
-                :fetch-suggestions="querySearch"
-                placeholder="请输入部门"
-                @select="handleSelect1"
-              ></el-autocomplete>
-            </el-col>
-          </el-row>
+          <el-autocomplete
+            v-model="state1"
+            :fetch-suggestions="querySearch"
+            placeholder="请输入部门"
+            @select="handleSelect1"
+            prefix-icon="iconfont icon-zhiweileixing icon4form"
+          ></el-autocomplete>
         </el-form-item>
       </el-form>
       <div class="foot4login" style="margin: 3% auto;width: 80%">
@@ -480,7 +473,7 @@ export default{
       vertical-align: middle;
       width: 27px;
     }
-    .el-form-item {
+    .form4search {
       .el-input__inner {
         border: 2px solid #1476C1;
         border-radius: 100px 0 0 100px;
