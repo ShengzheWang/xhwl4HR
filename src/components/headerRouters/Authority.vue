@@ -76,13 +76,17 @@
           <el-checkbox  v-model="disabled" style="display: inline-block">使用工号作为默认密码</el-checkbox>
         </div>
         <el-form-item  prop="department" class="item4login">
-          <el-select v-model="formAddAdmin.department" placeholder="请选择部门">
-            <el-option
-              v-for="item in departments"
-              :label="item.name"
-              :value="item.index">
-            </el-option>
-          </el-select>
+          <el-row class="demo-autocomplete">
+            <el-col :span="12">
+              <el-autocomplete
+                class="inline-input"
+                v-model="state1"
+                :fetch-suggestions="querySearch"
+                placeholder="请输入部门"
+                @select="handleSelect2"
+              ></el-autocomplete>
+            </el-col>
+          </el-row>
         </el-form-item>
       </el-form>
       <div class="foot4login" style="margin: 3% auto;width: 80%">
@@ -102,13 +106,17 @@
           <el-checkbox  v-model="disabled1" style="display: inline-block">使用工号作为默认密码</el-checkbox>
         </div>
         <el-form-item  prop="department" class="item4login">
-          <el-select v-model="formModify.department" placeholder="请选择部门" style="width: 100%">
-            <el-option
-              v-for="item in departments"
-              :label="item.name"
-              :value="item.index">
-            </el-option>
-          </el-select>
+          <el-row class="demo-autocomplete">
+            <el-col :span="12">
+              <el-autocomplete
+                class="inline-input"
+                v-model="state1"
+                :fetch-suggestions="querySearch"
+                placeholder="请输入部门"
+                @select="handleSelect1"
+              ></el-autocomplete>
+            </el-col>
+          </el-row>
         </el-form-item>
       </el-form>
       <div class="foot4login" style="margin: 3% auto;width: 80%">
@@ -127,6 +135,8 @@ export default{
     ElTabPane,
     ElFormItem},
   data () {
+
+
     return {
       showSearch:false,
       disabled:false,
@@ -136,12 +146,16 @@ export default{
       loading: true,
       currentPage: 1,
       total: 0,
+      totalPages:0,
       State : true,
       dialogFormVisible1: false,
       dialogFormVisible2: false,
       pageSize: 20,
       modifyIndex:null,
       form: {},
+
+      AllDepartments: [],
+      state1: '',
 
       departments:[             //所有的部门
         {name:'人事行政部',index:'1'},
@@ -179,6 +193,12 @@ export default{
         department:''
       },
 
+      Modify:{
+        username:'',
+        password:'',
+        department:''
+      },
+
       formSearch:{
         id:null,
         username:'',
@@ -195,7 +215,7 @@ export default{
           {min:6,max:18,message:'密码在6-18位之间',trigger:'change'}
         ],
         department:[
-          {required:true,message:'部门不能为空',trigger:'change'}
+          {required:true,message:'不存在该部门',trigger:'change'},
         ]
       },
     }
@@ -208,18 +228,30 @@ export default{
     this.$axios({
       method:'post',
       data:_this.$qs.stringify({
-        size:10,
+        size:20,
         page:1
       }),
       url:'/super/searchAdmins'
     }).then(function (response) {
       _this.$data.formAdmins=response.data.content;
       _this.$data.total=response.data.totalElements;
+      _this.$data.totalPages=response.data.totalPages;
       _this.$data.loading = false
       console.log(_this.$data.formAdmins)
     })
   },
   methods: {
+    querySearch(queryString, cb) {
+      var AllDepartments = this.AllDepartments;
+      var results = queryString ? AllDepartments.filter(this.createFilter(queryString)) : AllDepartments;
+      // 调用 callback 返回建议列表的数据
+      cb(results);
+    },
+    createFilter(queryString) {
+      return (department) => {
+        return (department.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
     searchAdmin(){
       let name=this.$data.input3;
       if(name===''){
@@ -227,7 +259,7 @@ export default{
         _this.$axios({
           method:'post',
           data:_this.$qs.stringify({
-            size:10,
+            size:20,
             page:1
           }),
           url:'/super/searchAdmins'
@@ -255,6 +287,7 @@ export default{
     modifyClick(index){
 
       this.$data.formModify.department=this.$data.formAdmins[index].department;
+      this.$data.state1=this.$data.departments[Number(this.$data.formModify.department)-1].name;
       this.$data.formModify.username=this.$data.formAdmins[index].username;
       this.$data.formModify.password=this.$data.formAdmins[index].password;
 
@@ -263,6 +296,8 @@ export default{
     },
 
     modifyAdmin(formName){
+      console.log(this.$data.formModify);
+
       let _this=this;
       if(_this.$data.disabled1===true){
         _this.$data.formModify.password=_this.$data.formModify.username;
@@ -276,7 +311,6 @@ export default{
             data:_this.$data.formModify
           }).then(function (response) {
             _this.$data.dialogFormVisible2 = false;
-            console.log(_this.$data.dialogFormVisible1);
             _this.$data.formAdmins.splice(_this.$data.modifyIndex,1,response.data)
 
           })
@@ -333,6 +367,7 @@ export default{
       })
     },
     addAdmin (formName) {
+      this.$data.state1='';
       let _this=this;
       if(_this.$data.disabled===true){
         _this.$data.formAddAdmin.password=_this.$data.formAddAdmin.username;
@@ -354,6 +389,8 @@ export default{
                 message:'添加成功！'
               })
               _this.$data.formAdmins.push(_this.$data.formAddAdmin);
+              _this.$data.formAddAdmin.username='';
+              _this.$data.formAddAdmin.password='';
 
           }).catch(function (error) {
            _this.$message({
@@ -366,7 +403,37 @@ export default{
         }
       })
     },
+    loadAll() {
+      return [
+        {"value":"人事行政部","index":"1"},
+        {"value":"财务管理部","index":"2"},
+        {"value":"部门管理部","index":"3"},
+        {"value":"市场开发部","index":"4"},
+        {"value":"工程技术部","index":"5"},
+        {"value":"运维及质量安全部","index":"6"},
+        {"value":"研发设计部","index":"7"},
+        {"value":"华南办事处","index":"8"},
+        {"value":"深圳办事处","index":"9"},
+        {"value":"北方办事处","index":"10"},
+        {"value":"西部办事处","index":"11"},
+        {"value":"华东办事处","index":"12"},
+        {"value":"华中办事处","index":"13"},
+        {"value":"华北办事处","index":"14"}
+      ];
+    },
+    handleSelect1(item) {
+      console.log(item.index);
+      this.$data.formModify.department=item.index;
+    },
+    handleSelect2(item) {
+      console.log(item.index);
+      this.$data.formAddAdmin.department=item.index;
+    }
+  },
+  mounted() {
+    this.AllDepartments = this.loadAll();
   }
+
 }
 </script>
 <style lang="less">

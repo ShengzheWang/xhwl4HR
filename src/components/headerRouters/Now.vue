@@ -42,7 +42,7 @@
 
       </div>
       <div style="width:60%;margin: 2% auto 0% auto">
-        <el-table :data="tableData" stripe class="table" style="width: 100%">
+        <el-table :data="tableData" stripe class="table" style="width: 100%" v-loading="loading">
           <el-table-column prop="positionName" label="职位名称" width="180">
           </el-table-column>
           <el-table-column prop="department" label="所在部门" width="160">
@@ -97,6 +97,7 @@ export default {
   name: 'Now',
   data () {
     return {
+      loading:true,
       currentPage: 1,
       total: 0,
       pageSize: 20,
@@ -116,6 +117,7 @@ export default {
       url:'/admin/positions'
     }).then(function (response) {
       _this.$data.tableData=response.data.content;
+      _this.$data.loading = false
       _this.$data.total=response.data.totalElements;
     })
 
