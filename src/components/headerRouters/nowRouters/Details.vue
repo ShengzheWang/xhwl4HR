@@ -111,16 +111,16 @@
             </el-tab-pane>
             <el-tab-pane label="已通过" name="1">
               <div style="width:100%;margin: 0% auto 0% auto">
-                <el-table :data="tableData2" stripe style="width: 100%" class="table1">
-                  <el-table-column prop="name" label="姓名" width="140">
+                <el-table :data="ResumesPassed" stripe style="width: 100%" class="table1">
+                  <el-table-column prop="username" label="姓名" width="140">
                   </el-table-column>
                   <el-table-column prop="sex" label="性别" width="140">
                   </el-table-column>
                   <el-table-column prop="age" label="年龄" width="140">
                   </el-table-column>
-                  <el-table-column prop="degree" label="最高学历" width="140">
+                  <el-table-column prop="highestEducation" label="最高学历" width="140">
                   </el-table-column>
-                  <el-table-column prop="date" label="投递时间" width="140">
+                  <el-table-column prop="deliverDate" label="投递时间" width="140">
                   </el-table-column>
                   <el-table-column label="查看详情" width="144">
                     <template slot-scope="scope">
@@ -169,18 +169,16 @@
               <el-tab-pane label="已回绝" name="2">
               <div style="width:100%;margin: 0% auto 0% auto">
                 <el-table
-                  :data="tableData3"
+                  :data="ResumesRefuse"
                   stripe
                   style="width: 100%" class="table2">
-                  <el-table-column prop="name" label="姓名" width="140">
+                  <el-table-column prop="username" label="姓名" width="140">
                   </el-table-column>
                   <el-table-column prop="sex" label="性别" width="140">
                   </el-table-column>
-                  <el-table-column prop="age" label="年龄" width="140">
+                  <el-table-column prop="highestEducation" label="最高学历" width="140">
                   </el-table-column>
-                  <el-table-column prop="degree" label="最高学历" width="140">
-                  </el-table-column>
-                  <el-table-column prop="date" label="投递时间" width="140">
+                  <el-table-column prop="deliverDate" label="投递时间" width="140">
                   </el-table-column>
                   <el-table-column label="查看详情" width="144">
                     <template slot-scope="scope">
@@ -276,29 +274,39 @@ export default {
         {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
         {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'}
       ],
-      tableData2: [
-        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
-        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
-        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
-        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'}
-      ],
-      tableData3: [
-        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
-        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
-        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
-        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'}
+      ResumesPassed: [
+        {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
+        ],
+      ResumesRefuse: [
+        {id:'',username:'',sex:'',age:'',highestEducation:'',deliverDate:'',auth:''}
       ]
     }
   },
   created(){
     console.log(this.$route.query.id);
-    let that=this
+    let _this=this
     this.$axios({
       method:'get',
-      url:'/admin/position/'+this.$route.query.id,
+      url:'/admin/position/'+_this.$route.query.id,
     }).then(function (response) {
-        that.$data.form=response.data;
+        _this.$data.form=response.data;
     })
+
+    this.$axios({
+      method:'get',
+      url:'/admin/Pass/'+_this.$route.query.id
+    }).then(function (response) {
+      _this.$data.ResumesPassed=response.data;
+
+    })
+
+    this.$axios({
+      method:'get',
+      url:'/admin/Refuse/'+_this.$route.query.id
+    }).then(function (response) {
+      _this.$data.ResumesRefuse=response.data;
+    })
+
   },
   updated(){
 
