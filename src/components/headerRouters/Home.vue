@@ -1,6 +1,8 @@
 <template>
   <div id="Home">
     <div class="blockDiv"></div>
+    <div class="blockDiv"></div>
+    <div class="blockDiv"></div>
     <div class="block">
       <div style="width:30%;margin: 10% auto 0% auto">
       </div>

@@ -1,6 +1,5 @@
 <template>
     <div id="Details">
-      <div class="blockDiv"></div>
       <div class="block">
         <div style="width:60%;margin: 2% auto 0 auto">
           <el-breadcrumb separator="/">

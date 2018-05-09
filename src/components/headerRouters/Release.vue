@@ -1,6 +1,5 @@
 <template>
   <div id="Release">
-    <div class="blockDiv"></div>
     <div class="block">
       <div style="width:60%;margin: 2% auto 0 auto">
             <h2> 基本信息</h2>

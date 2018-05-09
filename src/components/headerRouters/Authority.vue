@@ -1,6 +1,5 @@
 <template>
   <div id="Authority">
-    <div class="blockDiv"></div>
     <div class="block">
       <div style="width:60%;margin: 2% auto 0 auto">
         <el-form class="form4search" ref="form" :model="form" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">

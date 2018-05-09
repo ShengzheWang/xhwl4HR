@@ -1,20 +1,22 @@
 <template>
-  <div id="Xhwlheader" style="width:100%;min-width:1100px;opacity:0.95;height:110px;border-bottom: solid 1px #dddddd;
-       background: #ffffff;z-index:1;position: fixed;left: 0;top:0;right: 0">
-    <div style="display: inline-block;width: 26%;height: 160px;text-align: center;vertical-align: middle">
-      <div style="display: block;margin: 4% auto">
+  <div id="Xhwlheader"
+       style="width:100%;min-width:1100px;opacity:0.90;height:80px;border-bottom: solid 1px #dddddd;
+       background: #ffffff;z-index:1" >
+    <div class=""></div>
+    <div style="display: inline-block;width: 26%;height: 8px;text-align: center;" class="animated fadeInDown">
+      <div style="display: inline-block;margin-top: 3%">
         <img
-          src="../../static/img/logoMain.png" style="height:auto;width: 70%;">
+          src="../../static/img/logoMain.png" style="height:50px;width: auto;">
       </div>
     </div>
-    <div style="display: inline-block;width: 48%;text-align: center;height: 60px">
+    <div style="display: inline-block;width: 48%;text-align: center;height: 60px" class="animated fadeInDown">
       <el-menu  class="el-menu-demo" mode="horizontal" @select="handleSelect"
                :router='true'
                text-color="#444444"
                background-color="#ffffff"
                active-text-color='#1476C1'
                active-background-color="#ffffff"
-               :style="'width:'+(isSuperAdmin?560:450)+'px;margin:0 auto;height:60px;display: inline-block'">
+               :style="'width:'+(isSuperAdmin?560:450)+'px;font-size: 18px;margin:0 auto;height:58px;display: inline-block'">
         <el-menu-item index="1" style="border: none" route="/Now" class="item4menu">招聘中</el-menu-item>
         <el-menu-item index="2" style="border: none" route="/History" class="item4menu">历史招聘</el-menu-item>
         <el-menu-item index="3" style="border: none" route="/Release" class="item4menu">发布招聘</el-menu-item>
@@ -23,16 +25,16 @@
       </el-menu>
     </div>
     <div style="width:25%;display: inline-block;height: 120px;text-align: center;vertical-align: middle" v-if="Need2Login">
-      <div style="margin: 4% auto">
+      <div style="margin: 21px auto">
         <el-button plain @click="dialogFormVisible1 = true" class="button4plain"
                    style="">登录</el-button>
       </div>
     </div>
-    <div style="width:25%;display:inline-block;height: 100px;text-align: center;vertical-align: top" v-else>
-      <div style="margin-top:20px">
+    <div style="width:25%;display:inline-block;height: 90px;text-align: center;vertical-align: top" v-else>
+      <div style="margin-top:10px">
         <el-dropdown >
           <el-button  type="text" ><img
-            src="../../static/img/Default.png"><i class="el-icon-arrow-down el-icon--right"></i></el-button>
+            src="../../static/img/Default.png" style="width: 24px;"><i class="el-icon-arrow-down el-icon--right"></i></el-button>
           <el-dropdown-menu slot="dropdown" >
             <el-dropdown-item>
               <el-button type="text" @click="logout">注销</el-button>
