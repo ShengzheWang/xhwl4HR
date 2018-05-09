@@ -43,7 +43,10 @@
         </el-dropdown>
       </div>
     </div>
-    <el-dialog  class="form4login" :visible.sync="Need2Login" style="width: 50%;margin:auto auto" :lock-scroll="false" :append-to-body="true">
+    <el-dialog  class="form4login" :visible.sync="Need2Login" style="margin:auto auto;width: 1000px" :lock-scroll="false" :append-to-body="true"
+                :close-on-click-modal="false"
+                :close-on-press-escape="false"
+                :show-close="false">
       <el-form :label-position="labelPosition1"  :model="user" ref="user" :rules="rules" style="width: 80%;margin: 3% auto" :status-icon="true">
         <el-form-item  prop="username" class="item4login">
           <el-input v-model="user.username" placeholder="请输入工号" prefix-icon="iconfont icon-shoujihao icon4form" ></el-input>
@@ -203,7 +206,7 @@ export default {
     }
     .el-input__inner{
       height:54px;
-      padding-left:48px;
+      padding-left:48px !important;
     }
     .el-input__prefix{
       height:54px;
@@ -290,7 +293,7 @@ export default {
   }
   .icon4form{
     color:#1476C1;
-    font-size: 30px;
+    font-size: 30px !important;
   }
   #XhwlHeader {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;

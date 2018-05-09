@@ -63,7 +63,7 @@
         </div>
       </div>
     </div>
-    <el-dialog  class="form4login" :visible.sync="dialogFormVisible1" style="width: 50%;margin:auto auto" :lock-scroll="false" :append-to-body="true">
+    <el-dialog  class="form4login" :visible.sync="dialogFormVisible1" style="margin:auto auto;width: 1000px" :lock-scroll="false" :append-to-body="true">
       <el-form   :model="formAddAdmin" ref="formAddAdmin" style="width: 80%;margin: 3% auto" :status-icon="true" :rules="rules">
         <el-form-item  prop="username" class="item4login">
           <el-input  placeholder="请输入工号" prefix-icon="iconfont icon-shoujihao icon4form" v-model="formAddAdmin.username"></el-input>
@@ -90,7 +90,7 @@
         <el-button v-bind:class="'button4login now'+(State == true?'Login':'Register')+'-login'" @click="addAdmin('formAddAdmin')">添加</el-button>
       </div>
     </el-dialog>
-    <el-dialog  class="form4login" :visible.sync="dialogFormVisible2" style="width: 50%;margin:auto auto" :lock-scroll="false" :append-to-body="false">
+    <el-dialog  class="form4login" :visible.sync="dialogFormVisible2" style="margin:auto auto;width: 1000px" :lock-scroll="false" :append-to-body="false">
       <el-form   :model="formModify" ref="formModify" style="width: 80%;margin: 3% auto" :status-icon="true" :rules="rules">
         <el-form-item  prop="username" class="item4login">
           <el-input  placeholder="请输入工号" prefix-icon="iconfont icon-shoujihao icon4form" v-model="formModify.username"></el-input>
@@ -429,6 +429,9 @@ export default{
 }
 </script>
 <style lang="less">
+  .el-autocomplete{
+    width: 100%;
+  }
   #Authority{
     .el-table th {
       text-align: center;
@@ -495,6 +498,7 @@ export default{
       color:#E01B2F;
       width:80px
     }
+
     .el-table__header{
       font-size: 15px;
       .cell{

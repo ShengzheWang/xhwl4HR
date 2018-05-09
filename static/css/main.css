@@ -8,7 +8,8 @@ body {
     background: #ffffff;
     line-height: 1.4;
     color: #333;
-    font-size: 12px
+    font-size: 12px;
+  margin: 0;
 }
 a:link {
     text-decoration: none;
@@ -28,12 +29,18 @@ a:link {
 .el-form-item:hover  {
   transform: scale(1.01);
 }
+.item4menu{
+  background: #ffffff !important;
+  color:#484848
+}
+
 .item4menu:hover{
   background: #ffffff !important;
   color:#1376BE !important;
 }
 .item4menu.is-active{
   color:#1A72B7 !important;
+  font-weight: 600;
 }
 .el-header,.el-footer{
     color:#333;
@@ -236,4 +243,12 @@ ol, ul {
 }
 .table{
   border-top:2px solid #1476C1;
+}
+.el-menu-item{
+  font-size: 16px;
+}
+
+.el-submenu__title{
+  font-size: 16px;
+  border-bottom: none;
 }

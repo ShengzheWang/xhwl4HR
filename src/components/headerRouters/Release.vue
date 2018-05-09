@@ -57,7 +57,7 @@
 
         <h2> 工作职责</h2>
         <div class="line"></div>
-        <el-form label-width="40px" style="width: 80%;;display: inline-block;margin-left: 8%;margin-top:5%" :rules="rules" ref="form2" :model="form2">
+        <el-form label-width="30px" style="width: 80%;;display: inline-block;margin-left: 90px;margin-top:5%" :rules="rules" ref="form2" :model="form2">
           <el-form-item label="" prop="jobResponsibilities">
             <el-input type="textarea" v-model="form2.jobResponsibilities" :rows="15"></el-input>
           </el-form-item>
@@ -69,7 +69,7 @@
             <el-input type="textarea" v-model="form3.jobRequirements" :rows="15"></el-input>
           </el-form-item>
         </el-form>
-        <el-form  style="width: 80%;;display: inline-block;margin-left: 6%;margin-top:5%">
+        <el-form  style="width: 80%;;display: inline-block;margin-left: 6%;margin-top:2%">
           <el-form-item style="text-align: center">
             <el-button  class="button4release" @click="ReleaseJob"  style="width:20%;">发布招聘</el-button>
           </el-form-item>

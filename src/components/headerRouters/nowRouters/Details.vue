@@ -8,7 +8,7 @@
           </el-breadcrumb>
           <div class="position-details">
             <div style="text-align: left;display: inline-block;width: 50%">
-            <h1 class="name">{{form.positionName}}</h1><h2 class="classes">{{form.recruitmentType}}</h2>
+            <h1  style="font-size: 28px" class="name">{{form.positionName}}</h1><h2 class="classes">{{form.recruitmentType}}</h2>
             </div>
             <div style="text-align: right;display: inline-block;width: 49%">
             <h4 class="info-already-got">已收到简历数</h4>
@@ -17,37 +17,37 @@
             <div style="width: 100%">
               <el-row>
                 <el-col :span="6">
-                  <h3 class="label">工作地点：</h3>
-                  <h3 class="info">{{form.workPlace}}</h3>
+                  <p class="label">工作地点：</p>
+                  <p class="info">{{form.workPlace}}</p>
                 </el-col>
                 <el-col :span="6">
-                  <h3 class="label">学历要求：</h3>
-                  <h3 class="info">{{form.education}}</h3>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="6">
-                  <h3 class="label">所属部门：</h3>
-                  <h3 class="info">{{form.department}}</h3>
-                </el-col>
-                <el-col :span="6">
-                  <h3 class="label">工作类型：</h3>
-                  <h3 class="info">{{form.positionType}}</h3>
+                  <p class="label">学历要求：</p>
+                  <p class="info">{{form.education}}</p>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col :span="6">
-                  <h3 class="label">招聘人数：</h3>
-                  <h3 class="info">{{form.recruitingNumbers}}</h3>
+                  <p class="label">所属部门：</p>
+                  <p class="info">{{form.department}}</p>
+                </el-col>
+                <el-col :span="6">
+                  <p class="label">工作类型：</p>
+                  <p class="info">{{form.positionType}}</p>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="6">
+                  <p class="label">招聘人数：</p>
+                  <p class="info">{{form.recruitingNumbers}}</p>
                 </el-col>
               </el-row>
             </div>
-            <h1 style="color: #707070;margin-top: 3%">岗位职责
+            <h1 style="color: #000000;margin-top: 3%;font-size: 20px">岗位职责
             </h1>
-              <h3 v-html="form.jobResponsibilities"></h3>
-            <h1 style="color: #707070;margin-top: 1%">职位要求
+              <p  style="font-size: 18px;line-height: 32px" v-html="form.jobResponsibilities"></p>
+            <h1 style="color: #000000;margin-top: 1%;font-size: 20px">职位要求
             </h1>
-            <h3 v-html="form.jobRequirements"></h3>
+            <p  style="font-size: 18px;line-height: 32px" v-html="form.jobRequirements"></p>
           </div>
           <el-tabs type="card"  v-model="activeTab" @tab-click="handleClick">
             <div class="line" v-bind:style="'border-color:'+borderColor"></div>
@@ -174,6 +174,8 @@
                   <el-table-column prop="username" label="姓名" width="140">
                   </el-table-column>
                   <el-table-column prop="sex" label="性别" width="140">
+                  </el-table-column>
+                  <el-table-column prop="age" label="年龄" width="140">
                   </el-table-column>
                   <el-table-column prop="highestEducation" label="最高学历" width="140">
                   </el-table-column>
@@ -514,17 +516,18 @@ export default {
         background: #1476C1 ;
         line-height: 32px;
         border-radius: 32px;
+        margin-top: 24px;
       }
       .label{
         display: inline-block;
         color: #707070;
         line-height: 17px;
-        font-size: 15px;
+        font-size: 18px;
       }
       .info{
         display: inline-block;
         line-height: 17px;
-        font-size: 15px;
+        font-size: 18px;
       }
     }
 
