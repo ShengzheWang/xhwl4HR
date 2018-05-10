@@ -32,13 +32,13 @@
           </el-table-column>
           <el-table-column prop="password" label="密码" width="280">
           </el-table-column>
-          <el-table-column label="删除"  width="140">
+          <el-table-column label="删除"  width="150">
             <template slot-scope="scope">
               <el-button class="button4delete" @click="deleteClick(scope.$index)" type="text" size="middle" icon="icon iconfont icon-huishouquanxian">
               </el-button>
             </template>
           </el-table-column>
-          <el-table-column label="修改"  width="140">
+          <el-table-column label="修改"  width="150">
             <template slot-scope="scope">
               <el-button class="button4edit" @click="modifyClick(scope.$index)" type="text" size="middle" icon="icon iconfont icon-xiugai">
               </el-button>
