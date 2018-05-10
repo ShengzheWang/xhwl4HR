@@ -5,7 +5,7 @@
         <el-form class="form4search" ref="form" :model="form" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">
           <el-col style="width: 38%">
             <el-form-item >
-              <el-input placeholder="请输入工号" v-model="input3" style="font-size: 18px;height: 60px;margin-left: -1%">
+              <el-input placeholder="请输入工号" v-model="input3" style="font-size: 18px;margin-left: -1%">
                 <el-button slot="append" @click="searchAdmin"><img src="../../../static/img/search.png"> </el-button>
               </el-input>
             </el-form-item>
@@ -15,7 +15,7 @@
           </el-col>
           <el-col style="width: 20%">
             <el-form-item >
-              <el-button class="button4choose " @click="dialogFormVisible1 =true">添加管理员</el-button>
+              <el-button class="button4choose " style="height: 50px" @click="dialogFormVisible1 =true">添加管理员</el-button>
             </el-form-item>
           </el-col>
         </el-form>
@@ -479,7 +479,7 @@ export default{
       .el-input__inner {
         border: 2px solid #1476C1;
         border-radius: 100px 0 0 100px;
-        height: 60px;
+        height: 50px;
       }
       .el-input-group__append {
         border: 1px solid #1476C1;
