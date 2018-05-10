@@ -15,7 +15,7 @@
           </el-col>
           <el-col style="width: 20%">
             <el-form-item >
-              <el-button class="button4choose " style="height: 50px" @click="dialogFormVisible1 =true">添加管理员</el-button>
+              <el-button class="button4choose " style="height: 50px" @click="addClick">添加管理员</el-button>
             </el-form-item>
           </el-col>
         </el-form>
@@ -90,8 +90,8 @@
         <el-button v-bind:class="'button4login now'+(State == true?'Login':'Register')+'-login'" @click="addAdmin('formAddAdmin')">添加</el-button>
       </div>
     </el-dialog>
-    <el-dialog  class="form4login" :visible.sync="dialogFormVisible2" style="margin:auto auto;width: 1000px" :lock-scroll="false" :append-to-body="false">
-      <el-form   :model="formModify" ref="formModify" style="width: 80%;margin: 3% auto" :status-icon="true" :rules="rules">
+    <el-dialog  class="form4login" :visible.sync="dialogFormVisible2" style="width: 50%;margin:auto auto" :lock-scroll="false" :append-to-body="false">
+    <el-form   :model="formModify" ref="formModify" style="width: 80%;margin: 3% auto" :status-icon="true" :rules="rules">
         <el-form-item  prop="username" class="item4login">
           <el-input  placeholder="请输入工号" prefix-icon="iconfont icon-shoujihao icon4form" v-model="formModify.username"></el-input>
         </el-form-item>
@@ -127,7 +127,29 @@ export default{
     ElTabPane,
     ElFormItem},
   data () {
+    let checkPassword=(rule,value,callback)=>{
+      if(this.$data.disabled===true){
+        callback();
+      }else{
+        if(value){
+          if(value.length<6||value.length>18){
+            callback(new Error('密码长度在6-18位之间'))
+          }else{
+            callback();
+          }
+        }else{
+          callback(new Error('请输入密码'));
+        }
+      }
+    };
 
+    let checkDepartment=(rule,value,callback)=>{
+      if(this.$data.state1===this.$data.departments[Number(value)-1].name){
+       callback();
+      }else{
+        callback(new Error('不存在该部门'));
+      }
+    };
 
     return {
       showSearch:false,
@@ -203,11 +225,11 @@ export default{
           {required:true,message:'工号不能为空',trigger:'change'}
         ],
         password:[
-          {required:true,message:'密码不能为空',trigger:'change'},
-          {min:6,max:18,message:'密码在6-18位之间',trigger:'change'}
+          {validator:checkPassword,trigger:'change'}
         ],
         department:[
           {required:true,message:'不存在该部门',trigger:'change'},
+          {validator:checkDepartment,trigger:'blur'}
         ]
       },
     }
@@ -230,9 +252,21 @@ export default{
       _this.$data.totalPages=response.data.totalPages;
       _this.$data.loading = false
       console.log(_this.$data.formAdmins)
+    }).catch(function(error){
+        _this.$message({
+          type:'error',
+          message:error.response.data.msg
+        })
     })
   },
   methods: {
+    addClick(){         //点击添加时的函数
+      this.$data.formAddAdmin.department='';
+      this.$data.formAddAdmin.password='';
+      this.$data.formAddAdmin.username='';
+      this.$data.state1='';
+      this.$data.dialogFormVisible1 =true;
+    },
     querySearch(queryString, cb) {
       var AllDepartments = this.AllDepartments;
       var results = queryString ? AllDepartments.filter(this.createFilter(queryString)) : AllDepartments;
@@ -276,7 +310,7 @@ export default{
     },
 
 
-    modifyClick(index){
+    modifyClick(index){           //点击修改管理员的函数
 
       this.$data.formModify.department=this.$data.formAdmins[index].department;
       this.$data.state1=this.$data.departments[Number(this.$data.formModify.department)-1].name;
@@ -287,7 +321,7 @@ export default{
       this.$data.modifyIndex=index;
     },
 
-    modifyAdmin(formName){
+    modifyAdmin(formName){         //修改管理员界面中点击确定修改的按钮的函数
       console.log(this.$data.formModify);
 
       let _this=this;
@@ -322,6 +356,16 @@ export default{
       }).then(function (response) {
         _this.$data.formAdmins.splice(index,1);
         _this.$data.total--;
+        _this.$message({
+          type: 'success',
+          message: '删除管理员成功'
+        })
+      }).catch(function (error) {
+        _this.$message({
+          type:'error',
+          message:error.response.data.msg
+        })
+
       })
     },
     handleSizeChange (val) {
@@ -358,17 +402,14 @@ export default{
         _this.$data.loading  = false
       })
     },
-    addAdmin (formName) {
-      this.$data.state1='';
+    addAdmin (formName) {       //添加管理员界面中的确定按钮的函数
       let _this=this;
+      let flag=false;
       if(_this.$data.disabled===true){
         _this.$data.formAddAdmin.password=_this.$data.formAddAdmin.username;
       }
       this.$refs[formName].validate((valid)=>{
         if(valid){
-
-          console.log(_this.$data.formAddAdmin);
-
           this.$axios({
             method:'post',
             url:'/super/addAdmin',
@@ -380,14 +421,15 @@ export default{
                 type: 'success',
                 message:'添加成功！'
               })
+              console.log(_this.$data.formAddAdmin);
               _this.$data.formAdmins.push(_this.$data.formAddAdmin);
-              _this.$data.formAddAdmin.username='';
-              _this.$data.formAddAdmin.password='';
+              flag=true;
+              _this.$data.input3='';
 
           }).catch(function (error) {
            _this.$message({
              type:'error',
-             message:'该用户已存在！'
+             message:error.response.data.msg
            })
 
           })
@@ -413,12 +455,11 @@ export default{
         {"value":"华北办事处","index":"14"}
       ];
     },
-    handleSelect1(item) {
-      console.log(item.index);
+    handleSelect1(item) {       //添加管理员中的部门选择
       this.$data.formModify.department=item.index;
     },
-    handleSelect2(item) {
-      console.log(item.index);
+    handleSelect2(item) {       //修改管理员中的部门选择
+
       this.$data.formAddAdmin.department=item.index;
     }
   },
@@ -430,8 +471,8 @@ export default{
 </script>
 <style lang="less">
   .el-autocomplete{
-    width: 100%;
-  }
+      width: 100%;
+    }
   #Authority{
     .el-table th {
       text-align: center;
@@ -498,7 +539,6 @@ export default{
       color:#E01B2F;
       width:80px
     }
-
     .el-table__header{
       font-size: 15px;
       .cell{
