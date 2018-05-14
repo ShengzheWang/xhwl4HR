@@ -56,7 +56,7 @@
           </el-table-column>
           <el-table-column label="查看详情" fixed="right" width="140">
             <template slot-scope="scope">
-              <el-button class="button4details" @click="handleClick(scope.$index)" type="primary" size="middle">详情
+              <el-button class="button4details" @click="handleClick(scope.row)" type="primary" size="middle">详情
               </el-button>
             </template>
           </el-table-column>
@@ -165,7 +165,7 @@ export default {
     },
     handleClick (row) {
       //console.log(row);
-      this.$router.push({path:'/Details',query:{id:row+1}})
+      this.$router.push({path:'/Details',query:{id:row.id}})
     }
   }
 }

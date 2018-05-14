@@ -294,7 +294,7 @@
                     width="144"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                      <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-xiazaijianli"></i>
                       </el-button>
                     </template>
@@ -484,8 +484,33 @@ export default {
 
   },
   methods: {
-    resumeDetails (num) {
-      this.$router.push('/ResumeDetails')
+    resumeDetails (it) {
+      this.$router.push({ path: '/ResumeDetails' , query: {id:it.id}})
+    },
+    resumeDownload(it){
+      console.log(it)
+      const id = it['id']
+      this.$axios({
+        method:'get',
+        url:'/admin/downloadResume/'+ id,
+        responseType: 'blob'
+      }).then(function (response) {
+        const data = response.data
+        if (!data) {
+          return
+        }
+        let url = window.URL.createObjectURL(new Blob([data]))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', it.id+'_'+it.username+'_简历.pdf')
+
+        document.body.appendChild(link)
+        link.click()
+      }).catch(function(error){
+
+      })
+
     },
     handleClick () {
       switch (this.$data.activeTab) {

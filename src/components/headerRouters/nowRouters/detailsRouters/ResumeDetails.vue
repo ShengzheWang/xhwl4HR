@@ -2,13 +2,13 @@
   <div id="ResumeDetails">
     <div class="block">
       <div style="width:1200px;margin: 0% auto 0 auto">
-        <h1 class="resume-header">张三 简历预览</h1>
+        <h1 class="resume-header">{{name}} 简历预览</h1>
         <div>
           <h1 class="resume-item-header">个人信息</h1>
           <div class="line"></div>
           <a><img style="position: absolute;top:300px;right: 20%;height:300px" :src="imgUrl"></a>
           <div style="width:90%;margin: 0% auto 0 auto">
-            <h1 class="resume-item-middle">张三</h1>
+            <h1 class="resume-item-middle">{{name}}</h1>
             <div style="width: 95%;margin:0 auto">
               <div v-for="item in formBasicItem">
                 <p class="resume-item-label">{{item.label}}：</p>
@@ -26,7 +26,8 @@
               <h1 class="resume-item-middle" style="width: 33%">{{item.startTime}}~{{item.endTime}}</h1>
               <h1 class="resume-item-middle" style="width: 33%;text-align: center">{{item.school}}</h1>
               <h1 class="resume-item-middle" style="width: 33%;text-align: right">
-                {{item.speciality}}({{item.educationHistory}})</h1>
+                {{item.speciality}}({{item.educationHistory==1?'高中':item.educationHistory==2?'专科':
+                item.educationHistory==3?'本科':item.educationHistory==4?'研究生':item.educationHistory==5?'博士生':'博士后'}})</h1>
               <div style="width: 95%;margin:0 auto">
                 <p class="resume-item-label">专业排名占比：</p>
                 <p class="resume-item-info">{{item.rank}}%</p>
@@ -128,26 +129,19 @@
         <div>
           <h1 class="resume-item-header">工作意向</h1>
           <div class="line"></div>
-          <div v-if="formIntention.length!=0" style="width:90%;margin: 40px auto 0 auto">
-            <div v-for="item in formIntention">
               <div style="width: 95%;margin:0 auto">
                 <p class="resume-item-label">期望工作地点：</p>
-                <p class="resume-item-info">{{item.workPlace}}</p>
+                <p class="resume-item-info">{{formIntention.workPlace}}</p>
               </div>
               <div style="width: 95%;margin:0 auto">
                 <p class="resume-item-label">期望薪资：</p>
-                <p class="resume-item-info">{{item.salary}}元/月</p>
+                <p class="resume-item-info">{{formIntention.salary}}元/月</p>
               </div>
               <div style="width: 95%;margin:0 auto">
                 <p class="resume-item-label">可到岗时间：</p>
-                <p class="resume-item-info">{{item.expectedTimeForDuty}}</p>
+                <p class="resume-item-info">{{formIntention.expectedTimeForDuty}}</p>
               </div>
-            </div>
           </div>
-          <div v-else style="width:90%;margin: 0 auto 0 auto">
-            <h1 class="resume-item-middle" style="width: 33%">无</h1>
-          </div>
-        </div>
 
         <div>
           <h1 class="resume-item-header">自我评价</h1>
@@ -155,7 +149,7 @@
           <div  style="width:90%;margin: 40px auto 0 auto">
             <div style="width: 95%;margin:0 auto;height: auto">
               <div style="display: inline-block">
-                <span class="resume-item-info" style="vertical-align: top">{{self_assessment}}</span>
+                <span class="resume-item-info" style="vertical-align: top">{{self_assessment.selfAssessment}}</span>
               </div>
             </div>
           </div>
@@ -167,11 +161,11 @@
           <div  style="width:90%;margin: 40px auto 0 auto">
             <div style="width: 95%;margin:0 auto">
               <p class="resume-item-label">简历：</p>
-              <el-button type="text" class="resume-item-info" size="small">下载链接</el-button>
+              <el-button type="text" class="resume-item-info" size="small" @click="resumeDownload()">下载链接</el-button>
             </div>
             <div style="width: 95%;margin:0 auto">
               <p class="resume-item-label">其他辅助材料：</p>
-              <el-button type="text" class="resume-item-info" size="small">下载链接</el-button>
+              <el-button type="text" class="resume-item-info" size="small" @click="supportDownload()">下载链接</el-button>
             </div>
           </div>
         </div>
@@ -194,8 +188,38 @@ export default {
     ElFormItem
   },
   name: 'ResumeDetails',
+  created() {
+    let _this=this
+    this.$axios({
+      method:'get',
+      url:'/admin/getResume/'+_this.$route.query.id,
+    }).then(function (response) {
+      console.log(response)
+      _this.$data.name = response.data[0].name
+      _this.$data.formBasicItem[0].info = response.data[0].sex===1?'男':'女'
+      _this.$data.formBasicItem[1].info = response.data[0].idType===1?'身份证':response.data.idType===2?'港澳台通行证':'护照'
+      _this.$data.formBasicItem[2].info = response.data[0].idNumber
+      _this.$data.formBasicItem[3].info = response.data[0].birthday
+      _this.$data.formBasicItem[4].info = response.data[0].email
+      _this.$data.formBasicItem[5].info = response.data[0].telephone
+      _this.$data.formBasicItem[6].info = response.data[0].maritalStatus===1?'未婚':'已婚'
+      _this.$data.formBasicItem[7].info = response.data[0].workSeniority
+      _this.$data.formBasicItem[8].info = response.data[0].politicalStatus
+      _this.$data.formBasicItem[9].info = response.data[0].presentAddress
+
+      _this.$data.formEducation = response.data[1]
+      _this.$data.formTraining = response.data[2]
+      _this.$data.formProject = response.data[3]
+      _this.$data.formWork = response.data[4]
+      _this.$data.formTrainee = response.data[5]
+      _this.$data.formRewards = response.data[6]
+      _this.$data.formIntention = response.data[7]
+      _this.$data.self_assessment = response.data[8]
+    })
+  },
   data () {
     return {
+      name: '',
       formBasicItem: [
         {label: '性别', name: 'sex', info: '男'},
         {label: '证件类型', name: 'idType', info: '身份证'},
@@ -233,9 +257,72 @@ export default {
       self_assessment: '聪明可爱又伶俐'
     }
   },
-  method: {
-    resumeDetails (num) {
-      this.$router.push('/ResumeDetails')
+  methods: {
+    resumeDownload(){
+      let _this = this
+      const id = this.$route.query.id
+      this.$axios({
+        method:'get',
+        url:'/admin/downloadResume/'+ id,
+        responseType: 'blob'
+      }).then(function (response) {
+        const data = response.data
+        if (data.size === 0) {
+          _this.$message({
+            type:'warning',
+            message:'该简历没有上传简历附件'
+          })
+          return
+        }
+        let url = window.URL.createObjectURL(new Blob([data]))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', id+'_'+_this.$data.name+'_简历.pdf')
+        console.log(id+'_'+_this.$data.name+'_简历.pdf')
+        document.body.appendChild(link)
+        link.click()
+        _this.$message({
+          type:'success',
+          message:'下载成功!'
+        })
+      }).catch(function(error){
+
+      })
+
+    },
+    supportDownload(){
+      const id = this.$route.query.id
+      let _this = this
+      this.$axios({
+        method:'get',
+        url:'/admin/downloadSupportDetail/'+ id,
+        responseType: 'blob'
+      }).then(function (response) {
+        const data = response.data
+        if (data.size === 0) {
+          _this.$message({
+            type:'warning',
+            message:'该简历没有上传辅助材料附件'
+          })
+          return
+        }
+        let url = window.URL.createObjectURL(new Blob([data]))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', id+'_'+_this.$data.name+'_辅助材料.zip')
+
+        document.body.appendChild(link)
+        link.click()
+        _this.$message({
+          type:'success',
+          message:'下载成功!'
+        })
+      }).catch(function(error){
+
+      })
+
     }
   }
 }
