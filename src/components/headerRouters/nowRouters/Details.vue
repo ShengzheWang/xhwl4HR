@@ -318,7 +318,7 @@
                   </el-table-column>
                   <el-table-column label="查看详情" style="width: 13%">
                     <template slot-scope="scope">
-                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
+                      <el-button disabled @click="resumeDetails(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-chakanxiangqing"></i>
                       </el-button>
                     </template>
@@ -338,7 +338,7 @@
                     style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="changeStatus(scope.row)" type="text" size="middle">
+                      <el-button disabled @click="changeStatus(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
