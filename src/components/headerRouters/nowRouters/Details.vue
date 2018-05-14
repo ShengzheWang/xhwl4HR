@@ -28,7 +28,7 @@
               <el-row>
                 <el-col :span="6">
                   <p class="label">所属部门：</p>
-                  <p class="info">{{form.department}}</p>
+                  <p class="info">{{departments[Number(form.department)].name}}</p>
                 </el-col>
                 <el-col :span="6">
                   <p class="label">工作类型：</p>
@@ -391,6 +391,22 @@ export default {
       deliverNumber:'',
       borderColor: '#1476C1',
       activeTab: 0,
+      departments:[             //所有的部门
+        {name:'人事行政部',index:'1'},
+        {name:'财务管理部',index:'2'},
+        {name:'部门管理部',index:'3'},
+        {name:'市场开发部',index:'4'},
+        {name:'工程技术部',index:'5'},
+        {name:'运维及质量安全部',index:'6'},
+        {name:'研发设计部',index:'7'},
+        {name:'华南办事处',index:'8'},
+        {name:'深圳办事处',index:'9'},
+        {name:'北方办事处',index:'10'},
+        {name:'西部办事处',index:'11'},
+        {name:'华东办事处',index:'12'},
+        {name:'华中办事处',index:'13'},
+        {name:'华北办事处',index:'14'}
+      ],
       tableData1: [
         {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
         {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
