@@ -55,17 +55,17 @@
               <h1>简历初审</h1>
               <div style="width:100%;margin: 0% auto 0 auto">
                 <el-table :data="ResumesFirst" stripe style="width: 100%" class="table0">
-                  <el-table-column prop="username" label="姓名" width="140">
+                  <el-table-column prop="username" label="姓名" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="sex" label="性别" width="140">
+                  <el-table-column prop="sex" label="性别" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="age" label="年龄" width="140">
+                  <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="highestEducation" label="最高学历" width="140">
+                  <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="deliverDate" label="投递时间" width="140">
-                  </el-table-column>
-                  <el-table-column label="查看详情" width="144">
+                  <el-table-column
+                    label="查看详情"
+                    style="width: 13%">
                     <template slot-scope="scope">
                       <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-chakanxiangqing"></i>
@@ -74,20 +74,20 @@
                   </el-table-column>
                   <el-table-column
                     label="下载简历"
-                    width="144"
+                    style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                      <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-xiazaijianli"></i>
                       </el-button>
                     </template>
                   </el-table-column>
                   <el-table-column
                     label="投递状态"
-                    width="144"
+                    style="width: 13%"
                   >
                   <template slot-scope="scope">
-                      <el-button  @click="passResume(scope.$index,'ResumesFirst','ResumesHRFirst')" type="text" size="middle">
+                      <el-button  @click="changeStatus(scope.$index,'ResumesFirst','ResumesHRFirst')" type="text" size="middle">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
@@ -98,17 +98,15 @@
               <h1>HR初审</h1>
               <div style="width:100%;margin: 0% auto 0 auto">
                 <el-table :data="ResumesHRFirst" stripe style="width: 100%" class="table0">
-                  <el-table-column prop="username" label="姓名" width="140">
+                  <el-table-column prop="username" label="姓名" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="sex" label="性别" width="140">
+                  <el-table-column prop="sex" label="性别" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="age" label="年龄" width="140">
+                  <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="highestEducation" label="最高学历" width="140">
+                  <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="deliverDate" label="投递时间" width="140">
-                  </el-table-column>
-                  <el-table-column label="查看详情" width="144">
+                  <el-table-column label="查看详情" style="width: 13%">
                     <template slot-scope="scope">
                       <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-chakanxiangqing"></i>
@@ -117,20 +115,20 @@
                   </el-table-column>
                   <el-table-column
                     label="下载简历"
-                    width="144"
+                    style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                      <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-xiazaijianli"></i>
                       </el-button>
                     </template>
                   </el-table-column>
                   <el-table-column
                     label="投递状态"
-                    width="144"
+                    style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="passResume(scope.$index,'ResumesHRFirst','ResumesDepartmentWritten')" type="text" size="middle">
+                      <el-button  @click="changeStatus(scope.$index,'ResumesHRFirst','ResumesDepartmentWritten')" type="text" size="middle">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
@@ -141,17 +139,15 @@
               <h1>部门笔试</h1>
               <div style="width:100%;margin: 0% auto 0 auto">
                 <el-table :data="ResumesDepartmentWritten" stripe style="width: 100%" class="table0">
-                  <el-table-column prop="username" label="姓名" width="140">
+                  <el-table-column prop="username" label="姓名" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="sex" label="性别" width="140">
+                  <el-table-column prop="sex" label="性别" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="age" label="年龄" width="140">
+                  <el-table-column prop="HighestEducation" label="最高学历" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="HighestEducation" label="最高学历" width="140">
+                  <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="deliverDate" label="投递时间" width="140">
-                  </el-table-column>
-                  <el-table-column label="查看详情" width="144">
+                  <el-table-column label="查看详情" style="width: 13%">
                     <template slot-scope="scope">
                       <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-chakanxiangqing"></i>
@@ -160,20 +156,20 @@
                   </el-table-column>
                   <el-table-column
                     label="下载简历"
-                    width="144"
+                    style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                      <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-xiazaijianli"></i>
                       </el-button>
                     </template>
                   </el-table-column>
                   <el-table-column
                     label="投递状态"
-                    width="144"
+                    style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="passResume(scope.$index,'ResumesDepartmentWritten','ResumesDepartmentInterview')" type="text" size="middle">
+                      <el-button  @click="changeStatus(scope.$index,'ResumesDepartmentWritten','ResumesDepartmentInterview')" type="text" size="middle">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
@@ -184,17 +180,15 @@
               <h1>部门面试</h1>
               <div style="width:100%;margin: 0% auto 0 auto">
                 <el-table :data="ResumesDepartmentInterview" stripe style="width: 100%" class="table0">
-                  <el-table-column prop="username" label="姓名" width="140">
+                  <el-table-column prop="username" label="姓名" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="sex" label="性别" width="140">
+                  <el-table-column prop="sex" label="性别" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="age" label="年龄" width="140">
+                  <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="highestEducation" label="最高学历" width="140">
+                  <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="deliverDate" label="投递时间" width="140">
-                  </el-table-column>
-                  <el-table-column label="查看详情" width="144">
+                  <el-table-column label="查看详情" style="width: 13%">
                     <template slot-scope="scope">
                       <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-chakanxiangqing"></i>
@@ -203,20 +197,20 @@
                   </el-table-column>
                   <el-table-column
                     label="下载简历"
-                    width="144"
+                    style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                      <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-xiazaijianli"></i>
                       </el-button>
                     </template>
                   </el-table-column>
                   <el-table-column
                     label="投递状态"
-                    width="144"
+                    style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="rejectResume(scope.$index)" type="text" size="middle">
+                      <el-button  @click="changeStatus(scope.$index,'ResumesDepartmentInterview','ResumesHRinterview')" type="text" size="middle">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
@@ -228,17 +222,15 @@
               <h1>HR面试</h1>
               <div style="width:100%;margin: 0% auto 0 auto">
                 <el-table :data="ResumesHRinterview" stripe style="width: 100%" class="table0" ref="ResumesHRFirst">
-                  <el-table-column prop="username" label="姓名" width="140">
+                  <el-table-column prop="username" label="姓名" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="sex" label="性别" width="140">
+                  <el-table-column prop="sex" label="性别" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="age" label="年龄" width="140">
+                  <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="highestEducation" label="最高学历" width="140">
+                  <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="deliverDate" label="投递时间" width="140">
-                  </el-table-column>
-                  <el-table-column label="查看详情" width="144">
+                  <el-table-column label="查看详情" style="width: 13%">
                     <template slot-scope="scope">
                       <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-chakanxiangqing"></i>
@@ -247,20 +239,20 @@
                   </el-table-column>
                   <el-table-column
                     label="下载简历"
-                    width="144"
+                    style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                      <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-xiazaijianli"></i>
                       </el-button>
                     </template>
                   </el-table-column>
                   <el-table-column
                     label="投递状态"
-                    width="144"
+                    style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="passResume(scope.$index,'ResumesHRinterview','ResumesPassed')" type="text" size="middle">
+                      <el-button  @click="changeStatus(scope.$index,'ResumesHRinterview','ResumesPassed')" type="text" size="middle">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
@@ -272,17 +264,15 @@
             <el-tab-pane label="已通过" name="1">
               <div style="width:100%;margin: 0% auto 0% auto">
                 <el-table :data="ResumesPassed" stripe style="width: 100%" class="table1">
-                  <el-table-column prop="username" label="姓名" width="140">
+                  <el-table-column prop="username" label="姓名" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="sex" label="性别" width="140">
+                  <el-table-column prop="sex" label="性别" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="age" label="年龄" width="140">
+                  <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="highestEducation" label="最高学历" width="140">
+                  <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="deliverDate" label="投递时间" width="140">
-                  </el-table-column>
-                  <el-table-column label="查看详情" width="144">
+                  <el-table-column label="查看详情" style="width: 13%">
                     <template slot-scope="scope">
                       <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-chakanxiangqing"></i>
@@ -291,7 +281,7 @@
                   </el-table-column>
                   <el-table-column
                     label="下载简历"
-                    width="144"
+                    style="width: 13%"
                   >
                     <template slot-scope="scope">
                       <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
@@ -301,10 +291,10 @@
                   </el-table-column>
                   <el-table-column
                     label="投递状态"
-                    width="144"
+                    style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                      <el-button  @click="changeStatus(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
@@ -318,17 +308,15 @@
                   :data="ResumesRefuse"
                   stripe
                   style="width: 100%" class="table2">
-                  <el-table-column prop="username" label="姓名" width="140">
+                  <el-table-column prop="username" label="姓名" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="sex" label="性别" width="140">
+                  <el-table-column prop="sex" label="性别" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="age" label="年龄" width="140">
+                  <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="highestEducation" label="最高学历" width="140">
+                  <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
                   </el-table-column>
-                  <el-table-column prop="deliverDate" label="投递时间" width="140">
-                  </el-table-column>
-                  <el-table-column label="查看详情" width="144">
+                  <el-table-column label="查看详情" style="width: 13%">
                     <template slot-scope="scope">
                       <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-chakanxiangqing"></i>
@@ -337,20 +325,20 @@
                   </el-table-column>
                   <el-table-column
                     label="下载简历"
-                    width="144"
+                    style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                      <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-xiazaijianli"></i>
                       </el-button>
                     </template>
                   </el-table-column>
                   <el-table-column
                     label="投递状态"
-                    width="144"
+                    style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                      <el-button  @click="changeStatus(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
@@ -522,7 +510,48 @@ export default {
 
   },
   methods: {
-
+    changeStatus(row,formName,formName1){
+      let _this=this;
+      this.$confirm('请选择你对 '+_this.$data[formName][row].username+'的操作?', '提示', {
+        confirmButtonText: '审核成功，进入下一步',
+        cancelButtonText: '回绝',
+        type: 'warning'
+      }).then(() => {
+        _this.$axios({
+          method:'put',
+          url:'/admin/passToNext/'+_this.$data[formName][row].id
+        }).then(function (response) {
+          _this.$message({
+            type:'success',
+            message:'进入下一步成功！'
+          })
+          _this.$data[formName1].push(_this.$data[formName][row])
+          _this.$data[formName].splice(row,1)
+        }).catch((error)=>{
+          _this.$message({
+            type:'error',
+            message:'进入下一步失败！请查看是否有权限'
+          })
+        })
+      }).catch(() => {
+        _this.$axios({
+          method:'put',
+          url:'/admin/giveRefuse/'+_this.$data[formName][row].id
+        }).then((response)=>{
+          _this.$message({
+            type:'success',
+            message:'回绝成功！'
+          })
+          _this.$data.ResumesRefuse.push(_this.$data[formName][row])
+          _this.$data[formName].splice(row,1)
+        }).catch((error)=>{
+          _this.$message({
+            type:'error',
+            message:'回绝失败！请查看是否有权限'
+          })
+        })
+      });
+    },
     rejectResume(row,formName){             //回绝简历
       let _this=this;
       this.$axios({
@@ -681,6 +710,9 @@ export default {
       }
     }
     .table1{
+      .el-table__row:hover td{
+        background: #EEDFE0;
+      }
       .el-table__header-wrapper th{
         background: #FFEFF0 !important;
       }
@@ -692,6 +724,9 @@ export default {
       }
     }
     .table2{
+      .el-table__row:hover tr{
+        background: #F5F5F5;
+      }
       .el-table__header-wrapper th{
         background: #EAEAEA !important;
       }

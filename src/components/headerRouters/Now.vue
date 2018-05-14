@@ -44,15 +44,15 @@
         <el-table :data="tableData" stripe class="table" style="width: 100%" v-loading="loading">
           <el-table-column prop="positionName" label="职位名称" width="180">
           </el-table-column>
-          <el-table-column prop="department" label="所在部门" width="160">
+          <el-table-column prop="department" label="所在部门" width="120">
           </el-table-column>
-          <el-table-column prop="recruitmentType" label="招聘类型" width="160">
+          <el-table-column prop="recruitmentType" label="招聘类型" width="120">
           </el-table-column>
-          <el-table-column prop="workPlace" label="工作地点" width="160">
+          <el-table-column prop="workPlace" label="工作地点" width="120">
           </el-table-column>
-          <el-table-column prop="publishDate" label="发布时间" width="160">
+          <el-table-column prop="publishDate" label="发布时间" width="120">
           </el-table-column>
-          <el-table-column prop="deadline" label="截止时间" width="160">
+          <el-table-column prop="deadline" label="截止时间" width="120">
           </el-table-column>
           <el-table-column label="查看详情" fixed="right" width="140">
             <template slot-scope="scope">
@@ -193,7 +193,7 @@ export default {
     handleClick (row) {
       //console.log(row);
 
-      this.$router.push({path:'/Details',query:{id:this.$data.tableData[row].id}})
+      this.$router.push({path:'/Details',query:{id:row.id}})
 
     }
   }

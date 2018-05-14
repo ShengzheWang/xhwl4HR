@@ -23,22 +23,22 @@
       </div>
       <div style="width:60%;margin: 2% auto 0% auto">
         <el-table :data="formAdmins" v-show="!showSearch" stripe class="table" style="width: 100%" v-loading="loading">
-          <el-table-column prop="username" label="工号" width="280">
+          <el-table-column prop="username" label="工号" style="width: 28%">
           </el-table-column>
-          <el-table-column prop="department" label="部门" width="280">
+          <el-table-column prop="department" label="部门" style="width: 28%">
             <template slot-scope="scope">
               {{departments[Number(formAdmins[scope.$index].department)-1].name}}
             </template>
           </el-table-column>
-          <el-table-column prop="password" label="密码" width="280">
+          <el-table-column prop="password" label="密码" style="width: 28%">
           </el-table-column>
-          <el-table-column label="删除"  width="150">
+          <el-table-column label="删除"  style="width: 8%">
             <template slot-scope="scope">
               <el-button class="button4delete" @click="deleteClick(scope.$index)" type="text" size="middle" icon="icon iconfont icon-huishouquanxian">
               </el-button>
             </template>
           </el-table-column>
-          <el-table-column label="修改"  width="150">
+          <el-table-column label="修改"  style="width: 8%">
             <template slot-scope="scope">
               <el-button class="button4edit" @click="modifyClick(scope.$index)" type="text" size="middle" icon="icon iconfont icon-xiugai">
               </el-button>
