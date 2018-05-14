@@ -60,6 +60,12 @@
               </el-button>
             </template>
           </el-table-column>
+          <el-table-column label="删除职位" fixed="right" width="140">
+            <template slot-scope="scope">
+              <el-button class="button4details" @click="deletePosition(scope.$index)" type="danger" size="middle">删除
+              </el-button>
+            </template>
+          </el-table-column>
         </el-table>
 
         <div class="el-pagination__total page-total">
@@ -101,7 +107,7 @@ export default {
       total: 0,
       pageSize: 20,
       form: {},
-      tableData: [{positionName: '', department: '', workPlace: '', publishDate: '', deadline: '',recruitmentType:''
+      tableData: [{positionName: '', department: '', workPlace: '', publishDate: '', deadline: '',recruitmentType:'',id:''
       }]
     }
   },
@@ -120,8 +126,9 @@ export default {
       _this.$data.total=response.data.totalElements;
     })
 
+
   },
-  updated(){
+  updated(){                  //将简历类型进行修改
     for(let index=0;index<this.$data.tableData.length;index++){
       if(this.$data.tableData[index].recruitmentType==='1'){
         this.$data.tableData[index].recruitmentType='校园招聘'
@@ -133,6 +140,26 @@ export default {
     }
   },
   methods: {
+    deletePosition(row){        //删除职位
+      let _this=this;
+      this.$axios({
+        method:'delete',
+        url:'/admin/position/'+_this.$data.tableData[row].id
+      }).then(function (response) {
+        _this.$message({
+          type:'success',
+          message:'删除职位成功'
+        })
+        _this.$data.tableData.splice(row,1);
+      }).catch(function (error) {
+        _this.$message({
+          type:'error',
+          message:'删除失败！请查看是否有权限'
+        })
+
+      })
+    },
+
     handleSizeChange (val) {
       this.$data.pageSize = val
       let _this=this
@@ -165,7 +192,9 @@ export default {
     },
     handleClick (row) {
       //console.log(row);
-      this.$router.push({path:'/Details',query:{id:row.id}})
+
+      this.$router.push({path:'/Details',query:{id:this.$data.tableData[row].id}})
+
     }
   }
 }
