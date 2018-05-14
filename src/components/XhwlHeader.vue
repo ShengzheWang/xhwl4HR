@@ -116,8 +116,11 @@ export default {
       let _this = this
       this.$axios({
         method: 'get',
-        url: '/tokenCheck',
+        url: '/adminTokenCheck',
       }).then(function (response) {
+        if(response.data.msg==='superAdmin'){
+          _this.$data.isSuperAdmin=true
+        }
         _this.$message('欢迎回来')
         _this.$data.Need2Login = false
       }).catch(function(error) {
