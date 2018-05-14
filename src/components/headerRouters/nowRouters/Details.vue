@@ -52,6 +52,7 @@
           <el-tabs type="card"  v-model="activeTab" @tab-click="handleClick">
             <div class="line" v-bind:style="'border-color:'+borderColor"></div>
             <el-tab-pane label="待审核" name="0">
+              <h1>简历初审</h1>
               <div style="width:100%;margin: 0% auto 0 auto">
                 <el-table :data="tableData1" stripe style="width: 100%" class="table0">
                   <el-table-column prop="name" label="姓名" width="140">
@@ -93,20 +94,180 @@
                   </el-table-column>
                 </el-table>
               </div>
-              <div class="el-pagination__total page-total">
-                共<a style="width: 40px;display: inline-block;text-align: center">{{400}}</a>条
+
+              <h1>HR初审</h1>
+              <div style="width:100%;margin: 0% auto 0 auto">
+                <el-table :data="tableData1" stripe style="width: 100%" class="table0">
+                  <el-table-column prop="name" label="姓名" width="140">
+                  </el-table-column>
+                  <el-table-column prop="sex" label="性别" width="140">
+                  </el-table-column>
+                  <el-table-column prop="age" label="年龄" width="140">
+                  </el-table-column>
+                  <el-table-column prop="degree" label="最高学历" width="140">
+                  </el-table-column>
+                  <el-table-column prop="date" label="投递时间" width="140">
+                  </el-table-column>
+                  <el-table-column label="查看详情" width="144">
+                    <template slot-scope="scope">
+                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-chakanxiangqing"></i>
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="下载简历"
+                    width="144"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-xiazaijianli"></i>
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="投递状态"
+                    width="144"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-toudijindu"></i>
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
               </div>
-              <div class="page-select">
-                <el-pagination
-                  @size-change="handleSizeChange"
-                  @current-change="handleCurrentChange"
-                  :current-page="currentPage4"
-                  :page-sizes="[5, 10, 20, 30]"
-                  :page-size="5"
-                  layout="sizes, prev, pager, next, jumper"
-                  :total="400">
-                </el-pagination>
+
+              <h1>部门笔试</h1>
+              <div style="width:100%;margin: 0% auto 0 auto">
+                <el-table :data="tableData1" stripe style="width: 100%" class="table0">
+                  <el-table-column prop="name" label="姓名" width="140">
+                  </el-table-column>
+                  <el-table-column prop="sex" label="性别" width="140">
+                  </el-table-column>
+                  <el-table-column prop="age" label="年龄" width="140">
+                  </el-table-column>
+                  <el-table-column prop="degree" label="最高学历" width="140">
+                  </el-table-column>
+                  <el-table-column prop="date" label="投递时间" width="140">
+                  </el-table-column>
+                  <el-table-column label="查看详情" width="144">
+                    <template slot-scope="scope">
+                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-chakanxiangqing"></i>
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="下载简历"
+                    width="144"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-xiazaijianli"></i>
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="投递状态"
+                    width="144"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-toudijindu"></i>
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
               </div>
+
+              <h1>部门面试</h1>
+              <div style="width:100%;margin: 0% auto 0 auto">
+                <el-table :data="tableData1" stripe style="width: 100%" class="table0">
+                  <el-table-column prop="name" label="姓名" width="140">
+                  </el-table-column>
+                  <el-table-column prop="sex" label="性别" width="140">
+                  </el-table-column>
+                  <el-table-column prop="age" label="年龄" width="140">
+                  </el-table-column>
+                  <el-table-column prop="degree" label="最高学历" width="140">
+                  </el-table-column>
+                  <el-table-column prop="date" label="投递时间" width="140">
+                  </el-table-column>
+                  <el-table-column label="查看详情" width="144">
+                    <template slot-scope="scope">
+                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-chakanxiangqing"></i>
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="下载简历"
+                    width="144"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-xiazaijianli"></i>
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="投递状态"
+                    width="144"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-toudijindu"></i>
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+
+
+              <h1>HR面试</h1>
+              <div style="width:100%;margin: 0% auto 0 auto">
+                <el-table :data="tableData1" stripe style="width: 100%" class="table0">
+                  <el-table-column prop="name" label="姓名" width="140">
+                  </el-table-column>
+                  <el-table-column prop="sex" label="性别" width="140">
+                  </el-table-column>
+                  <el-table-column prop="age" label="年龄" width="140">
+                  </el-table-column>
+                  <el-table-column prop="degree" label="最高学历" width="140">
+                  </el-table-column>
+                  <el-table-column prop="date" label="投递时间" width="140">
+                  </el-table-column>
+                  <el-table-column label="查看详情" width="144">
+                    <template slot-scope="scope">
+                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-chakanxiangqing"></i>
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="下载简历"
+                    width="144"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-xiazaijianli"></i>
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="投递状态"
+                    width="144"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                        <i class="icon iconfont icon-toudijindu"></i>
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+
             </el-tab-pane>
             <el-tab-pane label="已通过" name="1">
               <div style="width:100%;margin: 0% auto 0% auto">
