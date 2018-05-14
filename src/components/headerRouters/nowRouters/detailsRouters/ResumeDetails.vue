@@ -129,18 +129,23 @@
         <div>
           <h1 class="resume-item-header">工作意向</h1>
           <div class="line"></div>
-              <div style="width: 95%;margin:0 auto">
-                <p class="resume-item-label">期望工作地点：</p>
-                <p class="resume-item-info">{{formIntention.workPlace}}</p>
-              </div>
-              <div style="width: 95%;margin:0 auto">
-                <p class="resume-item-label">期望薪资：</p>
-                <p class="resume-item-info">{{formIntention.salary}}元/月</p>
-              </div>
-              <div style="width: 95%;margin:0 auto">
-                <p class="resume-item-label">可到岗时间：</p>
-                <p class="resume-item-info">{{formIntention.expectedTimeForDuty}}</p>
-              </div>
+          <div v-if="formIntention" style="width:90%;margin: 0 auto 0 auto">
+            <div style="width: 95%;margin:0 auto">
+              <p class="resume-item-label">期望工作地点：</p>
+              <p class="resume-item-info">{{formIntention.workPlace}}</p>
+            </div>
+            <div style="width: 95%;margin:0 auto">
+              <p class="resume-item-label">期望薪资：</p>
+              <p class="resume-item-info">{{formIntention.salary}}元/月</p>
+            </div>
+            <div style="width: 95%;margin:0 auto">
+              <p class="resume-item-label">可到岗时间：</p>
+              <p class="resume-item-info">{{formIntention.expectedTimeForDuty}}</p>
+            </div>
+          </div>
+          <div v-else style="width:90%;margin: 0 auto 0 auto">
+            <h1 class="resume-item-middle" style="width: 33%">无</h1>
+          </div>
           </div>
 
         <div>

@@ -310,20 +310,6 @@
                     </template>
                   </el-table-column>
                 </el-table>
-                <div class="el-pagination__total page-total">
-                  共<a style="width: 40px;display: inline-block;text-align: center">{{400}}</a>条
-                </div>
-                <div class="page-select">
-                 <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="currentPage4"
-                    :page-sizes="[5, 10, 20, 30]"
-                    :page-size="5"
-                    layout="sizes, prev, pager, next, jumper"
-                    :total="400">
-                  </el-pagination>
-                </div>
               </div>
             </el-tab-pane>
               <el-tab-pane label="已回绝" name="2">
@@ -371,20 +357,6 @@
                   </el-table-column>
                 </el-table>
 
-                <div class="el-pagination__total page-total">
-                  共<a style="width: 40px;display: inline-block;text-align: center">{{400}}</a>条
-                </div>
-                <div class="page-select">
-                  <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="currentPage4"
-                    :page-sizes="[5, 10, 20, 30]"
-                    :page-size="5"
-                    layout="sizes, prev, pager, next, jumper"
-                    :total="400">
-                  </el-pagination>
-                </div>
               </div>
             </el-tab-pane>
           </el-tabs>
