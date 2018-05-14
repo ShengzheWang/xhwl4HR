@@ -12,7 +12,7 @@
             </div>
             <div style="text-align: right;display: inline-block;width: 49%">
             <h4 class="info-already-got">已收到简历数</h4>
-            <div class="already-got">{{form.num}}</div>
+            <div class="already-got">{{deliverNumber}}</div>
             </div>
             <div style="width: 100%">
               <el-row>
@@ -54,16 +54,16 @@
             <el-tab-pane label="待审核" name="0">
               <h1>简历初审</h1>
               <div style="width:100%;margin: 0% auto 0 auto">
-                <el-table :data="tableData1" stripe style="width: 100%" class="table0">
-                  <el-table-column prop="name" label="姓名" width="140">
+                <el-table :data="ResumesFirst" stripe style="width: 100%" class="table0">
+                  <el-table-column prop="username" label="姓名" width="140">
                   </el-table-column>
                   <el-table-column prop="sex" label="性别" width="140">
                   </el-table-column>
                   <el-table-column prop="age" label="年龄" width="140">
                   </el-table-column>
-                  <el-table-column prop="degree" label="最高学历" width="140">
+                  <el-table-column prop="highestEducation" label="最高学历" width="140">
                   </el-table-column>
-                  <el-table-column prop="date" label="投递时间" width="140">
+                  <el-table-column prop="deliverDate" label="投递时间" width="140">
                   </el-table-column>
                   <el-table-column label="查看详情" width="144">
                     <template slot-scope="scope">
@@ -87,7 +87,7 @@
                     width="144"
                   >
                   <template slot-scope="scope">
-                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                      <el-button  @click="passResume(scope.$index,'ResumesFirst','ResumesHRFirst')" type="text" size="middle">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
@@ -97,16 +97,16 @@
 
               <h1>HR初审</h1>
               <div style="width:100%;margin: 0% auto 0 auto">
-                <el-table :data="tableData1" stripe style="width: 100%" class="table0">
-                  <el-table-column prop="name" label="姓名" width="140">
+                <el-table :data="ResumesHRFirst" stripe style="width: 100%" class="table0">
+                  <el-table-column prop="username" label="姓名" width="140">
                   </el-table-column>
                   <el-table-column prop="sex" label="性别" width="140">
                   </el-table-column>
                   <el-table-column prop="age" label="年龄" width="140">
                   </el-table-column>
-                  <el-table-column prop="degree" label="最高学历" width="140">
+                  <el-table-column prop="highestEducation" label="最高学历" width="140">
                   </el-table-column>
-                  <el-table-column prop="date" label="投递时间" width="140">
+                  <el-table-column prop="deliverDate" label="投递时间" width="140">
                   </el-table-column>
                   <el-table-column label="查看详情" width="144">
                     <template slot-scope="scope">
@@ -130,7 +130,7 @@
                     width="144"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                      <el-button  @click="passResume(scope.$index,'ResumesHRFirst','ResumesDepartmentWritten')" type="text" size="middle">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
@@ -140,16 +140,16 @@
 
               <h1>部门笔试</h1>
               <div style="width:100%;margin: 0% auto 0 auto">
-                <el-table :data="tableData1" stripe style="width: 100%" class="table0">
-                  <el-table-column prop="name" label="姓名" width="140">
+                <el-table :data="ResumesDepartmentWritten" stripe style="width: 100%" class="table0">
+                  <el-table-column prop="username" label="姓名" width="140">
                   </el-table-column>
                   <el-table-column prop="sex" label="性别" width="140">
                   </el-table-column>
                   <el-table-column prop="age" label="年龄" width="140">
                   </el-table-column>
-                  <el-table-column prop="degree" label="最高学历" width="140">
+                  <el-table-column prop="HighestEducation" label="最高学历" width="140">
                   </el-table-column>
-                  <el-table-column prop="date" label="投递时间" width="140">
+                  <el-table-column prop="deliverDate" label="投递时间" width="140">
                   </el-table-column>
                   <el-table-column label="查看详情" width="144">
                     <template slot-scope="scope">
@@ -173,7 +173,7 @@
                     width="144"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                      <el-button  @click="passResume(scope.$index,'ResumesDepartmentWritten','ResumesDepartmentInterview')" type="text" size="middle">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
@@ -183,16 +183,16 @@
 
               <h1>部门面试</h1>
               <div style="width:100%;margin: 0% auto 0 auto">
-                <el-table :data="tableData1" stripe style="width: 100%" class="table0">
-                  <el-table-column prop="name" label="姓名" width="140">
+                <el-table :data="ResumesDepartmentInterview" stripe style="width: 100%" class="table0">
+                  <el-table-column prop="username" label="姓名" width="140">
                   </el-table-column>
                   <el-table-column prop="sex" label="性别" width="140">
                   </el-table-column>
                   <el-table-column prop="age" label="年龄" width="140">
                   </el-table-column>
-                  <el-table-column prop="degree" label="最高学历" width="140">
+                  <el-table-column prop="highestEducation" label="最高学历" width="140">
                   </el-table-column>
-                  <el-table-column prop="date" label="投递时间" width="140">
+                  <el-table-column prop="deliverDate" label="投递时间" width="140">
                   </el-table-column>
                   <el-table-column label="查看详情" width="144">
                     <template slot-scope="scope">
@@ -216,7 +216,7 @@
                     width="144"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                      <el-button  @click="rejectResume(scope.$index)" type="text" size="middle">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
@@ -227,16 +227,16 @@
 
               <h1>HR面试</h1>
               <div style="width:100%;margin: 0% auto 0 auto">
-                <el-table :data="tableData1" stripe style="width: 100%" class="table0">
-                  <el-table-column prop="name" label="姓名" width="140">
+                <el-table :data="ResumesHRinterview" stripe style="width: 100%" class="table0" ref="ResumesHRFirst">
+                  <el-table-column prop="username" label="姓名" width="140">
                   </el-table-column>
                   <el-table-column prop="sex" label="性别" width="140">
                   </el-table-column>
                   <el-table-column prop="age" label="年龄" width="140">
                   </el-table-column>
-                  <el-table-column prop="degree" label="最高学历" width="140">
+                  <el-table-column prop="highestEducation" label="最高学历" width="140">
                   </el-table-column>
-                  <el-table-column prop="date" label="投递时间" width="140">
+                  <el-table-column prop="deliverDate" label="投递时间" width="140">
                   </el-table-column>
                   <el-table-column label="查看详情" width="144">
                     <template slot-scope="scope">
@@ -260,7 +260,7 @@
                     width="144"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="handleClick(scope.row)" type="text" size="middle">
+                      <el-button  @click="passResume(scope.$index,'ResumesHRinterview','ResumesPassed')" type="text" size="middle">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
@@ -428,6 +428,7 @@ export default {
         recruitingNumbers:''
 
       },
+      deliverNumber:'',
       borderColor: '#1476C1',
       activeTab: 0,
       tableData1: [
@@ -435,6 +436,21 @@ export default {
         {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
         {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
         {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'}
+      ],
+      ResumesFirst:[
+        {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
+      ],
+      ResumesHRFirst:[
+        {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
+      ],
+      ResumesDepartmentWritten:[
+        {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
+      ],
+      ResumesDepartmentInterview:[
+        {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
+      ],
+      ResumesHRinterview:[
+        {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
       ],
       ResumesPassed: [
         {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
@@ -445,7 +461,6 @@ export default {
     }
   },
   created(){
-    console.log(this.$route.query.id);
     let _this=this
     this.$axios({
       method:'get',
@@ -454,7 +469,7 @@ export default {
         _this.$data.form=response.data;
     })
 
-    this.$axios({
+    this.$axios({         //获取已通过名单
       method:'get',
       url:'/admin/Pass/'+_this.$route.query.id
     }).then(function (response) {
@@ -462,11 +477,62 @@ export default {
 
     })
 
-    this.$axios({
+    this.$axios({         //获取已拒绝简历名单
       method:'get',
       url:'/admin/Refuse/'+_this.$route.query.id
     }).then(function (response) {
       _this.$data.ResumesRefuse=response.data;
+    })
+
+
+    this.$axios({
+      method:'get',
+      url:'/admin/ResumeReview/'+_this.$route.query.id
+    }).then(function (response) {
+      _this.$data.ResumesFirst=response.data
+    })
+
+
+    this.$axios({
+      method:'get',
+      url:'/admin/HRFristReview/'+_this.$route.query.id
+    }).then(function (response) {
+      _this.$data.ResumesHRFirst=response.data;
+    })
+
+    this.$axios({
+      method:'get',
+      url:"/admin/DepartmentWritten/"+_this.$route.query.id
+    }).then(function (response) {
+      _this.$data.ResumesDepartmentWritten=response.data;
+    })
+
+
+    this.$axios({
+      method:'get',
+      url:'/admin/DepartmentInterview/'+_this.$route.query.id
+    }).then(function (response) {
+      _this.$data.ResumesDepartmentInterview=response.data
+    })
+
+    this.$axios({
+      method:'get',
+      url:'/admin/HRInterview/'+_this.$route.query.id
+    }).then(function (response) {
+      _this.$data.ResumesHRinterview=response.data
+    }).catch(function (error) {
+      _this.$message({
+        type:'error',
+        message:error.response.data.msg
+      })
+    })
+
+    this.$axios({
+      method:'get',
+      url:'/admin/getDeliverNum/'+_this.$route.query.id
+    }).then(function (response) {
+      console.log(response.data)
+      _this.$data.deliverNumber=response.data.number
     })
 
   },
@@ -484,6 +550,64 @@ export default {
 
   },
   methods: {
+    rejectResume(row,formName){             //回绝简历
+      let _this=this;
+      this.$axios({
+        method:'put',
+        url:'/admin/giveRefuse/'+_this.$data[formName][row].id
+      }).then((response)=>{
+        _this.$message({
+          type:'success',
+          message:'操作成功！'
+        })
+        _this.$data.ResumesRefuse.push(_this.$data[formName][row])
+        _this.$data[formName].splice(row,1)
+      }).catch((error)=>{
+        _this.$message({
+          type:'error',
+          message:'操作失败！请查看是否有权限'
+        })
+      })
+    },
+    passResume(row,formName,formName1){       //通过简历，跳转到下一流程
+                                              //formName是操作的简历的表  formName1是下一流程的简历表
+                                              //操作成功后该简历从formName表中删除，在formName1的表中添加
+      let _this=this;
+      this.$axios({
+        method:'put',
+        url:'/admin/passToNext/'+_this.$data[formName][row].id
+      }).then(function (response) {
+        _this.$message({
+          type:'success',
+          message:'操作成功！'
+        })
+        _this.$data[formName1].push(_this.$data[formName][row])
+        _this.$data[formName].splice(row,1)
+      }).catch((error)=>{
+        _this.$message({
+          type:'error',
+          message:'操作失败！清查看是否有权限'
+        })
+      })
+    },
+    revokeReject(row){
+      let _this=this;
+      this.$axios({
+        method:'put',
+        url:'/admin/cancelRefuse/'+_this.$data.ResumesRefuse[row].id
+      }).then(function (response) {
+        _this.$message({
+          type:'success',
+          message:'操作成功'
+        })
+        _this.$data.ResumesRefuse.splice(row,1)
+      }).catch((error)=>{
+        _this.$message({
+          type:'error',
+          message:'操作失败'
+        })
+      })
+    },
     resumeDetails (num) {
       this.$router.push('/ResumeDetails')
     },

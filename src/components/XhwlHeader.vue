@@ -90,7 +90,7 @@ export default {
       labelPosition1: 'left',
       Need2Login: true,
       isHighAdmin: true,
-      isSuperAdmin: true,
+      isSuperAdmin: false,
       user:{
         username:'',
         password:''
@@ -141,7 +141,9 @@ export default {
           }).then(function (response) {
             switch(response.data.code){
               case 200:
-
+                if(response.data.msg==='superAdmin'){
+                  _this.$data.isSuperAdmin=true
+                }
                 const token=response.data.data;
                 _this.$axios.defaults.headers.Authorization = token
                 _this.$data.Need2Login = false
