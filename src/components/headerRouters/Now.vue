@@ -25,12 +25,12 @@
             </el-col>
             <el-col style="width: 38%;margin-left: -2px">
               <el-form-item >
-                <el-autocomplete
+                <el-autocomplete class="input-classes"
                   v-model="state1"
                   :fetch-suggestions="querySearch"
                   placeholder="请输入部门"
                   @select="handleSelect1"
-                  prefix-icon="iconfont icon-zhiweileixing icon4form"
+                  prefix-icon="classes-icon"
                 ></el-autocomplete>
               </el-form-item>
             </el-col>
@@ -326,6 +326,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
+
   #Now {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -421,7 +422,10 @@ export default {
       border-radius: 50px;
     }
     .input-classes{
-      border-radius: 50px;
+      width: 100%;
+      .el-input {
+        border-radius: 50px;
+      }
     }
     .el-form{
       .el-input{
