@@ -3,7 +3,7 @@
       <div class="block">
         <div style="width:60%;margin: 2% auto 0 auto">
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: '/Now' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/Now' }">招聘中</el-breadcrumb-item>
             <el-breadcrumb-item>职位详情</el-breadcrumb-item>
           </el-breadcrumb>
           <div class="position-details">
@@ -290,12 +290,12 @@
                     </template>
                   </el-table-column>
                   <el-table-column
-                    label="投递状态"
+                    label="发送通知"
                     style="width: 13%"
                   >
                     <template slot-scope="scope">
                       <el-button  @click="changeStatus(scope.row)" type="text" size="middle">
-                        <i class="icon iconfont icon-toudijindu"></i>
+                        <i class="icon iconfont icon-youxiang"></i>
                       </el-button>
                     </template>
                   </el-table-column>
@@ -334,12 +334,12 @@
                     </template>
                   </el-table-column>
                   <el-table-column
-                    label="投递状态"
+                    label="撤回回绝"
                     style="width: 13%"
                   >
                     <template slot-scope="scope">
                       <el-button disabled @click="changeStatus(scope.row)" type="text" size="middle">
-                        <i class="icon iconfont icon-toudijindu"></i>
+                        <i class="icon iconfont icon-huifutoudi"></i>
                       </el-button>
                     </template>
                   </el-table-column>
