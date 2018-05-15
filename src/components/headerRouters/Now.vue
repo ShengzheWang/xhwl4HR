@@ -51,7 +51,7 @@
           </el-table-column>
           <el-table-column label="所在部门" width="120">
             <template slot-scope="scope">
-            {{departments[Number(tableData[scope.$index].department)-1].name}}
+            {{departments[parseInt(scope.row.department)-1].name}}
             </template>
           </el-table-column>
           <el-table-column prop="recruitmentType" label="招聘类型" width="120">
@@ -141,7 +141,7 @@ export default {
           department:'',
           positionName:''
         },
-      tableData: [{positionName: '', department: '', workPlace: '', publishDate: '', deadline: '',recruitmentType:'',id:''
+      tableData: [{positionName: '', department: '1', workPlace: '', publishDate: '', deadline: '',recruitmentType:'',id:''
       }],
       departments:[             //所有的部门
         {name:'人事行政部',index:'1'},
