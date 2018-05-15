@@ -136,8 +136,8 @@ export default {
       pageSize: 20,
       formSearch:
         {
-          earlyDate:'',
-          lastDate:'',
+          earlyDate:null,
+          lastDate:null,
           department:'',
           positionName:''
         },
@@ -299,6 +299,11 @@ export default {
       // 调用 callback 返回建议列表的数据
       cb(results);
     },
+    createFilter(queryString) {
+        return (department) => {
+          return (department.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+        };
+      },
     loadAll() {
       return [
         {"value":"人事行政部","index":"1"},
