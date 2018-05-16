@@ -10,7 +10,7 @@
       </div>
     </div>
     <div style="display: inline-block;width: 48%;text-align: center;height: 60px" class="animated fadeInDown">
-      <el-menu  class="el-menu-demo" mode="horizontal" @select="handleSelect"
+      <el-menu  :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                :router='true'
                text-color="#444444"
                background-color="#ffffff"
@@ -66,6 +66,26 @@
 <script>
 export default {
   name: 'XhwlHeader',
+  watch: {
+    $route(to, from) {
+      switch(to.path){
+        case '/Now':
+          this.$data.activeIndex = '1'
+          break
+        case '/Authority':
+          this.$data.activeIndex = '5'
+          break
+        case '/Release':
+          this.$data.activeIndex = '3'
+          break
+        case '/History':
+          this.$data.activeIndex = '2'
+          break
+        default:
+          this.$data.activeIndex = ''
+      }
+    }
+  },
   data () {
     var checkLogUser=(rule,value,callback)=>{
       if(!value){
@@ -154,8 +174,10 @@ export default {
                 document.cookie=token;
                 _this.$message({
                   message:'登录成功',
-                  type:'success'
+                  type:'success',
+                  showClose:true
                 });
+                _this.$router.push('/Now')
                 break
               case 500:
                 _this.$message({

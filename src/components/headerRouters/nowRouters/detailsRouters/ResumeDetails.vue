@@ -6,7 +6,8 @@
         <div>
           <h1 class="resume-item-header">个人信息</h1>
           <div class="line"></div>
-          <a><img style="position: absolute;top:300px;right: 20%;height:300px" :src="imgUrl"></a>
+          <a><img v-if="imgUrl" style="position: absolute;right: 20%;height:300px" :src="imgUrl">
+          </a>
           <div style="width:90%;margin: 0% auto 0 auto">
             <h1 class="resume-item-middle">{{name}}</h1>
             <div style="width: 95%;margin:0 auto">
@@ -221,45 +222,53 @@ export default {
       _this.$data.formIntention = response.data[7]
       _this.$data.self_assessment = response.data[8]
     })
+    this.$axios.get(this.$axios.defaults.baseURL + 'admin/downloadPhoto/'+_this.$route.query.id,{
+      responseType: 'arraybuffer'
+    })
+      .then(function (response) {
+        console.log(response.data)
+        if(response.data.byteLength === 0 )
+          return
+        _this.$data.imgUrl = 'data:image/png;base64,' + btoa(
+          new Uint8Array(response.data)
+            .reduce((data, byte) => data + String.fromCharCode(byte), '')
+        )
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   },
   data () {
     return {
       name: '',
       formBasicItem: [
-        {label: '性别', name: 'sex', info: '男'},
-        {label: '证件类型', name: 'idType', info: '身份证'},
-        {label: '证件号码', name: 'idNumber', info: '5107811998020589128'},
-        {label: '出生日期', name: 'birthday', info: '1998-02-05'},
-        {label: '邮箱', name: 'email', info: '1034298388@qq.com'},
-        {label: '联系方式', name: 'telephone', info: '18859233971'},
-        {label: '婚姻状况', name: 'maritalStatus', info: '未婚'},
-        {label: '工作年限', name: 'workSeniority', info: '零'},
-        {label: '政治面貌', name: 'politicalStatus', info: '团员'},
-        {label: '现居住地', name: 'presentAddress', info: '厦门大学'}
+        {label: '性别', name: 'sex', info: ''},
+        {label: '证件类型', name: 'idType', info: ''},
+        {label: '证件号码', name: 'idNumber', info: ''},
+        {label: '出生日期', name: 'birthday', info: ''},
+        {label: '邮箱', name: 'email', info: ''},
+        {label: '联系方式', name: 'telephone', info: ''},
+        {label: '婚姻状况', name: 'maritalStatus', info: ''},
+        {label: '工作年限', name: 'workSeniority', info: ''},
+        {label: '政治面貌', name: 'politicalStatus', info: ''},
+        {label: '现居住地', name: 'presentAddress', info: ''}
       ],
-      imgUrl: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2356960934,261710042&fm=27&gp=0.jpg',
+      imgUrl: null,
       formEducation: [
-        {startTime: '2015-09-01', endTime: '2019-07-30', school: '厦门大学', speciality: '计算机', educationHistory: '本科', rank: '20'}
       ],
       formTraining: [
-        {startTime: '2015-09-01', endTime: '2019-07-30', trainingContent: '蓝翔技校',trainingInstitutions: '烹饪', description: '在蓝翔技术学校认真学习了挖掘机,并且认真完成烹饪技术的培训，可以做回锅肉给大家吃啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊'}
-      ],
+        ],
       formProject: [
-        //{projectName: '兴海物联校园团队', projectRole: '酱油小兵', projectDescription: '呀呀呀呀呀呀呀呀呀呀呀呀呀'}
       ],
       formWork: [
-        {startTime: '2015-09-01', endTime: '2019-07-30', company: '兴海物联有限公司', position: '打杂'}
-      ],
+       ],
       formTrainee: [
-        {startTime: '2015-09-01', endTime: '2019-07-30', company: '兴海物联有限公司', position: '打杂'}
-      ],
+       ],
       formRewards: [
-        {dateOfAward: '2017-10-01', awardName: '小红花一枚'}
       ],
       formIntention: [
-        {workPlace: '深圳', salary: '20000', expectedTimeForDuty: '2019-10-10'}
-      ],
-      self_assessment: '聪明可爱又伶俐'
+       ],
+      self_assessment: ''
     }
   },
   methods: {

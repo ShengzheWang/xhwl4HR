@@ -29,7 +29,7 @@
                   v-model="state1"
                   :fetch-suggestions="querySearch"
                   placeholder="请输入部门"
-                  @select="handleSelect1"
+                  @select="handleSelect1" :clearable="true"
                   prefix-icon="classes-icon"
                 ></el-autocomplete>
               </el-form-item>
