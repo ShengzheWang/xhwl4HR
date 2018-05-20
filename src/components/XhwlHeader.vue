@@ -16,12 +16,12 @@
                background-color="#ffffff"
                active-text-color='#1476C1'
                active-background-color="#ffffff"
-               :style="'width:'+(isSuperAdmin?560:450)+'px;font-size: 18px;margin:0 auto;height:58px;display: inline-block'">
+               :style="'width:'+(isSuperAdmin===2?560:isSuperAdmin===1?450:340)+'px;font-size: 18px;margin:0 auto;height:58px;display: inline-block'">
         <el-menu-item index="1" style="border: none" route="/Now" class="item4menu">招聘中</el-menu-item>
         <el-menu-item index="2" style="border: none" route="/History" class="item4menu">历史招聘</el-menu-item>
-        <el-menu-item index="3" style="border: none" route="/Release" class="item4menu">发布招聘</el-menu-item>
+        <el-menu-item v-if="isSuperAdmin >= 1" index="3" style="border: none" route="/Release" class="item4menu">发布招聘</el-menu-item>
         <el-menu-item index="4" style="border: none" route="/Message" class="item4menu">消息中心</el-menu-item>
-        <el-menu-item v-if="isSuperAdmin" index="5" style="border: none" route="/Authority" class="item4menu">权限审核</el-menu-item>
+        <el-menu-item v-if="isSuperAdmin===2" index="5" style="border: none" route="/Authority" class="item4menu">权限审核</el-menu-item>
       </el-menu>
     </div>
     <div style="width:25%;display: inline-block;height: 120px;text-align: center;vertical-align: middle" v-if="Need2Login">
@@ -141,8 +141,8 @@ export default {
         if(response.data.msg==='superAdmin'){
           _this.$data.isSuperAdmin=2
         }
-        if(response.data.msg==='superAdmin'){
-          _this.$data.isSuperAdmin=2
+        if(response.data.msg==='seniorAdmin'){
+          _this.$data.isSuperAdmin=1
         }
         _this.$message('欢迎回来')
         _this.$data.Need2Login = false
@@ -171,7 +171,10 @@ export default {
             switch(response.data.code){
               case 200:
                 if(response.data.msg==='superAdmin'){
-                  _this.$data.isSuperAdmin=true
+                  _this.$data.isSuperAdmin=2
+                }
+                if(response.data.msg==='seniorAdmin'){
+                  _this.$data.isSuperAdmin=1
                 }
                 const token=response.data.data;
                 _this.$axios.defaults.headers.Authorization = token
