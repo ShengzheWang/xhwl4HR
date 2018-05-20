@@ -113,6 +113,7 @@
           jobRequirements:''
         },
         formRelease:{
+          id:'',
           positionName:'',
           department:'',
           resumeAuditDepartment:'',
@@ -188,6 +189,30 @@
         }
       }
     },
+    created(){
+      if(this.$route.query.id){
+        let _this=this;
+        this.$axios({
+          method:'get',
+          url:'/admin/position/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.form.id=response.data.id;
+          _this.$data.form.positionName=response.data.positionName;
+          _this.$data.form.department=response.data.department;
+          _this.$data.form.resumeAuditDepartment=response.data.resumeAuditDepartment;
+          _this.$data.form.assessmentDepartment=response.data.assessmentDepartment;
+          _this.$data.form.positionType=response.data.positionType;
+          _this.$data.form.recruitmentType=response.data.recruitmentType;
+          _this.$data.form.workPlace=response.data.workPlace;
+          _this.$data.form.education=response.data.education;
+          _this.$data.form.recruitingNumbers=response.data.recruitingNumbers;
+          _this.$data.form.deadline=response.data.deadline;
+          _this.$data.form2.jobResponsibilities=response.data.jobResponsibilities;
+          _this.$data.form3.jobRequirements=response.data.jobRequirements;
+
+        })
+      }
+    },
     methods: {
       ReleaseJob(){
         if(this.$data.form.deadline!==null){
@@ -230,6 +255,7 @@
             type:'error'
           })
         }else if(flag1===true&&flag2===true&&flag3===true){
+          this.$data.formRelease.id=this.$data.form.id;
           this.$data.formRelease.positionName=this.$data.form.positionName;
           this.$data.formRelease.positionType=this.$data.form.positionType;
           this.$data.formRelease.department=this.$data.form.department;
@@ -243,19 +269,19 @@
           this.$data.formRelease.jobRequirements=this.$data.form3.jobRequirements;
           this.$data.formRelease.jobResponsibilities=this.$data.form2.jobResponsibilities;
           let that=this;
-          console.log(that.$data.formRelease);
-          this.$axios({
-            method:'post',
-            url:'/admin/position',
-            data:that.$data.formRelease
-          }).then(function (response) {
-            that.$message({
-              message:'提交成功！',
-              type:'success'
+          console.log(this.$data.formRelease);
+            this.$axios({
+              method: 'post',
+              url: '/admin/position',
+              data: that.$data.formRelease
+            }).then(function (response) {
+              that.$message({
+                message: '提交成功！',
+                type: 'success'
+              })
+              //console.log(response);
             })
-            console.log(response);
-          })
-          this.$router.push('/Now');
+            this.$router.push('/Now');
         }
       },
     }
