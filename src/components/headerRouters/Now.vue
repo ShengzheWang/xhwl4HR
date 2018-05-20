@@ -62,19 +62,19 @@
           </el-table-column>
           <el-table-column prop="deadline" label="截止时间" style="width:10%">
           </el-table-column>
-          <el-table-column label="查看详情" fixed="right" style="width:15%">
+          <el-table-column label="查看详情" fixed="right" style="width:10%">
             <template slot-scope="scope">
               <el-button class="button4details" @click="handleClick(scope.row)" type="primary" size="middle">详情
               </el-button>
             </template>
           </el-table-column>
-          <el-table-column label="删除职位" fixed="right" style="width:15%">
+          <el-table-column label="删除职位" fixed="right" style="width:10%">
             <template slot-scope="scope">
               <el-button class="button4details" @click="deletePosition(scope.$index)" type="danger" size="middle">删除
               </el-button>
             </template>
           </el-table-column>
-          <el-table-column label="修改职位" fixed="right" width="140">
+          <el-table-column label="修改职位" fixed="right" style="width:10%">
             <template slot-scope="scope">
               <el-button class="button4details" @click="modifyPosition(scope.$index)" type="danger" size="middle">修改
               </el-button>

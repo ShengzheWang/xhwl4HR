@@ -110,7 +110,7 @@ export default {
       labelPosition1: 'left',
       Need2Login: true,
       isHighAdmin: true,
-      isSuperAdmin: false,
+      isSuperAdmin: 0,
       user:{
         username:'',
         password:''
@@ -139,10 +139,16 @@ export default {
         url: '/adminTokenCheck',
       }).then(function (response) {
         if(response.data.msg==='superAdmin'){
-          _this.$data.isSuperAdmin=true
+          _this.$data.isSuperAdmin=2
+        }
+        if(response.data.msg==='superAdmin'){
+          _this.$data.isSuperAdmin=2
         }
         _this.$message('欢迎回来')
         _this.$data.Need2Login = false
+        console.log(_this.$route.path)
+        if(_this.$route.path === '/')
+        _this.$router.push('/Now')
       }).catch(function(error) {
         _this.$message('用户凭证已过期，请重新登陆')
         delete _this.$axios.defaults.headers['Authorization']
