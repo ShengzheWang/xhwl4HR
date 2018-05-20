@@ -318,7 +318,7 @@
                   </el-table-column>
                   <el-table-column label="查看详情" style="width: 13%">
                     <template slot-scope="scope">
-                      <el-button disabled @click="resumeDetails(scope.row)" type="text" size="middle">
+                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-chakanxiangqing"></i>
                       </el-button>
                     </template>
@@ -338,7 +338,7 @@
                     style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button disabled @click="changeStatus(scope.row)" type="text" size="middle">
+                      <el-button  @click="revokeReject(scope.$index)" type="text" size="middle">
                         <i class="icon iconfont icon-huifutoudi"></i>
                       </el-button>
                     </template>
@@ -568,63 +568,30 @@ export default {
         })
       });
     },
-    rejectResume(row,formName){             //回绝简历
-      let _this=this;
-      this.$axios({
-        method:'put',
-        url:'/admin/giveRefuse/'+_this.$data[formName][row].id
-      }).then((response)=>{
-        _this.$message({
-          type:'success',
-          message:'操作成功！'
-        })
-        _this.$data.ResumesRefuse.push(_this.$data[formName][row])
-        _this.$data[formName].splice(row,1)
-      }).catch((error)=>{
-        _this.$message({
-          type:'error',
-          message:'操作失败！请查看是否有权限'
-        })
-      })
-    },
-    passResume(row,formName,formName1){       //通过简历，跳转到下一流程
-                                              //formName是操作的简历的表  formName1是下一流程的简历表
-                                              //操作成功后该简历从formName表中删除，在formName1的表中添加
-      let _this=this;
-      this.$axios({
-        method:'put',
-        url:'/admin/passToNext/'+_this.$data[formName][row].id
-      }).then(function (response) {
-        _this.$message({
-          type:'success',
-          message:'操作成功！'
-        })
-        _this.$data[formName1].push(_this.$data[formName][row])
-        _this.$data[formName].splice(row,1)
-      }).catch((error)=>{
-        _this.$message({
-          type:'error',
-          message:'操作失败！清查看是否有权限'
-        })
-      })
-    },
+
     revokeReject(row){
       let _this=this;
-      this.$axios({
-        method:'put',
-        url:'/admin/cancelRefuse/'+_this.$data.ResumesRefuse[row].id
-      }).then(function (response) {
-        _this.$message({
-          type:'success',
-          message:'操作成功'
+      this.$confirm('确定对 '+_this.$data.ResumesRefuse[row].username+'撤销回绝?', '提示', {
+        confirmButtonText: '撤销',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        _this.$axios({
+          method: 'put',
+          url: '/admin/cancelRefuse/' + _this.$data.ResumesRefuse[row].id
+        }).then(function (response) {
+          _this.$message({
+            type: 'success',
+            message: '操作成功'
+          })
+          _this.$data.ResumesRefuse.splice(row, 1)
+        }).catch((error) => {
+          _this.$message({
+            type: 'error',
+            message: '操作失败'
+          })
         })
-        _this.$data.ResumesRefuse.splice(row,1)
-      }).catch((error)=>{
-        _this.$message({
-          type:'error',
-          message:'操作失败'
-        })
-      })
+      }).catch(() => {});
     },
     resumeDetails (it) {
       this.$router.push({ path: '/ResumeDetails' , query: {id:it.id}})
