@@ -318,7 +318,7 @@
                   </el-table-column>
                   <el-table-column label="查看详情" style="width: 13%">
                     <template slot-scope="scope">
-                      <el-button disabled @click="resumeDetails(scope.row)" type="text" size="middle">
+                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-chakanxiangqing"></i>
                       </el-button>
                     </template>
@@ -528,45 +528,59 @@ export default {
   methods: {
     changeStatus(row,formName,formName1){
       let _this=this;
-      this.$confirm('请选择你对 '+_this.$data[formName][row].username+'的操作?', '提示', {
-        confirmButtonText: '审核成功，进入下一步',
-        cancelButtonText: '回绝',
-        type: 'warning'
-      }).then(() => {
-        _this.$axios({
-          method:'put',
-          url:'/admin/passToNext/'+_this.$data[formName][row].id
-        }).then(function (response) {
-          _this.$message({
-            type:'success',
-            message:'进入下一步成功！'
+      this.$confirm('请确定您将对 '+_this.$data[formName][row].username+' 进行操作（下一步将无法取消）','重要',{
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(()=>{
+        _this.$confirm('请选择你对 '+_this.$data[formName][row].username+'的操作?', '提示', {
+          confirmButtonText: '审核完成，进入下一步',
+          cancelButtonText: '回绝',
+          type: 'warning',
+          showClose:false,
+          beforeClose: (action, instance, done) => {
+            console.log(action)
+            console.log(done)
+            done();
+          }
+        }).then(() => {
+          _this.$axios({
+            method:'put',
+            url:'/admin/passToNext/'+_this.$data[formName][row].id
+          }).then(function (response) {
+            _this.$message({
+              type:'success',
+              message:'进入下一步成功！'
+            })
+            _this.$data[formName1].push(_this.$data[formName][row])
+            _this.$data[formName].splice(row,1)
+          }).catch((error)=>{
+            _this.$message({
+              type:'error',
+              message:'进入下一步失败！请查看是否有权限'
+            })
           })
-          _this.$data[formName1].push(_this.$data[formName][row])
-          _this.$data[formName].splice(row,1)
-        }).catch((error)=>{
-          _this.$message({
-            type:'error',
-            message:'进入下一步失败！请查看是否有权限'
+        }).catch(() => {
+          _this.$axios({
+            method:'put',
+            url:'/admin/giveRefuse/'+_this.$data[formName][row].id
+          }).then((response)=>{
+            _this.$message({
+              type:'success',
+              message:'回绝成功！'
+            })
+            _this.$data.ResumesRefuse.push(_this.$data[formName][row])
+            _this.$data[formName].splice(row,1)
+          }).catch((error)=>{
+            _this.$message({
+              type:'error',
+              message:'回绝失败！请查看是否有权限'
+            })
           })
-        })
-      }).catch(() => {
-        _this.$axios({
-          method:'put',
-          url:'/admin/giveRefuse/'+_this.$data[formName][row].id
-        }).then((response)=>{
-          _this.$message({
-            type:'success',
-            message:'回绝成功！'
-          })
-          _this.$data.ResumesRefuse.push(_this.$data[formName][row])
-          _this.$data[formName].splice(row,1)
-        }).catch((error)=>{
-          _this.$message({
-            type:'error',
-            message:'回绝失败！请查看是否有权限'
-          })
-        })
-      });
+        });
+      }).catch(()=>{
+
+      })
     },
     rejectResume(row,formName){             //回绝简历
       let _this=this;

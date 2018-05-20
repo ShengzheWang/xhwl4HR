@@ -96,13 +96,13 @@
             <div v-for="item in formTraining">
               <h1 class="resume-item-middle" style="width: 33%">{{item.startTime}}~{{item.endTime}}</h1>
               <h1 class="resume-item-middle" style="width: 33%;text-align: center">
-                培训机构：{{item.trainingContent}}</h1>
+                {{item.trainingContent}}</h1>
               <h1 class="resume-item-middle" style="width: 33%;text-align: right">
-                培训内容：{{item.trainingInstitutions}}</h1>
+                {{item.trainingInstitutions}}</h1>
               <div style="width: 100%;margin:0 auto;">
                 <div style="display: inline-block">
                   <span class="resume-item-label-2">详细描述：</span>
-                  <span class="resume-item-info" style="width: 924px;float: right;vertical-align: top;line-height: 1.8">{{item.description}}</span>
+                  <span class="resume-item-info" style="width: 800px;float: right;vertical-align: top;line-height: 1.8">{{item.description}}</span>
                 </div>
               </div>
             </div>
@@ -368,8 +368,7 @@ export default {
         let link = document.createElement('a')
         link.style.display = 'none'
         link.href = url
-        link.setAttribute('download', id+'_'+_this.$data.name+'_简历.pdf')
-        console.log(id+'_'+_this.$data.name+'_简历.pdf')
+        link.setAttribute('download', id+'_'+_this.$data.formBasic.name+'_简历.pdf')
         document.body.appendChild(link)
         link.click()
         _this.$message({
@@ -401,7 +400,7 @@ export default {
         let link = document.createElement('a')
         link.style.display = 'none'
         link.href = url
-        link.setAttribute('download', id+'_'+_this.$data.name+'_辅助材料.zip')
+        link.setAttribute('download', id+'_'+_this.$data.formBasic.name+'_辅助材料.zip')
 
         document.body.appendChild(link)
         link.click()
@@ -472,17 +471,19 @@ export default {
       text-align: left;
       margin-top: 12px;
       margin-bottom: 12px;
+      padding: 0
     }
     .resume-item-label-2 {
       display: inline-block;
       font-size: 14px;
       color: #707070;
       vertical-align: middle;
-      line-height: 16px;
       width: 100px;
       text-align: left;
+      line-height: 1.8;
       margin-top: 12px;
       margin-bottom: 12px;
+      padding: 0
     }
     .resume-item-info {
       display: inline;
