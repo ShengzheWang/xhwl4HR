@@ -74,6 +74,12 @@
               </el-button>
             </template>
           </el-table-column>
+          <el-table-column label="修改职位" fixed="right" width="140">
+            <template slot-scope="scope">
+              <el-button class="button4details" @click="modifyPosition(scope.$index)" type="danger" size="middle">修改
+              </el-button>
+            </template>
+          </el-table-column>
         </el-table>
 
         <div class="el-pagination__total page-total">
@@ -163,6 +169,23 @@ export default {
       AllDepartments:[]
    }
   },
+  watch:{ //从修改和新建职位的页面跳转回来时需要进行更新
+      '$route':function () {
+        let _this=this
+        this.$axios({
+          method: 'post',
+          data: _this.$qs.stringify({
+            size: 20,
+            page: 1
+          }),
+          url:'/admin/positions'
+        }).then(function (response) {
+          _this.$data.tableData=response.data.content;
+          _this.$data.loading = false
+          _this.$data.total=response.data.totalElements;
+        })
+      }
+  },
   created(){
     let _this=this
     this.$axios({
@@ -177,8 +200,6 @@ export default {
       _this.$data.loading = false
       _this.$data.total=response.data.totalElements;
     })
-
-
   },
   updated(){                  //将简历类型进行修改
     for(let index=0;index<this.$data.tableData.length;index++){
@@ -192,6 +213,10 @@ export default {
     }
   },
   methods: {
+    modifyPosition(index){
+      let key=this.$data.tableData[index].id;
+      this.$router.push({path:'/Release',query:{id:key}})
+    },
     SearchPositions(){
       let _this=this;
       let SearchDate1='';
@@ -216,12 +241,12 @@ export default {
         if(_this.$data.formSearch.earlyDate!==null){
           console.log(_this.$data.formSearch.earlyDate)
           SearchDate1=_this.$data.formSearch.earlyDate.Format('yyyy-MM-dd');
-          console.log(SearchDate1)
+          //console.log(SearchDate1)
         }else{
         }
         if(_this.$data.formSearch.lastDate!==null){
           SearchDate2=_this.$data.formSearch.lastDate.Format('yyyy-MM-dd');
-          console.log(SearchDate2)
+          //console.log(SearchDate2)
         }
         this.$axios({
           method: 'post',
@@ -286,7 +311,6 @@ export default {
     },
     handleClick (row) {
       //console.log(row);
-
       this.$router.push({path:'/Details',query:{id:row.id}})
 
     },
