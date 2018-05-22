@@ -1,7 +1,9 @@
 <template>
     <div id="Details">
       <div class="block">
-        <div style="width:60%;margin: 2% auto 0 auto">
+        <div style="width:90%;margin: 2% auto 0 auto">
+          <div style="height: 60px"></div>
+
           <el-breadcrumb separator="/">
             <el-breadcrumb-item :to="{ path: '/Now' }">招聘中</el-breadcrumb-item>
             <el-breadcrumb-item>职位详情</el-breadcrumb-item>
@@ -49,10 +51,14 @@
             </h1>
             <p  style="font-size: 18px;line-height: 32px" v-html="form.jobRequirements"></p>
           </div>
-          <el-tabs type="card"  v-model="activeTab" @tab-click="handleClick">
-            <div class="line" v-bind:style="'border-color:'+borderColor"></div>
-            <el-tab-pane label="待审核" name="0">
-              <h1>简历初审</h1>
+          <el-tabs type="card"  v-model="activeTab" @tab-click="handleClick" style="background: #ffffff">
+            <div style=" font-size: 0;-webkit-text-size-adjust:none;">
+              <div v-for="item in 7" v-bind:class="'card-top '+'card-top-'+item+(item===(Number(activeTab)+1)?' card-top-active':'')">
+                <div  class="card-top-item card-top-item-left"></div>
+                <div  class="card-top-item card-top-item-right"></div>
+              </div>
+            </div>
+            <el-tab-pane label="简历初审" name="0">
               <div style="width:100%;margin: 0% auto 0 auto">
                 <el-table :data="ResumesFirst" stripe style="width: 100%" class="table0">
                   <el-table-column prop="username" label="姓名" style="width: 16%">
@@ -87,15 +93,16 @@
                     style="width: 13%"
                   >
                   <template slot-scope="scope">
-                      <el-button  @click="changeStatus(scope.$index,'ResumesFirst','ResumesHRFirst')" type="text" size="middle">
+                      <el-button  @click="changeStatus(scope.$index,'ResumesFirst','ResumesHRFirst')" type="text" size="middle"
+                                  :disabled="scope.row.auth===0">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
                   </el-table-column>
                 </el-table>
               </div>
-
-              <h1>HR初审</h1>
+            </el-tab-pane>
+            <el-tab-pane label="HR初审" name="1">
               <div style="width:100%;margin: 0% auto 0 auto">
                 <el-table :data="ResumesHRFirst" stripe style="width: 100%" class="table0">
                   <el-table-column prop="username" label="姓名" style="width: 16%">
@@ -108,7 +115,8 @@
                   </el-table-column>
                   <el-table-column label="查看详情" style="width: 13%">
                     <template slot-scope="scope">
-                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
+                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle"
+                                  :disabled="scope.row.auth===0">
                         <i class="icon iconfont icon-chakanxiangqing"></i>
                       </el-button>
                     </template>
@@ -128,15 +136,16 @@
                     style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="changeStatus(scope.$index,'ResumesHRFirst','ResumesDepartmentWritten')" type="text" size="middle">
+                      <el-button  @click="changeStatus(scope.$index,'ResumesHRFirst','ResumesDepartmentWritten')" type="text" size="middle"
+                                  :disabled="scope.row.auth===0">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
                   </el-table-column>
                 </el-table>
               </div>
-
-              <h1>部门笔试</h1>
+            </el-tab-pane>
+            <el-tab-pane label="部门笔试" name="2">
               <div style="width:100%;margin: 0% auto 0 auto">
                 <el-table :data="ResumesDepartmentWritten" stripe style="width: 100%" class="table0">
                   <el-table-column prop="username" label="姓名" style="width: 16%">
@@ -169,15 +178,16 @@
                     style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="changeStatus(scope.$index,'ResumesDepartmentWritten','ResumesDepartmentInterview')" type="text" size="middle">
+                      <el-button  @click="changeStatus(scope.$index,'ResumesDepartmentWritten','ResumesDepartmentInterview')" type="text" size="middle"
+                                  :disabled="scope.row.auth===0">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
                   </el-table-column>
                 </el-table>
               </div>
-
-              <h1>部门面试</h1>
+            </el-tab-pane>
+            <el-tab-pane label="部门面试" name="3">
               <div style="width:100%;margin: 0% auto 0 auto">
                 <el-table :data="ResumesDepartmentInterview" stripe style="width: 100%" class="table0">
                   <el-table-column prop="username" label="姓名" style="width: 16%">
@@ -210,7 +220,8 @@
                     style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="changeStatus(scope.$index,'ResumesDepartmentInterview','ResumesHRinterview')" type="text" size="middle">
+                      <el-button  @click="changeStatus(scope.$index,'ResumesDepartmentInterview','ResumesHRinterview')" type="text" size="middle"
+                                  :disabled="scope.row.auth===0">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
@@ -218,8 +229,8 @@
                 </el-table>
               </div>
 
-
-              <h1>HR面试</h1>
+            </el-tab-pane>
+            <el-tab-pane label="HR面试" name="4">
               <div style="width:100%;margin: 0% auto 0 auto">
                 <el-table :data="ResumesHRinterview" stripe style="width: 100%" class="table0" ref="ResumesHRFirst">
                   <el-table-column prop="username" label="姓名" style="width: 16%">
@@ -252,7 +263,8 @@
                     style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="changeStatus(scope.$index,'ResumesHRinterview','ResumesPassed')" type="text" size="middle">
+                      <el-button  @click="changeStatus(scope.$index,'ResumesHRinterview','ResumesPassed')" type="text" size="middle"
+                                  :disabled="scope.row.auth===0">
                         <i class="icon iconfont icon-toudijindu"></i>
                       </el-button>
                     </template>
@@ -261,7 +273,7 @@
               </div>
 
             </el-tab-pane>
-            <el-tab-pane label="已通过" name="1">
+            <el-tab-pane label="已通过" name="5">
               <div style="width:100%;margin: 0% auto 0% auto">
                 <el-table :data="ResumesPassed" stripe style="width: 100%" class="table1">
                   <el-table-column prop="username" label="姓名" style="width: 16%">
@@ -302,7 +314,7 @@
                 </el-table>
               </div>
             </el-tab-pane>
-              <el-tab-pane label="已回绝" name="2">
+              <el-tab-pane label="已回绝" name="6">
               <div style="width:100%;margin: 0% auto 0% auto">
                 <el-table
                   :data="ResumesRefuse"
@@ -672,6 +684,80 @@ export default {
 </script>
 <style lang="less">
   #Details{
+    .card-top{
+      width: 14.2%;
+      height: 62px;
+      background: #38BDFE;
+      display: inline-block;
+
+      .card-top-item{
+        display: inline-block;
+        width: 50%;
+        height: 60px;
+        transition: all 0.6s;
+        font-size: 0;
+        -webkit-text-size-adjust:none;
+
+      }
+      .card-top-item-left{
+        background: #ffffff;
+        border-bottom-right-radius: 0px;
+      }
+      .card-top-item-right{
+        background: #ffffff;
+        border-bottom-right-radius: 0px;
+      }
+    }
+    .card-top-active{
+      .card-top-item-left{
+        border-bottom-right-radius: 60px;
+      }
+      .card-top-item-right{
+        border-bottom-left-radius: 60px;
+      }
+      /*.card-top-item-0{*/
+        /*display: inline-block;*/
+        /*margin: 0;*/
+        /*width: 10%;*/
+        /*height: 40px;*/
+        /*background: #1476C1;*/
+      /*}*/
+      /*.card-top-item-1{*/
+        /*display: inline-block;*/
+        /*margin: 0;*/
+        /*width: 8%;*/
+        /*height: 28px;*/
+        /*background: #1476C1;*/
+      /*}*/
+      /*.card-top-item-2{*/
+        /*display: inline-block;*/
+        /*margin: 0;*/
+        /*width: 8%;*/
+        /*height: 18px;*/
+        /*background: #1476C1;*/
+      /*}*/
+      /*.card-top-item-3{*/
+        /*display: inline-block;*/
+        /*margin: 0;*/
+        /*width:8%;*/
+        /*height: 12px;*/
+        /*background: #1476C1;*/
+      /*}*/
+      /*.card-top-item-4{*/
+        /*display: inline-block;*/
+        /*margin: 0;*/
+        /*width: 8%;*/
+        /*height: 8px;*/
+        /*background: #1476C1;*/
+      /*}*/
+      /*.card-top-item-5{*/
+        /*display: inline-block;*/
+        /*margin: 0;*/
+        /*width: 8%;*/
+        /*height: 4px;*/
+        /*background: #1476C1;*/
+      /*}*/
+    }
     .line{
       border: solid 1px #1476C1;
       margin-top: 0;
@@ -717,7 +803,6 @@ export default {
     .el-table__row{
       text-align: center;
     }
-    .table0{
       .el-table__header-wrapper th{
         background: #ECF1F7 !important;
       }
@@ -727,91 +812,36 @@ export default {
       .iconfont{
         color:#1476C1
       }
-    }
-    .table1{
-      .el-table__row:hover td{
-        background: #EEDFE0;
-      }
-      .el-table__header-wrapper th{
-        background: #FFEFF0 !important;
-      }
-      .el-table__row--striped td{
-        background: #FFF9F9;
-      }
-      .iconfont{
-        color:#E01B2F
-      }
-    }
-    .table2{
-      .el-table__row:hover tr{
-        background: #F5F5F5;
-      }
-      .el-table__header-wrapper th{
-        background: #EAEAEA !important;
-      }
-      .el-table__row--striped td{
-        background: #F4F4F4;
-      }
-      .iconfont{
-        color:#707070
-      }
+    .el-tabs__header.is-top{
+      border-bottom: none;
     }
     .el-tabs__nav {
       width: 100%;
       border: none;
+
     }
     .el-tabs__header{
       margin-bottom: 0;
     }
     .el-tabs__item{
-      height:50px;
-      border-radius:20px 20px 0 0 ;
-      border: 2px solid;
-      width: 15%;
+      height:40px;
+      border-radius:40px 40px 40px 40px ;
+      box-sizing: border-box;
+      border: 2px solid #38BDFE;
+      width: 10.2%;
+      margin-right: 2%;
+      margin-left: 2%;
       text-align: center;
       vertical-align: middle;
       font-weight: bold;
-      font-size: 18px;
-      line-height:45px;
+      font-size: 16px;
+      line-height:40px;
       background: #ffffff;
-      border-bottom: none;
+      color:#38BDFE;
     }
-    #tab-0{
-      z-index: 997;
-      border:solid 1px #1476C1;
-      color:#1476C1;
-      border-bottom: none;
-    }
-    #tab-0.is-active{
-      z-index: 999;
-      background: #1476C1;
-      color:#ffffff
-    }
-    #tab-1{
-      position: absolute;
-      left:14%;
-      z-index: 998;
-      border:solid 1px #E01B2F;
-      color: #E01B2F;
-      border-bottom: none;
-    }
-    #tab-1.is-active{
-      z-index: 999;
-      background: #E01B2F;
-      color:#ffffff
-    }
-    #tab-2{
-      position: absolute;
-      left:28%;
-      z-index: 996;
-      border:solid 1px #707070;
-      color: #707070;
-      border-bottom: none;
-    }
-    #tab-2.is-active{
-      z-index: 999;
-      background: #707070;
-      color:#ffffff
+    .el-tabs__item.is-active{
+      background: #38BDFE;
+      color:#ffffff;
     }
     .position-details{
       border-top: #1476C1 solid 1px;
@@ -866,6 +896,7 @@ export default {
         line-height: 17px;
         font-size: 18px;
       }
+
     }
 
   }

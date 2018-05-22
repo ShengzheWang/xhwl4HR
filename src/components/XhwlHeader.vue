@@ -9,20 +9,8 @@
           src="../../static/img/logoMain.png" style="height:50px;width: auto;">
       </div>
     </div>
-    <div style="display: inline-block;width: 48%;text-align: center;height: 60px" class="animated fadeInDown">
-      <el-menu  :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
-               :router='true'
-               text-color="#444444"
-               background-color="#ffffff"
-               active-text-color='#1476C1'
-               active-background-color="#ffffff"
-               :style="'width:'+(isSuperAdmin===2?560:isSuperAdmin===1?450:340)+'px;font-size: 18px;margin:0 auto;height:58px;display: inline-block'">
-        <el-menu-item index="1" style="border: none" route="/Now" class="item4menu">招聘中</el-menu-item>
-        <el-menu-item index="2" style="border: none" route="/History" class="item4menu">历史招聘</el-menu-item>
-        <el-menu-item v-if="isSuperAdmin >= 1" index="3" style="border: none" route="/Release" class="item4menu">发布招聘</el-menu-item>
-        <el-menu-item index="4" style="border: none" route="/Message" class="item4menu">消息中心</el-menu-item>
-        <el-menu-item v-if="isSuperAdmin===2" index="5" style="border: none" route="/Authority" class="item4menu">权限审核</el-menu-item>
-      </el-menu>
+    <div style="display: inline-block;width: 48%;text-align: center;height: 60px">
+
     </div>
     <div style="width:25%;display: inline-block;height: 120px;text-align: center;vertical-align: middle" v-if="Need2Login">
       <div style="margin: 21px auto">

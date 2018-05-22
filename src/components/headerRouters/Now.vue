@@ -1,7 +1,8 @@
 <template>
   <div id="Now">
     <div class="block">
-      <div style="width:60%;margin: 5% auto 0 auto">
+      <div style="width:90%;margin: 2% auto 0 auto">
+        <div style="height: 60px"></div>
         <el-form ref="formSearch" :model="formSearch" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">
           <el-form-item >
             <el-col style="width: 38%">
@@ -45,7 +46,7 @@
         </el-form>
 
       </div>
-      <div style="width:60%;margin: 2% auto 0% auto">
+      <div style="width:90%;margin: 2% auto 0% auto">
         <el-table :data="tableData" stripe class="table" style="width: 100%" v-loading="loading">
           <el-table-column prop="positionName" label="职位名称" style="width:20%">
           </el-table-column>

@@ -1,7 +1,15 @@
 <template>
   <div id="app" style="min-width:1200px">
     <XhwlHeader></XhwlHeader>
-    <router-view></router-view>
+    <div style="width: 80%;margin: 0 auto;height: auto;display: table">
+      <div style="display: table-cell;width: 15%;height: 100%;position: relative">
+        <XhwlMenu></XhwlMenu>
+      </div>
+      <div style="display: table-cell;width: 84%;">
+        <router-view style="background: #ffffff;margin-top:20px;margin-left: -2%"></router-view>
+      </div>
+    </div>
+
     <xhwl-footer></xhwl-footer>
   </div>
 </template>
@@ -9,6 +17,7 @@
 <script>
   import XhwlHeader from './components/XhwlHeader.vue'
   import XhwlFooter from './components/XhwlFooter.vue'
+  import XhwlMenu from './components/XhwlMenu.vue'
   import Home from './components/headerRouters/Home.vue'
   import ElFooter from '../node_modules/element-ui/packages/footer/src/main.vue'
   export default {
@@ -44,6 +53,7 @@
     methods: {},
     components: {
       ElFooter,
+      XhwlMenu,
       XhwlHeader,
       XhwlFooter,
       Home}

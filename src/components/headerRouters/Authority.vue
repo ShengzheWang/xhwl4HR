@@ -1,7 +1,8 @@
 <template>
   <div id="Authority">
     <div class="block">
-      <div style="width:60%;margin: 2% auto 0 auto">
+      <div style="width:80%;margin: 2% auto 0 auto">
+        <div style="height: 60px"></div>
         <el-form class="form4search" ref="form" :model="form" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">
           <el-col style="width: 38%">
             <el-form-item >
@@ -21,7 +22,7 @@
         </el-form>
 
       </div>
-      <div style="width:60%;margin: 2% auto 0% auto">
+      <div style="width:80%;margin: 2% auto 0% auto">
         <el-table :data="formAdmins" v-show="!showSearch" stripe class="table" style="width: 100%" v-loading="loading">
           <el-table-column prop="username" label="工号" style="width: 28%">
           </el-table-column>
@@ -127,29 +128,7 @@ export default{
     ElTabPane,
     ElFormItem},
   data () {
-    let checkPassword=(rule,value,callback)=>{
-      if(this.$data.disabled===true){
-        callback();
-      }else{
-        if(value){
-          if(value.length<6||value.length>18){
-            callback(new Error('密码长度在6-18位之间'))
-          }else{
-            callback();
-          }
-        }else{
-          callback(new Error('请输入密码'));
-        }
-      }
-    };
 
-    let checkDepartment=(rule,value,callback)=>{
-      if(this.$data.state1===this.$data.departments[Number(value)-1].name){
-       callback();
-      }else{
-        callback(new Error('不存在该部门'));
-      }
-    };
 
     return {
       showSearch:false,
@@ -232,7 +211,30 @@ export default{
           {validator:checkDepartment,trigger:'blur'}
         ]
       },
-    }
+    };
+    let checkPassword=(rule,value,callback)=>{
+      if(this.$data.disabled===true){
+        callback();
+      }else{
+        if(value){
+          if(value.length<6||value.length>18){
+            callback(new Error('密码长度在6-18位之间'))
+          }else{
+            callback();
+          }
+        }else{
+          callback(new Error('请输入密码'));
+        }
+      }
+    };
+
+    let checkDepartment=(rule,value,callback)=>{
+      if(this.$data.state1===this.$data.departments[Number(value)-1].name){
+        callback();
+      }else{
+        callback(new Error('不存在该部门'));
+      }
+    };
   },
 
 

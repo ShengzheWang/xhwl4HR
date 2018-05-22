@@ -5,6 +5,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import Home from './components/headerRouters/Home.vue'
 import Now from './components/headerRouters/Now.vue'
+import History from './components/headerRouters/History.vue'
 import Release from './components/headerRouters/Release.vue'
 import Details from './components/headerRouters/nowRouters/Details.vue'
 import ResumeDetails from './components/headerRouters/nowRouters/detailsRouters/ResumeDetails.vue'
@@ -33,7 +34,8 @@ const routes = [
   { path: '/Release', component: Release},
   { path: '/Details', component: Details},
   { path: '/ResumeDetails', component: ResumeDetails},
-  { path: '/Authority', component: Authority}
+  { path: '/Authority', component: Authority},
+  { path: '/History', component: History}
 ]
 const router = new Router({
   routes // （缩写）相当于 routes: routes

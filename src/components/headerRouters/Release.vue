@@ -1,7 +1,8 @@
 <template>
   <div id="Release">
     <div class="block">
-      <div style="width:60%;margin: 2% auto 0 auto">
+      <div style="width:90%;margin: 2% auto 0 auto">
+        <div style="height: 60px"></div>
         <h2> 基本信息</h2>
         <div class="line"></div>
         <el-form ref="form" :model="form" :rules="rules" label-width="120px" style="width: 100%;;display: inline-block;margin-top:5%">

@@ -1,7 +1,8 @@
 <template>
   <div id="History">
     <div class="block">
-      <div style="width:60%;margin: 5% auto 0 auto">
+      <div style="width:90%;margin: 2% auto 0 auto">
+        <div style="height: 60px"></div>
         <el-form ref="form" :model="form" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">
           <el-form-item >
             <el-col style="width: 38%">
@@ -40,30 +41,30 @@
         </el-form>
 
       </div>
-      <div style="width:60%;margin: 2% auto 0% auto">
+      <div style="width:90%;margin: 2% auto 0% auto">
         <el-table :data="tableData" stripe class="table" style="width: 100%" v-loading="loading">
-          <el-table-column prop="positionName" label="职位名称" width="180">
+          <el-table-column prop="positionName" label="职位名称" style="width: 10%">
           </el-table-column>
-          <el-table-column label="所在部门" width="120">
+          <el-table-column label="所在部门" style="width: 10%">
             <template slot-scope="scope">
             {{departments[Number(tableData[scope.$index].department)].name}}
             </template>
           </el-table-column>
-          <el-table-column prop="recruitmentType" label="招聘类型" width="120">
+          <el-table-column prop="recruitmentType" label="招聘类型" style="width: 10%">
           </el-table-column>
-          <el-table-column prop="workPlace" label="工作地点" width="120">
+          <el-table-column prop="workPlace" label="工作地点" style="width: 10%">
           </el-table-column>
-          <el-table-column prop="publishDate" label="发布时间" width="120">
+          <el-table-column prop="publishDate" label="发布时间" style="width: 10%">
           </el-table-column>
-          <el-table-column prop="deadline" label="截止时间" width="120">
+          <el-table-column prop="deadline" label="截止时间" style="width: 10%">
           </el-table-column>
-          <el-table-column label="查看详情" fixed="right" width="140">
+          <el-table-column label="查看详情" fixed="right" style="width: 10%">
             <template slot-scope="scope">
               <el-button class="button4details" @click="handleClick(scope.row)" type="primary" size="middle">详情
               </el-button>
             </template>
           </el-table-column>
-          <el-table-column label="删除职位" fixed="right" width="140">
+          <el-table-column label="删除职位" fixed="right" style="width: 10%">
             <template slot-scope="scope">
               <el-button class="button4details" @click="deletePosition(scope.$index)" type="danger" size="middle">删除
               </el-button>
@@ -221,7 +222,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
-  #Now {
+  #History {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
