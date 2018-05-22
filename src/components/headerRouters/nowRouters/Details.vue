@@ -294,7 +294,7 @@
                     style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="changeStatus(scope.row)" type="text" size="middle">
+                      <el-button  @click="tell(scope.row)" type="text" size="middle">
                         <i class="icon iconfont icon-youxiang"></i>
                       </el-button>
                     </template>
@@ -583,6 +583,28 @@ export default {
       })
     },
 
+    tell(row){
+      let _this=this;
+      this.$confirm('确定对 '+row.username+'发送邮件和短信?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+      }).then(() => {
+        _this.$axios({
+          method: 'post',
+          url: '/admin/onNoteWithoutDate/' + row.id
+        }).then(function (response) {
+          _this.$message({
+            type: 'success',
+            message: '发送成功'
+          })
+        }).catch((error) => {
+          _this.$message({
+            type: 'success',
+            message: '发送失败'
+          })
+        })
+      }).catch(() => {});
+    },
     revokeReject(row){
       let _this=this;
       this.$confirm('确定对 '+_this.$data.ResumesRefuse[row].username+'撤销回绝?', '提示', {
