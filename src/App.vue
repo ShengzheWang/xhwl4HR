@@ -1,9 +1,9 @@
 <template>
   <div id="app" style="min-width:1200px">
-    <XhwlHeader></XhwlHeader>
+    <XhwlHeader @isSuperAdmin="changeSuperAdmin" ></XhwlHeader>
     <div style="width: 80%;margin: 0 auto;height: auto;display: table">
       <div style="display: table-cell;width: 15%;height: 100%;position: relative">
-        <XhwlMenu></XhwlMenu>
+        <XhwlMenu :isSuperAdmin="isSuperAdmin"></XhwlMenu>
       </div>
       <div style="display: table-cell;width: 84%;">
         <router-view style="background: #ffffff;margin-top:20px;margin-left: -2%"></router-view>
@@ -27,6 +27,7 @@
         input3: '',
         value3: '',
         postChosen: '',
+        isSuperAdmin:0,
         items: [
           {text: '展示示例一'},
           {text: '展示示例二'},
@@ -50,7 +51,11 @@
         ]
       }
     },
-    methods: {},
+    methods: {
+      changeSuperAdmin (data) {
+        this.$data.isSuperAdmin = data
+      }
+    },
     components: {
       ElFooter,
       XhwlMenu,

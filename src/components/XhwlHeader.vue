@@ -55,24 +55,7 @@
 export default {
   name: 'XhwlHeader',
   watch: {
-    $route(to, from) {
-      switch(to.path){
-        case '/Now':
-          this.$data.activeIndex = '1'
-          break
-        case '/Authority':
-          this.$data.activeIndex = '5'
-          break
-        case '/Release':
-          this.$data.activeIndex = '3'
-          break
-        case '/History':
-          this.$data.activeIndex = '2'
-          break
-        default:
-          this.$data.activeIndex = ''
-      }
-    }
+
   },
   data () {
     var checkLogUser=(rule,value,callback)=>{
@@ -118,7 +101,7 @@ export default {
   },
   beforeMount () {
     const token = document.cookie.split(';')[0]
-    console.log(token)
+
     if (token) {
       this.$axios.defaults.headers.Authorization = token
       let _this = this
@@ -135,8 +118,9 @@ export default {
         _this.$message('欢迎回来')
         _this.$data.Need2Login = false
         console.log(_this.$route.path)
+        _this.$emit('isSuperAdmin',_this.$data.isSuperAdmin)
         if(_this.$route.path === '/')
-        _this.$router.push('/Now')
+          _this.$router.push('/Now')
       }).catch(function(error) {
         _this.$message('用户凭证已过期，请重新登陆')
         delete _this.$axios.defaults.headers['Authorization']
@@ -174,6 +158,7 @@ export default {
                   type:'success',
                   showClose:true
                 });
+                _this.$emit('isSuperAdmin',_this.$data.isSuperAdmin)
                 _this.$router.push('/Now')
                 break
               case 500:

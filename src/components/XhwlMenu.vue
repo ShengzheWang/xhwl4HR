@@ -18,12 +18,12 @@
 
         <span slot="title" style="display: block">历史招聘</span>
       </el-menu-item>
-      <el-menu-item v-if="isSuperAdmin >= 1" index="3" style="border: none" route="/Release" class="item4menu">
+      <el-menu-item v-if="IsSuperAdmin >= 1" index="3" style="border: none" route="/Release" class="item4menu">
         <i class="icon iconfont icon-fabu-"></i>
 
         <span slot="title" style="display: block">发布招聘</span>
       </el-menu-item>
-      <el-menu-item v-if="isSuperAdmin===2" index="5" style="border: none" route="/Authority" class="item4menu">
+      <el-menu-item v-if="IsSuperAdmin===2" index="5" style="border: none" route="/Authority" class="item4menu">
         <i class="icon iconfont icon-quanxianguanli-"></i>
 
         <span slot="title" style="display: block">权限审核</span></el-menu-item>
@@ -39,6 +39,12 @@
 <script>
 export default{
   name: 'XhwlMenu',
+  props: ['isSuperAdmin'],
+  computed: {
+    IsSuperAdmin () {
+      return this.$props.isSuperAdmin
+    }
+  },
   watch: {
     $route(to, from) {
       switch(to.path){
@@ -59,40 +65,10 @@ export default{
       }
     }
   },
-  beforeMount () {
-    const token = document.cookie.split(';')[0]
-    console.log(token)
-    if (token) {
-      this.$axios.defaults.headers.Authorization = token
-      let _this = this
-      this.$axios({
-        method: 'get',
-        url: '/adminTokenCheck',
-      }).then(function (response) {
-        if(response.data.msg==='superAdmin'){
-          _this.$data.isSuperAdmin=2
-        }
-        if(response.data.msg==='seniorAdmin'){
-          _this.$data.isSuperAdmin=1
-        }
-        _this.$message('欢迎回来')
-        _this.$data.Need2Login = false
-        console.log(_this.$route.path)
-        if(_this.$route.path === '/')
-          _this.$router.push('/Now')
-      }).catch(function(error) {
-        _this.$message('用户凭证已过期，请重新登陆')
-        delete _this.$axios.defaults.headers['Authorization']
-        document.cookie = ''
-        _this.$data.Need2Login = true
-        _this.$router.push('/')
-      })
-    }
-  },
   data () {
     return {
       activeIndex: '1',
-      isSuperAdmin:0
+      document:null
     }
   },
   methods:{
