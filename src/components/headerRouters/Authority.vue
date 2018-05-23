@@ -28,7 +28,7 @@
           </el-table-column>
           <el-table-column prop="department" label="部门" style="width: 28%">
             <template slot-scope="scope">
-              {{departments[Number(formAdmins[scope.$index].department)-1].name}}
+              {{departments[parseInt(formAdmins[scope.$index].department)].name}}
             </template>
           </el-table-column>
           <el-table-column prop="password" label="密码" style="width: 28%">
@@ -151,6 +151,7 @@ export default{
       state1: '',
 
       departments:[             //所有的部门
+        {name:'',index:'0'},
         {name:'人事行政部',index:'1'},
         {name:'财务管理部',index:'2'},
         {name:'部门管理部',index:'3'},
@@ -177,7 +178,7 @@ export default{
         id:null,
         username:'',
         password:'',
-        department:'',
+        department:'1',
       }],
 
       formModify:{
