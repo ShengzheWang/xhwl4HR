@@ -829,6 +829,7 @@ export default {
       box-sizing: border-box;
       border: 2px solid #38BDFE;
       width: 10.2%;
+      padding: 0;
       margin-right: 2%;
       margin-left: 2%;
       text-align: center;

@@ -1,13 +1,16 @@
 <template>
   <div id="app" style="min-width:1200px">
     <XhwlHeader @isSuperAdmin="changeSuperAdmin" ></XhwlHeader>
-    <div style="width: 80%;margin: 0 auto;height: auto;display: table">
+    <div v-if="$route.path!='/ResumeDetails'" style="width: 80%;margin: 0 auto;height: auto;display: table">
       <div style="display: table-cell;width: 15%;height: 100%;position: relative">
         <XhwlMenu :isSuperAdmin="isSuperAdmin"></XhwlMenu>
       </div>
       <div style="display: table-cell;width: 84%;">
         <router-view style="background: #ffffff;margin-top:20px;margin-left: -2%"></router-view>
       </div>
+    </div>
+    <div v-else="">
+      <router-view ></router-view>
     </div>
 
     <xhwl-footer></xhwl-footer>

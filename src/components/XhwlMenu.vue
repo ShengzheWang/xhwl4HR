@@ -6,7 +6,7 @@
               background-color="#000000"
               active-text-color='#ffffff'
               active-background-color="#38BDFE"
-              style="font-size: 18px;display: inline-block;margin: 0 auto;height: 100%;width: 80%;z-index: 0">
+              style="font-size: 16px;display: inline-block;margin: 0 auto;height: 100%;width: 80%;z-index: 0">
       <el-menu-item index="1" style="border: none;margin-top:30px" route="/Now" class="item4menu">
 
         <i class="icon iconfont icon-zhengzaizhaopin-"></i>
