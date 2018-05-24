@@ -448,6 +448,97 @@ export default {
       ]
     }
   },
+  watch:{
+    ResumesRefuse:{
+      handler(old,val){
+        let _this=this;
+        this.$axios({         //获取已拒绝简历名单
+          method:'get',
+          url:'/admin/Refuse/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesRefuse=response.data;
+        })
+      }
+
+    },
+    ResumesPassed:{
+      handler(old,val) {
+        let _this = this;
+        this.$axios({         //获取已通过名单
+          method: 'get',
+          url: '/admin/Pass/' + _this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesPassed = response.data;
+
+        })
+      }
+
+    },
+    ResumesHRinterview:{
+      handler(old,val){
+        let _this=this
+        this.$axios({
+          method:'get',
+          url:'/admin/HRInterview/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesHRinterview=response.data
+        }).catch(function (error) {
+          _this.$message({
+            type:'error',
+            message:error.response.data.msg
+          })
+        })
+      }
+
+    },
+    ResumesDepartmentInterview:{
+      handler(old,val){
+        let _this=this;
+        this.$axios({
+          method:'get',
+          url:'/admin/DepartmentInterview/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesDepartmentInterview=response.data
+        })
+      }
+
+    },
+    ResumesDepartmentWritten:{
+      handler(old,val){
+        let _this=this
+        this.$axios({
+          method:'get',
+          url:"/admin/DepartmentWritten/"+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesDepartmentWritten=response.data;
+        })
+      }
+
+    },
+    ResumesHRFirst:{
+      handler(old,val){
+        let _this=this;
+        this.$axios({
+          method:'get',
+          url:'/admin/HRFristReview/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesHRFirst=response.data;
+        })
+      }
+    },
+    ResumesFirst:{
+      handler(old,val){
+        let _this=this;
+        this.$axios({
+          method:'get',
+          url:'/admin/ResumeReview/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesFirst=response.data
+        })
+      }
+
+    }
+  },
   created(){
     let _this=this
     this.$axios({
