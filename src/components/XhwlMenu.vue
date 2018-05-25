@@ -1,12 +1,12 @@
 <template>
-  <div id="XhwlMenu" style="display: block;height: 100%;position:absolute;top:-20px;left:0;width: 100%">
+  <div id="XhwlMenu" style="display: block;height: 100%;position:absolute;top:0px;left:0;width: 100%">
     <el-menu  :default-active="activeIndex" class="el-menu-demo" @select="handleSelect"
               :router='true'
               text-color="#ffffff"
               background-color="#001C31"
               active-text-color='#ffffff'
               active-background-color="#1476BF"
-              style="font-size: 16px;display: inline-block;margin: 0 auto;height: 100%;width: 90%;z-index: 0">
+              style="font-size: 16px;display: inline-block;margin: 0 auto;height: 100%;width: 90%;z-index: 0;">
       <el-menu-item index="1" style="border: none;margin-top:30px" route="/Now" class="item4menu">
 
         <i class="icon iconfont icon-zhengzaizhaopin-"></i>
@@ -32,7 +32,10 @@
 
         <span slot="title" style="display: block" >消息中心</span>
       </el-menu-item>
-
+      <div style="display: block;width: 100%;position:absolute;bottom:10px;left:0;text-align: center">
+        <a style="color:#aaaaaa;font-size: 10px"
+        >兴海物联 版权所有</a>
+      </div>
     </el-menu>
   </div>
 </template>
@@ -43,6 +46,24 @@ export default{
   computed: {
     IsSuperAdmin () {
       return this.$props.isSuperAdmin
+    }
+  },
+  mounted(){
+    switch(this.$route.path){
+      case '/Now':
+        this.$data.activeIndex = '1'
+        break
+      case '/Authority':
+        this.$data.activeIndex = '5'
+        break
+      case '/Release':
+        this.$data.activeIndex = '3'
+        break
+      case '/History':
+        this.$data.activeIndex = '2'
+        break
+      default:
+
     }
   },
   watch: {
@@ -104,7 +125,7 @@ export default{
     .item4menu.is-active {
       background:#1476BF !important;
       color: #ffffff !important;
-      width: 110%;
+      width: 113%;
       box-sizing: border-box;
     }
   }

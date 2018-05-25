@@ -2,18 +2,16 @@
   <div id="app" style="min-width:1200px">
     <XhwlHeader v-if="$route.path!='/ResumeDetails'" @isSuperAdmin="changeSuperAdmin" ></XhwlHeader>
     <div v-if="$route.path!='/ResumeDetails'" style="width: 80%;margin: 0 auto;height: 100%;vertical-align: top">
-      <div v-bind:style="'display: inline-block;width: 15%;position:relative;height:'+height+'px'">
+      <div v-bind:style="'display: inline-block;width: 15%;position:relative;height:'+(height+20)+'px'">
         <XhwlMenu :isSuperAdmin="isSuperAdmin"></XhwlMenu>
       </div>
       <div style="display: inline-block;width: 84%;height: 100%;margin: 0">
-        <router-view v-bind:style="'background: #ffffff;margin-top:20px;overflow:scroll;height:'+height+'px'"></router-view>
+        <router-view class="inner" v-bind:style="'box-shadow: 5px 5px 5px #888888;background: #ffffff;margin-top:20px;overflow-y:auto;height:'+height+'px'"></router-view>
       </div>
     </div>
     <div v-else>
       <router-view ></router-view>
     </div>
-
-    <xhwl-footer></xhwl-footer>
   </div>
 </template>
 
@@ -57,9 +55,9 @@
     },
     mounted(){
       let _this = this
-      _this.$data.height = window.innerHeight-80;
+      _this.$data.height = window.innerHeight-110;
       window.onresize = function temp() {
-        _this.$data.height = window.innerHeight-80;
+        _this.$data.height = window.innerHeight-110;
         console.log(_this.$data.height)
       };
 

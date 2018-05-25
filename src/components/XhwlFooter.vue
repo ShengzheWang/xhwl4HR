@@ -1,15 +1,7 @@
 <template>
-  <div id="XhwlFooter">
+  <div id="XhwlFooter" >
     <div class="footer">
       <div class="wrap">
-        <ul class="friend-link">
-          <li><a target="_blank">兴海物联
-            官方网站</a></li>
-          <li>|</li>
-          <li><a target="_blank">中建集团</a></li>
-          <li>|</li>
-          <li><a target="_blank">校园团队</a></li>
-        </ul>
       </div>
       <div style="text-align: center;width: 100%">
         <a class="copyright"
@@ -27,7 +19,7 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: left;
     color: #2c3e50;
-    margin-top: 60px;
+    margin-top: 0px;
   }
 
 </style>
