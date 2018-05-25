@@ -522,12 +522,10 @@ export default{
     .form4search {
       .el-input__inner {
         border: 2px solid #1476C1;
-        border-radius: 100px 0 0 100px;
         height: 50px;
       }
       .el-input-group__append {
         border: 1px solid #1476C1;
-        border-radius: 0px 100px 100px 0;
         background: #1476C1;
       }
     }
@@ -577,7 +575,6 @@ export default{
       width: 100%;
       height: 54px;
       border: solid 1px #1476C1;
-      border-radius: 50px;
       font-size: 20px;
     }
     .input-name{

@@ -279,11 +279,13 @@ export default {
       width: 27px;
     }
     .button4details{
-      border-radius: 40px !important;
       border:solid 1px #2480C3;
       background: inherit;
       color:#2480C3;
-      width:80px
+      width:80%;
+      font-size: 100%;
+      padding: 10px 0;
+      text-align: center;
     }
     .el-table__header{
       font-size: 15px;
@@ -310,14 +312,11 @@ export default {
       width: 100%;
       height: 54px;
       border: solid 2px #E01B2F;
-      border-radius: 50px;
       font-size: 20px;
     }
     .input-name{
-      border-radius: 50px;
     }
     .input-classes{
-      border-radius: 50px;
     }
     .el-form{
       .el-input{
@@ -339,7 +338,6 @@ export default {
 
     .end-time{
       height:50px !important;
-      border-radius:0 50px 50px 0;
       border-left:none !important;
     }
     .end-time-icon{
@@ -353,7 +351,6 @@ export default {
     }
     .start-time{
       height:50px !important;
-      border-radius:50px 0 0 50px;
       border-right: none !important;
     }
     .start-time-icon::before{

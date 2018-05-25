@@ -224,13 +224,6 @@ export default {
     .button4login{
       transition: all 0.2s;
       letter-spacing: 2px!important;
-      border-radius: 46px!important;
-      font-size: 20px!important;
-    }
-    .button4login{
-      transition: all 0.2s;
-      letter-spacing: 2px!important;
-      border-radius: 46px!important;
       font-size: 20px!important;
     }
     .item4login{

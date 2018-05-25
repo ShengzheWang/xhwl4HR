@@ -1,15 +1,15 @@
 <template>
   <div id="app" style="min-width:1200px">
-    <XhwlHeader @isSuperAdmin="changeSuperAdmin" ></XhwlHeader>
-    <div v-if="$route.path!='/ResumeDetails'" style="width: 80%;margin: 0 auto;height: auto;display: table">
-      <div style="display: table-cell;width: 15%;height: 100%;position: relative">
+    <XhwlHeader v-if="$route.path!='/ResumeDetails'" @isSuperAdmin="changeSuperAdmin" ></XhwlHeader>
+    <div v-if="$route.path!='/ResumeDetails'" style="width: 80%;margin: 0 auto;height: 100%;vertical-align: top">
+      <div v-bind:style="'display: inline-block;width: 15%;position:relative;height:'+height+'px'">
         <XhwlMenu :isSuperAdmin="isSuperAdmin"></XhwlMenu>
       </div>
-      <div style="display: table-cell;width: 84%;">
-        <router-view style="background: #ffffff;margin-top:20px;margin-left: -2%"></router-view>
+      <div style="display: inline-block;width: 84%;height: 100%;margin: 0">
+        <router-view v-bind:style="'background: #ffffff;margin-top:20px;overflow:scroll;height:'+height+'px'"></router-view>
       </div>
     </div>
-    <div v-else="">
+    <div v-else>
       <router-view ></router-view>
     </div>
 
@@ -31,6 +31,7 @@
         value3: '',
         postChosen: '',
         isSuperAdmin:0,
+        height: '',
         items: [
           {text: '展示示例一'},
           {text: '展示示例二'},
@@ -54,6 +55,15 @@
         ]
       }
     },
+    mounted(){
+      let _this = this
+      _this.$data.height = window.innerHeight-80;
+      window.onresize = function temp() {
+        _this.$data.height = window.innerHeight-80;
+        console.log(_this.$data.height)
+      };
+
+    },
     methods: {
       changeSuperAdmin (data) {
         this.$data.isSuperAdmin = data
@@ -68,8 +78,10 @@
   }
 </script>
 
-<style scoped>
+<style lang="less">
   #app {
+    div{
+    }
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

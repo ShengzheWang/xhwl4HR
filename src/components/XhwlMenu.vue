@@ -1,12 +1,12 @@
 <template>
-  <div id="XhwlMenu" style="display: block;height: 100%;position:absolute;top:0;left:0;width: 100%">
+  <div id="XhwlMenu" style="display: block;height: 100%;position:absolute;top:-20px;left:0;width: 100%">
     <el-menu  :default-active="activeIndex" class="el-menu-demo" @select="handleSelect"
               :router='true'
               text-color="#ffffff"
-              background-color="#000000"
+              background-color="#001C31"
               active-text-color='#ffffff'
-              active-background-color="#38BDFE"
-              style="font-size: 16px;display: inline-block;margin: 0 auto;height: 100%;width: 80%;z-index: 0">
+              active-background-color="#1476BF"
+              style="font-size: 16px;display: inline-block;margin: 0 auto;height: 100%;width: 90%;z-index: 0">
       <el-menu-item index="1" style="border: none;margin-top:30px" route="/Now" class="item4menu">
 
         <i class="icon iconfont icon-zhengzaizhaopin-"></i>
@@ -87,7 +87,7 @@ export default{
      line-height: 1.4;
     }
     .item4menu {
-      background: #000000 !important;
+      background: #001C31 !important;
       height: 100px !important;
       text-align: center;
       width: 100%;
@@ -97,18 +97,15 @@ export default{
     }
 
     .item4menu:hover {
-      background:#38BDFE !important;
+      background:#1476BF !important;
       color: #ffffff !important;
 
     }
     .item4menu.is-active {
-      background:#38BDFE !important;
+      background:#1476BF !important;
       color: #ffffff !important;
-      font-weight: 600;
-      width: 140%;
+      width: 110%;
       box-sizing: border-box;
-      border-radius: 200px 0 0 200px;
-      margin-left: -30%;
     }
   }
 </style>
