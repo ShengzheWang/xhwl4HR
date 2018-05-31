@@ -735,6 +735,7 @@ export default {
           query: {
             id: row.id,
             name: row.username,
+            detailsId:_this.$route.query.id,
             type: formName
           }
         })

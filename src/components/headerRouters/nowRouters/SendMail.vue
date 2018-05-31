@@ -23,6 +23,7 @@
     export default {
         name: "SendMail",
       created(){
+        this.$data.detailsId=this.$route.query.detailsId;
         this.$data.name=this.$route.query.name;
         this.$data.id=this.$route.query.id;
         if(this.$route.query.type==='ResumesPassed'){
@@ -45,10 +46,20 @@
             let _this=this;
             this.$axios({
               method:'post',
-              url:'/admin/customMail/'+_this.$data.id+'?'+'title='+_this.$data.title+'&component='+_this.$data.component
+              url:'/admin/customMail/'+_this.$data.id,
+              data:_this.$qs.stringify({
+                title:_this.$data.title,
+                component:_this.$data.component
+              })
 
             }).then(function (response) {
-              _this.$router.push('Details/'+id);
+              _this.$message(
+                {
+                  type:'success',
+                  message:'发送成功'
+                }
+              )
+              _this.$router.push({path:'/Details',query:{id:_this.$data.detailsId}})
             })
           }
       }
