@@ -292,7 +292,6 @@ export default {
         url:'/admin/positions'
       }).then(function (response) {
         _this.$data.tableData=response.data.content;
-        _this.$data.total=response.data.totalElements;
       })
     },
     handlePageChange (val) {
@@ -307,11 +306,9 @@ export default {
         url:'/admin/positions'
       }).then(function (response) {
         _this.$data.tableData=response.data.content;
-        _this.$data.total=response.data.totalElements;
       })
     },
     handleClick (row) {
-      //console.log(row);
       this.$router.push({path:'/Details',query:{id:row.id}})
 
     },

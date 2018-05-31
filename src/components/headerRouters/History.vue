@@ -3,39 +3,42 @@
     <div class="block">
       <div style="width:90%;margin: 2% auto 0 auto">
         <div style="height: 60px"></div>
-        <el-form ref="form" :model="form" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">
+        <el-form ref="formSearch" :model="formSearch" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">
           <el-form-item >
             <el-col style="width: 38%">
-              <el-date-picker type="date" prefix-icon="start-time-icon" class="start-time" placeholder="发布日期-起" v-model="form.date1" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" prefix-icon="start-time-icon" class="start-time" placeholder="发布日期-起" v-model="formSearch.publish_date" style="width: 100%;"></el-date-picker>
             </el-col>
             <el-col style="width: 2%">
               <div style="width: 100%;height: 50px;color:#1476C1;text-align: center;font-size: 30px;vertical-align: middle;border-top:#1476C1 solid 2px;border-bottom: #1476C1 solid 2px ">|</div>
             </el-col>
             <el-col style="width: 38%">
-              <el-date-picker type="date" prefix-icon="end-time-icon" class="end-time" placeholder="发布日期-终" v-model="form.date2" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" prefix-icon="end-time-icon" class="end-time" placeholder="发布日期-终" v-model="formSearch.end_date" style="width: 100%;"></el-date-picker>
             </el-col>
           </el-form-item>
 
             <el-col style="width: 38%">
               <el-form-item >
-            <el-input v-model="form.name" prefix-icon="name-icon" placeholder="职位名称" class="input-name" ></el-input>
+            <el-input v-model="formSearch.positionName" prefix-icon="name-icon" placeholder="职位名称" class="input-name" ></el-input>
               </el-form-item>
             </el-col>
             <el-col style="width: 2%">
               <div style="width: 100%"><p> </p></div>
             </el-col>
             <el-col style="width: 38%;margin-left: -2px">
-              <el-form-item >
-              <el-input v-model="form.region" prefix-icon="classes-icon" placeholder="招聘部门" class="input-classes">
-              </el-input>
-              </el-form-item>
+              <el-autocomplete class="input-classes"
+                               v-model="state1"
+                               :fetch-suggestions="querySearch"
+                               placeholder="请输入部门"
+                               @select="handleSelect1" :clearable="true"
+                               prefix-icon="classes-icon"
+              ></el-autocomplete>
             </el-col>
             <el-col style="width: 2%">
               <div style="width: 100%"><p> </p></div>
             </el-col>
             <el-col style="width: 20%">
               <el-form-item >
-              <el-button class="button4choose">筛选</el-button>
+              <el-button class="button4choose" @click="searchPositions">筛选</el-button>
               </el-form-item>
             </el-col>
         </el-form>
@@ -97,7 +100,24 @@ import ElButton from '../../../node_modules/element-ui/packages/button/src/butto
 import ElForm from '../../../node_modules/element-ui/packages/form/src/form.vue'
 import ElIcon from '../../../node_modules/element-ui/packages/icon/src/icon.vue'
 
+Date.prototype.Format = function (fmt) {
+  var o = {
+    "M+": this.getMonth() + 1, //月份
+    "d+": this.getDate(), //日
+    "h+": this.getHours(), //小时
+    "m+": this.getMinutes(), //分
+    "s+": this.getSeconds(), //秒
+    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+    "S": this.getMilliseconds() //毫秒
+  };
+  if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+  return fmt;
+}
+
 export default {
+
   components: {
     ElIcon,
     ElForm,
@@ -106,6 +126,7 @@ export default {
   name: 'History',
   data () {
     return {
+      state1:'',
       loading:true,
       currentPage: 1,
       total: 0,
@@ -113,6 +134,12 @@ export default {
       form: {},
       tableData: [{positionName: '', department: '', workPlace: '', publishDate: '', deadline: '',recruitmentType:'',id:''
       }],
+      formSearch:{
+        publish_date:'',
+        end_date:'',
+        departmentName:'',
+        positionName:''
+      },
       departments:[             //所有的部门
         {name:'人事行政部',index:'1'},
         {name:'财务管理部',index:'2'},
@@ -129,17 +156,18 @@ export default {
         {name:'华中办事处',index:'13'},
         {name:'华北办事处',index:'14'}
       ],
+      AllDepartments:[]
     }
   },
   created(){
     let _this=this
     this.$axios({
-      method: 'post',
+      method: 'get',
       data: _this.$qs.stringify({
         size: 20,
         page: 1
       }),
-      url:'/admin/positions'
+      url:'/admin/PositionAfterDeadline/'
     }).then(function (response) {
       _this.$data.tableData=response.data.content;
       _this.$data.loading = false
@@ -179,7 +207,30 @@ export default {
 
       })
     },
+    searchPositions(){
+      let _this=this;
 
+      console.log(this.$data.formSearch);
+
+/*
+      if(this.$data.formSearch.publish_date) {
+        this.$data.formSearch.publish_date = this.$data.formSearch.publish_date.Format('yyyy-MM-nn');
+      }
+
+      if(this.$data.formSearch.end_date) {
+        this.$data.formSearch.end_date = this.$data.formSearch.end_date.Format('yyyy-MM-nn');
+      }
+*/
+
+      this.$axios({
+        method:'post',
+        url:'/admin/searchPositionAfterDeadline?'+'publish_date='+_this.$data.formSearch.publish_date+'&end_date='+_this.$data.formSearch.end_date+
+          '&departmentName='+_this.$data.formSearch.department+'&positionName='+_this.$data.formSearch.positionName
+      }).then(function (response) {
+        console.log(response);
+      })
+
+    },
     handleSizeChange (val) {
       this.$data.pageSize = val
       let _this=this
@@ -212,10 +263,44 @@ export default {
     },
     handleClick (row) {
       //console.log(row);
+      this.$router.push({path:'/HistoryDetails',query:{id:row.id}})
+    },
+    handleSelect1(item) {       //部门选择
+      this.$data.formSearch.department=item.index;
+    },
+    querySearch(queryString, cb) {
+      var AllDepartments = this.AllDepartments;
+      var results = queryString ? AllDepartments.filter(this.createFilter(queryString)) : AllDepartments;
+      // 调用 callback 返回建议列表的数据
+      cb(results);
+    },
+    createFilter(queryString) {
+      return (department) => {
+        return (department.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
+    loadAll() {
+      return [
+        {"value":"人事行政部","index":"1"},
+        {"value":"财务管理部","index":"2"},
+        {"value":"部门管理部","index":"3"},
+        {"value":"市场开发部","index":"4"},
+        {"value":"工程技术部","index":"5"},
+        {"value":"运维及质量安全部","index":"6"},
+        {"value":"研发设计部","index":"7"},
+        {"value":"华南办事处","index":"8"},
+        {"value":"深圳办事处","index":"9"},
+        {"value":"北方办事处","index":"10"},
+        {"value":"西部办事处","index":"11"},
+        {"value":"华东办事处","index":"12"},
+        {"value":"华中办事处","index":"13"},
+        {"value":"华北办事处","index":"14"}
+      ];
+    },
 
-      this.$router.push({path:'/Details',query:{id:row.id}})
-
-    }
+  },
+  mounted(){
+    this.AllDepartments = this.loadAll();
   }
 }
 </script>

@@ -306,7 +306,7 @@
                     style="width: 13%"
                   >
                     <template slot-scope="scope">
-                      <el-button  @click="tell(scope.row)" type="text" size="middle">
+                      <el-button  @click="tell(scope.row,'ResumesPassed')" type="text" size="middle">
                         <i class="icon iconfont icon-youxiang"></i>
                       </el-button>
                     </template>
@@ -355,6 +355,16 @@
                       </el-button>
                     </template>
                   </el-table-column>
+                  <el-table-column
+                    label="发送通知"
+                    style="width: 13%"
+                  >
+                    <template slot-scope="scope">
+                      <el-button  @click="tell(scope.row,'ResumesRefused')" type="text" size="middle">
+                        <i class="icon iconfont icon-youxiang"></i>
+                      </el-button>
+                    </template>
+                  </el-table-column>
                 </el-table>
 
               </div>
@@ -363,6 +373,7 @@
 
         </div>
       </div>
+
     </div>
 </template>
 <script>
@@ -383,6 +394,7 @@ export default {
   name: 'Details',
   data () {
     return {
+      mailShow:false,
       form: {
         id:'',
         positionName: '',
@@ -445,25 +457,19 @@ export default {
         ],
       ResumesRefuse: [
         {id:'',username:'',sex:'',age:'',highestEducation:'',deliverDate:'',auth:''}
-      ]
+      ],
+      formMail:{
+        title:'',
+        component:''
+      }
     }
   },
   watch:{
+
     ResumesRefuse:{
       handler(old,val){
         let _this=this;
-        this.$axios({         //获取已拒绝简历名单
-          method:'get',
-          url:'/admin/Refuse/'+_this.$route.query.id
-        }).then(function (response) {
-          _this.$data.ResumesRefuse=response.data;
-        })
-      }
 
-    },
-    ResumesPassed:{
-      handler(old,val) {
-        let _this = this;
         this.$axios({         //获取已通过名单
           method: 'get',
           url: '/admin/Pass/' + _this.$route.query.id
@@ -471,12 +477,7 @@ export default {
           _this.$data.ResumesPassed = response.data;
 
         })
-      }
 
-    },
-    ResumesHRinterview:{
-      handler(old,val){
-        let _this=this
         this.$axios({
           method:'get',
           url:'/admin/HRInterview/'+_this.$route.query.id
@@ -488,55 +489,37 @@ export default {
             message:error.response.data.msg
           })
         })
-      }
 
-    },
-    ResumesDepartmentInterview:{
-      handler(old,val){
-        let _this=this;
         this.$axios({
           method:'get',
           url:'/admin/DepartmentInterview/'+_this.$route.query.id
         }).then(function (response) {
           _this.$data.ResumesDepartmentInterview=response.data
         })
-      }
 
-    },
-    ResumesDepartmentWritten:{
-      handler(old,val){
-        let _this=this
         this.$axios({
           method:'get',
           url:"/admin/DepartmentWritten/"+_this.$route.query.id
         }).then(function (response) {
           _this.$data.ResumesDepartmentWritten=response.data;
         })
-      }
 
-    },
-    ResumesHRFirst:{
-      handler(old,val){
-        let _this=this;
+
         this.$axios({
           method:'get',
           url:'/admin/HRFristReview/'+_this.$route.query.id
         }).then(function (response) {
           _this.$data.ResumesHRFirst=response.data;
         })
-      }
-    },
-    ResumesFirst:{
-      handler(old,val){
-        let _this=this;
+
         this.$axios({
           method:'get',
           url:'/admin/ResumeReview/'+_this.$route.query.id
         }).then(function (response) {
           _this.$data.ResumesFirst=response.data
         })
-      }
 
+      }
     }
   },
   created(){
@@ -686,27 +669,76 @@ export default {
       })
     },
 
-    tell(row){
+    tell(row,formName){
       let _this=this;
-      this.$confirm('确定对 '+row.username+'发送邮件和短信?', '提示', {
+      let flag=false;
+/*
+            this.$confirm('确定对 ' + row.username + '发送邮件和短信?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+            }).then(() => {
+              if(formName==='ResumesPassed') {
+                _this.$axios({
+                  method: 'post',
+                  url: '/admin/onNote/' + row.id+'?month=&day=&hour=&month=&minute='
+                }).then(function (response) {
+                  _this.$message({
+                    type: 'success',
+                    message: '发送成功'
+                  })
+                  flag=true
+                }).catch((error) => {
+                  _this.$message({
+                    type: 'success',
+                    message: '发送失败'
+                  })
+                })
+              }else{
+                _this.$axios({
+                  method: 'post',
+                  url: '/admin/offNote/' + row.id
+                }).then(function (response) {
+                  _this.$message({
+                    type: 'success',
+                    message: '发送成功'
+                  })
+                  flag=true
+                }).catch((error) => {
+                  _this.$message({
+                    type: 'success',
+                    message: '发送失败'
+                  })
+                })
+              }
+
+              if(flag===true) {
+                //发送邮件
+                _this.$router.push({
+                  path: '/SendMail',
+                  query: {
+                    id: row.id,
+                    name: row.username,
+                    type: formName
+                  }
+                })
+              }
+        }).catch(() => {
+        });
+*/
+
+      this.$confirm('确定对 ' + row.username + '发送邮件?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
       }).then(() => {
-        _this.$axios({
-          method: 'post',
-          url: '/admin/onNoteWithoutDate/' + row.id
-        }).then(function (response) {
-          _this.$message({
-            type: 'success',
-            message: '发送成功'
-          })
-        }).catch((error) => {
-          _this.$message({
-            type: 'success',
-            message: '发送失败'
-          })
+        _this.$router.push({
+          path: '/SendMail',
+          query: {
+            id: row.id,
+            name: row.username,
+            type: formName
+          }
         })
-      }).catch(() => {});
+      }).catch((err)=>{})
     },
     revokeReject(row){
       let _this=this;

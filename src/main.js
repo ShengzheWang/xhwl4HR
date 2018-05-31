@@ -10,6 +10,8 @@ import Release from './components/headerRouters/Release.vue'
 import Details from './components/headerRouters/nowRouters/Details.vue'
 import ResumeDetails from './components/headerRouters/nowRouters/detailsRouters/ResumeDetails.vue'
 import Authority from './components/headerRouters/Authority.vue'
+import HistoryDetails from './components/headerRouters/nowRouters/HistoryDetails'
+import SendMail from './components/headerRouters/nowRouters/SendMail'
 
 import axios from 'axios'
 import qs from 'qs'
@@ -35,7 +37,9 @@ const routes = [
   { path: '/Details', component: Details},
   { path: '/ResumeDetails', component: ResumeDetails},
   { path: '/Authority', component: Authority},
-  { path: '/History', component: History}
+  { path: '/History', component: History},
+  { path: '/HistoryDetails',component:HistoryDetails},
+  { path:'/SendMail',component:SendMail}
 ]
 const router = new Router({
   routes // （缩写）相当于 routes: routes
