@@ -29,14 +29,6 @@ a:link {
   transition: all 0.3s;
 }
 
-.el-form-item:focus {
-  transform: scale(1.01);
-}
-
-.el-form-item:hover {
-  transform: scale(1.01);
-}
-
 .el-header, .el-footer {
   color: #333;
   background: #ffffff;

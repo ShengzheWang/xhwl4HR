@@ -1,18 +1,21 @@
 <template>
     <div>
-      <div style="margin-left: 10%">
+      <div style="margin-left: 10%;width: 80%">
         <div style="height:30px;"></div>
-      <div style="font-size:20px">给求职者{{name}}发送{{type}}邮件</div>
+        <div style="font-size:32px">给求职者{{name}}发送{{type}}邮件</div>
+        <div class="line" style="margin: 40px auto"></div>
         <div style="height:30px;"></div>
-        <el-form>
+        <el-form labelWidth="10%" label-position="top">
+
         <el-form-item label="邮件标题">
-          <el-input style="width: 50%;" v-model="title"></el-input>
+          <el-input style="width: 100%;" v-model="title"></el-input>
         </el-form-item>
         <el-form-item label="邮件内容">
-          <el-input style="width: 50%;" :rows="10" type="textarea" v-model="component"></el-input>
+          <el-input style="width: 100%;"  :rows="10" type="textarea" v-model="component"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button style="margin-left: 7%" @click="sendMail">发送邮件</el-button>
+          <el-button  class="button4release" @click="sendMail">发送邮件</el-button>
+          <el-button  style="position: absolute;right: 0" class="button4cancel" @click="exitMail">取消发送</el-button>
         </el-form-item>
       </el-form>
       </div>
@@ -42,6 +45,9 @@
           }
         },
       methods:{
+        exitMail(){
+          this.$router.push({path:'/Details',query:{id:this.$data.detailsId}})
+        },
           sendMail(){
             let _this=this;
             this.$axios({
@@ -67,5 +73,22 @@
 </script>
 
 <style scoped>
-
+  .button4release{
+    background: #E01B2F;
+    color: #ffffff;
+    height: 54px;
+    border: solid 2px #E01B2F;
+    font-size: 20px;
+  }
+  .button4cancel{
+    background: #ffffff;
+    color: #6C6F66;
+    height: 54px;
+    border: solid 2px #DCDFE6;
+    font-size: 20px;
+  }
+  .line{
+    border: solid 1px #1476C1;
+    margin-top: 0;
+  }
 </style>

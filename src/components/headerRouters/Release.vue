@@ -301,7 +301,6 @@
       color: #ffffff;
       height: 54px;
       border: solid 2px #E01B2F;
-      border-radius: 50px;
       font-size: 20px;
     }
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
