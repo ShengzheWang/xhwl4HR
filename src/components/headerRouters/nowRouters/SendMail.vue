@@ -1,8 +1,14 @@
 <template>
     <div>
-      <div style="margin-left: 10%;width: 80%">
-        <div style="height:30px;"></div>
-        <div style="font-size:32px">给求职者{{name}}发送{{type}}邮件</div>
+        <div class="block">
+          <div style="width:90%;margin: 2% auto 0 auto">
+            <div style="height: 60px"></div>
+
+            <el-breadcrumb separator="/">
+              <el-breadcrumb-item :to="{ path: '/Now' }">招聘中</el-breadcrumb-item>
+              <el-breadcrumb-item :to="{path:'/Details',query:{id:this.$data.detailsId}}">职位详情</el-breadcrumb-item>
+              <el-breadcrumb-item>给求职者{{name}}发送{{type}}邮件</el-breadcrumb-item>
+            </el-breadcrumb>
         <div class="line" style="margin: 40px auto"></div>
         <div style="height:30px;"></div>
         <el-form labelWidth="10%" label-position="top">
@@ -19,6 +25,7 @@
         </el-form-item>
       </el-form>
       </div>
+    </div>
     </div>
 </template>
 
