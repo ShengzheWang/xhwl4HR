@@ -402,6 +402,9 @@ export default {
     .input-name{
     }
     .input-classes{
+      width: 100%;
+      .el-input {
+      }
     }
     .el-form{
       .el-input{
@@ -448,6 +451,7 @@ export default {
       content: url("../../../static/img/name.jpg");
     }
     .classes-icon{
+      margin-top: 11px;
       height: 25px;
     }
     .classes-icon::before{
