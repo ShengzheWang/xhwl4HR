@@ -31,8 +31,8 @@
           </el-form-item>
           <el-form-item label="招聘类型" style="" prop="recruitmentType">
             <el-select v-model.number="form.recruitmentType" placeholder="请选择招聘类型">
-              <el-option label="社会招聘" :value=1></el-option>
-              <el-option label="校园招聘" :value=2></el-option>
+              <el-option label="社会招聘" :value=2></el-option>
+              <el-option label="校园招聘" :value=1></el-option>
               <el-option label="实习生招聘" :value=3></el-option>
             </el-select>
           </el-form-item>
@@ -203,7 +203,7 @@
           _this.$data.form.resumeAuditDepartment=response.data.resumeAuditDepartment;
           _this.$data.form.assessmentDepartment=response.data.assessmentDepartment;
           _this.$data.form.positionType=response.data.positionType;
-          _this.$data.form.recruitmentType=response.data.recruitmentType;
+          _this.$data.form.recruitmentType=parseInt(response.data.recruitmentType);
           _this.$data.form.workPlace=response.data.workPlace;
           _this.$data.form.education=response.data.education;
           _this.$data.form.recruitingNumbers=response.data.recruitingNumbers;
