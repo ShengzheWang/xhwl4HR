@@ -36,8 +36,10 @@
               <el-option label="实习生招聘" :value=3></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="工作地点" style="width: 220px" prop="workPlace">
-            <el-input v-model="form.workPlace"></el-input>
+          <el-form-item label="工作地点" style="" prop="workPlace">
+            <el-select v-model.number="form.workPlace" placeholder="请选择招聘类型">
+              <el-option label="深圳" value="深圳"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="学历要求" style="" prop="education">
             <el-select v-model="form.education" placeholder="请选择">
@@ -46,6 +48,9 @@
               <el-option label="博士" value="博士"></el-option>
               <el-option label="大专" value="大专"></el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="工作年限" style="width: 30%" prop="workSeniority">
+            <el-input v-model="form.workSeniority"></el-input>
           </el-form-item>
           <el-form-item label="招聘人数" style="" prop="recruitingNumbers">
             <el-input-number :min="1" :max="10" :step="1" v-model.number="form.recruitingNumbers"></el-input-number>
@@ -103,6 +108,7 @@
           positionType:'',
           recruitmentType:'',
           workPlace:'',
+          workSeniority:'',
           education:'',
           recruitingNumbers:'',
           deadline:null,
@@ -122,6 +128,7 @@
           positionType:'',
           recruitmentType:'',
           workPlace:'',
+          workSeniority:'',
           education:'',
           recruitingNumbers:'',
           deadline:'',
@@ -205,6 +212,7 @@
           _this.$data.form.positionType=response.data.positionType;
           _this.$data.form.recruitmentType=parseInt(response.data.recruitmentType);
           _this.$data.form.workPlace=response.data.workPlace;
+          _this.$data.form.workSeniority=response.data.workSeniority;
           _this.$data.form.education=response.data.education;
           _this.$data.form.recruitingNumbers=response.data.recruitingNumbers;
           _this.$data.form.deadline=response.data.deadline;

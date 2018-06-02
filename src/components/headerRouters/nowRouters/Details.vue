@@ -301,6 +301,7 @@
                       </el-button>
                     </template>
                   </el-table-column>
+                  <!--
                   <el-table-column
                     label="发送通知"
                     style="width: 13%"
@@ -310,7 +311,7 @@
                         <i class="icon iconfont icon-youxiang"></i>
                       </el-button>
                     </template>
-                  </el-table-column>
+                  </el-table-column>-->
                 </el-table>
               </div>
             </el-tab-pane>
@@ -355,6 +356,7 @@
                       </el-button>
                     </template>
                   </el-table-column>
+                  <!--
                   <el-table-column
                     label="发送通知"
                     style="width: 13%"
@@ -364,7 +366,7 @@
                         <i class="icon iconfont icon-youxiang"></i>
                       </el-button>
                     </template>
-                  </el-table-column>
+                  </el-table-column>-->
                 </el-table>
 
               </div>
@@ -613,7 +615,30 @@ export default {
   },
   methods: {
     changeStatus(row,formName,formName1){
+
+      let NextForm='';
+      let NextForm1='';
+      if(formName==='ResumesFirst'){
+        NextForm='简历初审'
+        NextForm1='HR初审'
+      }else if(formName==='ResumesHRFirst'){
+        NextForm='HR初审'
+        NextForm1='部门笔试'
+      }else if(formName==='ResumesDepartmentWritten'){
+        NextForm='部门笔试'
+        NextForm1='部门面试'
+      }else if(formName==='ResumesDepartmentInterview'){
+        NextForm='部门面试'
+        NextForm1='HR面试'
+      }else if(formName==='ResumesHRinterview'){
+        NextForm='HR面试'
+      }
+
+
       let _this=this;
+      let name=this.$data[formName][row].username;
+      let id=this.$data[formName][row].id;
+
       this.$confirm('请确定您将对 '+_this.$data[formName][row].username+' 进行操作（下一步将无法取消）','重要',{
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -640,6 +665,18 @@ export default {
             })
             _this.$data[formName1].push(_this.$data[formName][row])
             _this.$data[formName].splice(row,1)
+            _this.$router.push({
+              path: '/SendMail',
+              query: {
+                id: id,
+                name: name,
+                detailsId: _this.$route.query.id,
+                type: 'passed',
+                step:NextForm,
+                stepNext:NextForm1,
+                positionName:_this.$data.form.positionName
+              }
+            })
           }).catch((error)=>{
             _this.$message({
               type:'error',
@@ -657,6 +694,18 @@ export default {
             })
             _this.$data.ResumesRefuse.push(_this.$data[formName][row])
             _this.$data[formName].splice(row,1)
+            _this.$router.push({
+              path: '/SendMail',
+              query: {
+                id: id,
+                name: name,
+                detailsId: _this.$route.query.id,
+                type: 'reject',
+                step:NextForm,
+                stepNext:NextForm1,
+                positionName:_this.$data.form.positionName
+              }
+            })
           }).catch((error)=>{
             _this.$message({
               type:'error',
@@ -672,59 +721,6 @@ export default {
     tell(row,formName){
       let _this=this;
       let flag=false;
-/*
-            this.$confirm('确定对 ' + row.username + '发送邮件和短信?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-            }).then(() => {
-              if(formName==='ResumesPassed') {
-                _this.$axios({
-                  method: 'post',
-                  url: '/admin/onNote/' + row.id+'?month=&day=&hour=&month=&minute='
-                }).then(function (response) {
-                  _this.$message({
-                    type: 'success',
-                    message: '发送成功'
-                  })
-                  flag=true
-                }).catch((error) => {
-                  _this.$message({
-                    type: 'success',
-                    message: '发送失败'
-                  })
-                })
-              }else{
-                _this.$axios({
-                  method: 'post',
-                  url: '/admin/offNote/' + row.id
-                }).then(function (response) {
-                  _this.$message({
-                    type: 'success',
-                    message: '发送成功'
-                  })
-                  flag=true
-                }).catch((error) => {
-                  _this.$message({
-                    type: 'success',
-                    message: '发送失败'
-                  })
-                })
-              }
-
-              if(flag===true) {
-                //发送邮件
-                _this.$router.push({
-                  path: '/SendMail',
-                  query: {
-                    id: row.id,
-                    name: row.username,
-                    type: formName
-                  }
-                })
-              }
-        }).catch(() => {
-        });
-*/
 
       this.$confirm('确定对 ' + row.username + '发送邮件?', '提示', {
         confirmButtonText: '确定',
@@ -733,6 +729,8 @@ export default {
         _this.$router.push({
           path: '/SendMail',
           query: {
+            positionName:_this.$data.positionName,
+            address:_this.$data.workPlace,
             id: row.id,
             name: row.username,
             detailsId:_this.$route.query.id,
