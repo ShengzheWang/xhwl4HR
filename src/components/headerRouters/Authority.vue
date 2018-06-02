@@ -351,6 +351,11 @@ export default{
 
     deleteClick(index){         //删除管理员
       let _this=this;
+      this.$confirm('确定删除管理员'+_this.$data.formAdmins[index].username+'?', '提示', {
+        confirmButtonText: '撤销',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
       let key=_this.$data.formAdmins[index].username;
       console.log(this.$data.formAdmins[index].id);
       this.$axios({
@@ -368,8 +373,7 @@ export default{
           type:'error',
           message:error.response.data.msg
         })
-
-      })
+      })})
     },
     handleSizeChange (val) {
       this.$data.loading  = true
