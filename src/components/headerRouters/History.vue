@@ -208,27 +208,32 @@ export default {
       })
     },
     searchPositions(){
-      let _this=this;
+       let _this=this;
 
-      console.log(this.$data.formSearch);
+        let publish_date=this.$data.formSearch.publish_date;
+        let end_date=this.$data.formSearch.end_date;
 
-/*
-      if(this.$data.formSearch.publish_date) {
-        this.$data.formSearch.publish_date = this.$data.formSearch.publish_date.Format('yyyy-MM-nn');
-      }
 
-      if(this.$data.formSearch.end_date) {
-        this.$data.formSearch.end_date = this.$data.formSearch.end_date.Format('yyyy-MM-nn');
-      }
-*/
+        if(this.$data.formSearch.publish_date) {
+          publish_date = this.$data.formSearch.publish_date.Format('yyyy-MM-dd');
+        }else{
+          publish_date='2000-01-01';
+        }
 
-      this.$axios({
-        method:'post',
-        url:'/admin/searchPositionAfterDeadline?'+'publish_date='+_this.$data.formSearch.publish_date+'&end_date='+_this.$data.formSearch.end_date+
+        if(this.$data.formSearch.end_date) {
+          end_date = this.$data.formSearch.end_date.Format('yyyy-MM-dd');
+        }else{
+          end_date='2000-01-01';
+        }
+
+
+        this.$axios({
+          method:'post',
+          url:'/admin/searchPositionAfterDeadline?'+'publish_date='+publish_date+'&end_date='+end_date+
           '&departmentName='+_this.$data.formSearch.department+'&positionName='+_this.$data.formSearch.positionName
-      }).then(function (response) {
-        console.log(response);
-      })
+        }).then(function (response) {
+          _this.$data.tableData=response.data.content;
+        })
 
     },
     handleSizeChange (val) {
