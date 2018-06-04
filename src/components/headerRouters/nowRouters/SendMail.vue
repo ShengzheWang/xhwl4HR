@@ -22,7 +22,7 @@
             <el-input style="width: 20%;" v-model="contact"></el-input>
           </el-form-item>
           <el-form-item label="邮件预览">
-            <el-input type="textarea" :rows="20" :disabled="true" v-model="component"></el-input>
+            <el-input type="textarea" :rows="20"  v-model="component"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button  class="button4release" @click="sendMail">发送邮件</el-button>
