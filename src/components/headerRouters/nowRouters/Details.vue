@@ -101,6 +101,20 @@
                   </el-table-column>
                 </el-table>
               </div>
+              <div class="el-pagination__total page-total">
+                共<a>{{total4ResumesFirst}}</a>条
+              </div>
+              <div class="page-select">
+                <el-pagination
+                  @size-change="handleSizeChange4ResumesFirst"
+                  @current-change="handlePageChange4ResumesFirst"
+                  :current-page="currentPageForResumeFirst"
+                  :page-sizes="[5, 10, 20, 30]"
+                  :page-size="pageSize4ResumesFirst"
+                  layout="sizes, prev, pager, next, jumper"
+                  :total="total4ResumesFirst">
+                </el-pagination>
+              </div>
             </el-tab-pane>
             <el-tab-pane label="HR初审" name="1">
               <div style="width:100%;margin: 0% auto 0 auto">
@@ -144,6 +158,20 @@
                   </el-table-column>
                 </el-table>
               </div>
+              <div class="el-pagination__total page-total">
+                共<a>{{total4HRFirst}}</a>条
+              </div>
+              <div class="page-select">
+                <el-pagination
+                  @size-change="handleSizeChange4HRFirst"
+                  @current-change="handlePageChange4HRFirst"
+                  :current-page="currentPage4HRFirst"
+                  :page-sizes="[5, 10, 20, 30]"
+                  :page-size="pageSize4HRFirst"
+                  layout="sizes, prev, pager, next, jumper"
+                  :total="total4HRFirst">
+                </el-pagination>
+              </div>
             </el-tab-pane>
             <el-tab-pane label="部门笔试" name="2">
               <div style="width:100%;margin: 0% auto 0 auto">
@@ -185,6 +213,20 @@
                     </template>
                   </el-table-column>
                 </el-table>
+              </div>
+              <div class="el-pagination__total page-total">
+                共<a>{{total4DepartmentWritten}}</a>条
+              </div>
+              <div class="page-select">
+                <el-pagination
+                  @size-change="handleSizeChange4DepartmentWritten"
+                  @current-change="handlePageChange4DepartmentWritten"
+                  :current-page="currentPage4DepartmentWritten"
+                  :page-sizes="[5, 10, 20, 30]"
+                  :page-size="pageSize4DepartmentWritten"
+                  layout="sizes, prev, pager, next, jumper"
+                  :total="total4DepartmentWritten">
+                </el-pagination>
               </div>
             </el-tab-pane>
             <el-tab-pane label="部门面试" name="3">
@@ -228,7 +270,20 @@
                   </el-table-column>
                 </el-table>
               </div>
-
+              <div class="el-pagination__total page-total">
+                共<a>{{total4DepartmentInterview}}</a>条
+              </div>
+              <div class="page-select">
+                <el-pagination
+                  @size-change="handleSizeChange4DepartmentInterview"
+                  @current-change="handlePageChange4DepartmentInterview"
+                  :current-page="currentPage4DepartmentInterview"
+                  :page-sizes="[5, 10, 20, 30]"
+                  :page-size="pageSize4DepartmentInterview"
+                  layout="sizes, prev, pager, next, jumper"
+                  :total="total4DepartmentInterview">
+                </el-pagination>
+              </div>
             </el-tab-pane>
             <el-tab-pane label="HR面试" name="4">
               <div style="width:100%;margin: 0% auto 0 auto">
@@ -271,7 +326,20 @@
                   </el-table-column>
                 </el-table>
               </div>
-
+              <div class="el-pagination__total page-total">
+                共<a>{{total4HRinterview}}</a>条
+              </div>
+              <div class="page-select">
+                <el-pagination
+                  @size-change="handleSizeChange4HRInterview"
+                  @current-change="handlePageChange4HRInterview"
+                  :current-page="currentPage4HRinterview"
+                  :page-sizes="[5, 10, 20, 30]"
+                  :page-size="pageSize4HRinterview"
+                  layout="sizes, prev, pager, next, jumper"
+                  :total="total4HRinterview">
+                </el-pagination>
+              </div>
             </el-tab-pane>
             <el-tab-pane label="已通过" name="5">
               <div style="width:100%;margin: 0% auto 0% auto">
@@ -313,6 +381,20 @@
                     </template>
                   </el-table-column>-->
                 </el-table>
+              </div>
+              <div class="el-pagination__total page-total">
+                共<a>{{total4Passed}}</a>条
+              </div>
+              <div class="page-select">
+                <el-pagination
+                  @size-change="handleSizeChange4Passed"
+                  @current-change="handlePageChange4Passed"
+                  :current-page="currentPage4Passed"
+                  :page-sizes="[5, 10, 20, 30]"
+                  :page-size="pageSize4Passed"
+                  layout="sizes, prev, pager, next, jumper"
+                  :total="total4Passed">
+                </el-pagination>
               </div>
             </el-tab-pane>
               <el-tab-pane label="已回绝" name="6">
@@ -368,8 +450,21 @@
                     </template>
                   </el-table-column>-->
                 </el-table>
-
               </div>
+                <div class="el-pagination__total page-total">
+                  共<a>{{total4Refuse}}</a>条
+                </div>
+                <div class="page-select">
+                  <el-pagination
+                    @size-change="handleSizeChange4Refuse"
+                    @current-change="handlePageChange4Refuse"
+                    :current-page="currentPage4refuse"
+                    :page-sizes="[5, 10, 20, 30]"
+                    :page-size="pageSize4Refuse"
+                    layout="sizes, prev, pager, next, jumper"
+                    :total="total4Refuse">
+                  </el-pagination>
+                </div>
             </el-tab-pane>
           </el-tabs>
 
@@ -401,7 +496,7 @@ export default {
         id:'',
         positionName: '',
         recruitmentType: '',
-        num: 5,
+        num: 0,
         workPlace: '',
         education: '',
         assessmentDepartment: '',
@@ -412,7 +507,6 @@ export default {
         positionType:'',
         resumeAuditDepartment:'',
         recruitingNumbers:''
-
       },
       deliverNumber:'',
       borderColor: '#1476C1',
@@ -439,24 +533,45 @@ export default {
         {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
         {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'}
       ],
+      currentPageForResumeFirst:1,
+      total4ResumesFirst:0,
+      pageSize4ResumesFirst:10,
       ResumesFirst:[
         {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
       ],
+      currentPage4HRFirst:1,
+      total4HRFirst:0,
+      pageSize4HRFirst:10,
       ResumesHRFirst:[
         {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
       ],
+      total4DepartmentWritten:0,
+      pageSize4DepartmentWritten:10,
+      currentPage4DepartmentWritten:1,
       ResumesDepartmentWritten:[
         {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
       ],
+      currentPage4DepartmentInterview:1,
+      total4DepartmentInterview:0,
+      pageSize4DepartmentInterview:10,
       ResumesDepartmentInterview:[
         {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
       ],
+      currentPage4HRinterview:1,
+      total4HRinterview:0,
+      pageSize4HRinterview:10,
       ResumesHRinterview:[
         {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
       ],
+      currentPage4Passed:1,
+      total4Passed:0,
+      pageSize4Passed:10,
       ResumesPassed: [
         {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
         ],
+      currentPage4refuse:1,
+      total4Refuse:0,
+      pageSize4Refuse:10,
       ResumesRefuse: [
         {id:'',username:'',sex:'',age:'',highestEducation:'',deliverDate:'',auth:''}
       ],
@@ -476,15 +591,16 @@ export default {
           method: 'get',
           url: '/admin/Pass/' + _this.$route.query.id
         }).then(function (response) {
-          _this.$data.ResumesPassed = response.data;
-
+          _this.$data.ResumesPassed = response.data.content;
+          _this.$data.total4Passed=response.data.totalElements
         })
 
         this.$axios({
           method:'get',
           url:'/admin/HRInterview/'+_this.$route.query.id
         }).then(function (response) {
-          _this.$data.ResumesHRinterview=response.data
+          _this.$data.ResumesHRinterview=response.data.content
+          _this.$data.total4HRinterview=response.data.totalElements
         }).catch(function (error) {
           _this.$message({
             type:'error',
@@ -496,14 +612,16 @@ export default {
           method:'get',
           url:'/admin/DepartmentInterview/'+_this.$route.query.id
         }).then(function (response) {
-          _this.$data.ResumesDepartmentInterview=response.data
+          _this.$data.ResumesDepartmentInterview=response.data.content
+          _this.$data.total4HRinterview=response.data.totalElements
         })
 
         this.$axios({
           method:'get',
           url:"/admin/DepartmentWritten/"+_this.$route.query.id
         }).then(function (response) {
-          _this.$data.ResumesDepartmentWritten=response.data;
+          _this.$data.ResumesDepartmentWritten=response.data.content;
+          _this.$data.total4DepartmentWritten=response.data.totalElements
         })
 
 
@@ -511,14 +629,17 @@ export default {
           method:'get',
           url:'/admin/HRFristReview/'+_this.$route.query.id
         }).then(function (response) {
-          _this.$data.ResumesHRFirst=response.data;
+          _this.$data.ResumesHRFirst=response.data.content;
+          _this.$data.total4HRFirst=response.data.totalElements
         })
 
         this.$axios({
           method:'get',
           url:'/admin/ResumeReview/'+_this.$route.query.id
         }).then(function (response) {
-          _this.$data.ResumesFirst=response.data
+          _this.$data.ResumesFirst=response.data.content
+          _this.$data.total4ResumesFirst=response.data.totalElements
+          console.log(response)
         })
 
       }
@@ -537,15 +658,22 @@ export default {
       method:'get',
       url:'/admin/Pass/'+_this.$route.query.id
     }).then(function (response) {
-      _this.$data.ResumesPassed=response.data;
-
+      _this.$data.ResumesPassed=response.data.content;
+      _this.$data.total4Passed=response.data.totalElements
+    }).catch((err)=>{
+      _this.$data.message({
+        type:'danger',
+        message:err.response.data.msg
+      })
     })
 
     this.$axios({         //获取已拒绝简历名单
       method:'get',
-      url:'/admin/Refuse/'+_this.$route.query.id
+      url:'/admin/Refuse/'+_this.$route.query.id+'?page=1&size=10'
     }).then(function (response) {
-      _this.$data.ResumesRefuse=response.data;
+      _this.$data.ResumesRefuse=response.data.content;
+      _this.$data.total4Refuse=response.data.totalElements
+      console.log(response)
     })
 
 
@@ -553,37 +681,43 @@ export default {
       method:'get',
       url:'/admin/ResumeReview/'+_this.$route.query.id
     }).then(function (response) {
-      _this.$data.ResumesFirst=response.data
+      _this.$data.ResumesFirst=response.data.content;
+      _this.$data.total4ResumesFirst=response.data.totalElements;
+      console.log(response)
     })
 
 
     this.$axios({
       method:'get',
-      url:'/admin/HRFristReview/'+_this.$route.query.id
+      url:'/admin/HRFristReview/'+_this.$route.query.id+'?page=1&size=10'
     }).then(function (response) {
-      _this.$data.ResumesHRFirst=response.data;
+      _this.$data.ResumesHRFirst=response.data.content;
+      _this.$data.total4HRFirst=response.data.totalElements
     })
 
     this.$axios({
       method:'get',
-      url:"/admin/DepartmentWritten/"+_this.$route.query.id
+      url:"/admin/DepartmentWritten/"+_this.$route.query.id+'?page=1&size=10'
     }).then(function (response) {
-      _this.$data.ResumesDepartmentWritten=response.data;
+      _this.$data.ResumesDepartmentWritten=response.data.content;
+      _this.$data.total4DepartmentWritten=response.data.totalElements
     })
 
 
     this.$axios({
       method:'get',
-      url:'/admin/DepartmentInterview/'+_this.$route.query.id
+      url:'/admin/DepartmentInterview/'+_this.$route.query.id+'?page=1&size=10'
     }).then(function (response) {
-      _this.$data.ResumesDepartmentInterview=response.data
+      _this.$data.ResumesDepartmentInterview=response.data.content
+      _this.$data.totalDepartmentInterview=response.data.totalElements
     })
 
     this.$axios({
       method:'get',
-      url:'/admin/HRInterview/'+_this.$route.query.id
+      url:'/admin/HRInterview/'+_this.$route.query.id+'?page=1&size=10'
     }).then(function (response) {
-      _this.$data.ResumesHRinterview=response.data
+      _this.$data.ResumesHRinterview=response.data.content
+      _this.$data.total4HRinterview=response.data.totalElements
     }).catch(function (error) {
       _this.$message({
         type:'error',
@@ -633,8 +767,6 @@ export default {
       }else if(formName==='ResumesHRinterview'){
         NextForm='HR面试'
       }
-
-
       let _this=this;
       let name=this.$data[formName][row].username;
       let id=this.$data[formName][row].id;
@@ -800,7 +932,204 @@ export default {
         case '2':this.$data.borderColor = '#707070'
           break
       }
-    }
+    },
+    handleSizeChange4DepartmentWritten (val) {
+      this.$data.pageSize4DepartmentWritten = val
+      let _this=this
+      this.$axios({
+        method: 'get',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize4DepartmentWritten,
+          page: _this.$data.currentPage4DepartmentWritten
+        }),
+        url:'/admin/DepartmentWritten/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesDepartmentWritten =response.data.content;
+      })
+    },
+    handlePageChange4DepartmentWritten (val) {
+      this.$data.currentPage4DepartmentWritten = val
+      let _this=this
+      this.$axios({
+        method: 'get',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize4DepartmentWritten,
+          page: _this.$data.currentPage4DepartmentWritten
+        }),
+        url:'/admin/DepartmentWritten/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesDepartmentWritten=response.data.content;
+      })
+    },
+    handleSizeChange4ResumesFirst (val) {
+      this.$data.pageSize4ResumesFirst = val
+      let _this=this
+      this.$axios({
+        method: 'get',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize4ResumesFirst,
+          page: _this.$data.currentPageForResumesFirst
+        }),
+        url:'/admin/ResumeReview/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesFirst =response.data.content;
+      })
+
+    },
+    handlePageChange4ResumesFirst (val) {
+      this.$data.currentPageForResumesFirst = val
+      let _this=this
+      this.$axios({
+        method: 'get',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize4ResumesFirst,
+          page: _this.$data.currentPageForResumesFirst
+        }),
+        url:'/admin/ResumeReview/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesFirst=response.data.content;
+      })
+    },
+    handleSizeChange4HRFirst (val) {
+      this.$data.pageSize4HRFirst = val
+      let _this=this
+      this.$axios({
+        method: 'get',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize4HRFirst,
+          page: _this.$data.currentPage4HRFirst
+        }),
+        url:'/admin/HRFristReview/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesHRFirst =response.data.content;
+      })
+    },
+    handlePageChange4HRFirst (val) {
+      this.$data.currentPage4HRFirst = val
+      let _this=this
+      this.$axios({
+        method: 'get',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize4HRFirst,
+          page: _this.$data.currentPage4HRFirst
+        }),
+        url:'/admin/ResumeReview/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesHRFirst=response.data.content;
+      })
+    },
+    handleSizeChange4DepartmentInterview (val) {
+      this.$data.pageSize4DepartmentInterview = val
+      let _this=this
+      this.$axios({
+        method: 'get',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize4DepartmentInterview,
+          page: _this.$data.currentPage4DepartmentInterview
+        }),
+        url:'/admin/DepartmentInterview/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesDepartmentInterview =response.data.content;
+      })
+    },
+    handlePageChange4DepartmentInterview (val) {
+      this.$data.currentPage4DepartmentInterview = val
+      let _this=this
+      this.$axios({
+        method: 'get',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize4DepartmentInterview,
+          page: _this.$data.currentPage4DepartmentInterview
+        }),
+        url:'/admin/DepartmentInterview/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesDepartmentInterview=response.data.content;
+      })
+    },
+    handleSizeChange4HRInterview (val) {
+      this.$data.pageSize4HRinterview = val
+      let _this=this
+      this.$axios({
+        method: 'get',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize4HRinterview,
+          page: _this.$data.currentPage4HRinterview
+        }),
+        url:'/admin/HRInterview/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesHRInterview =response.data.content;
+      })
+    },
+    handlePageChange4HRInterview (val) {
+      this.$data.currentPage4HRinterview = val
+      let _this=this
+      this.$axios({
+        method: 'get',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize4HRinterview,
+          page: _this.$data.currentPage4HRinterview
+        }),
+        url:'/admin/HRInterview/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesHRinterview=response.data.content;
+      })
+    },
+    handleSizeChange4Passed (val) {
+      this.$data.pageSize4Passed = val
+      let _this=this
+      this.$axios({
+        method: 'get',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize4Passed,
+          page: _this.$data.currentPage4Passed
+        }),
+        url:'/admin/Pass/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesPassed =response.data.content;
+      })
+    },
+    handlePageChange4Passed (val) {
+      this.$data.currentPage4Passed = val
+      let _this=this
+      this.$axios({
+        method: 'get',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize4Passed,
+          page: _this.$data.currentPage4Passed
+        }),
+        url:'/admin/Pass/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesPassed=response.data.content;
+      })
+    },
+    handleSizeChange4Refuse (val) {
+      this.$data.pageSize4Refuse = val
+      let _this=this
+      this.$axios({
+        method: 'get',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize4Refuse,
+          page: _this.$data.currentPage4refuse
+        }),
+        url:'/admin/Refuse/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesRefuse =response.data.content;
+      })
+    },
+    handlePageChange4Refuse (val) {
+      this.$data.currentPage4refuse = val
+      let _this=this
+      this.$axios({
+        method: 'get',
+        data: _this.$qs.stringify({
+          size: _this.$data.pageSize4Refuse,
+          page: _this.$data.currentPage4refuse
+        }),
+        url:'/admin/Refuse/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesRefuse=response.data.content;
+      })
+    },
   }
 }
 </script>
