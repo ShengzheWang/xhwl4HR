@@ -50,7 +50,7 @@
           </el-table-column>
           <el-table-column label="所在部门" style="width: 10%">
             <template slot-scope="scope">
-            {{departments[Number(tableData[scope.$index].department)].name}}
+            {{departments[Number(tableData[scope.$index].department)-1].name}}
             </template>
           </el-table-column>
           <el-table-column prop="recruitmentType" label="招聘类型" style="width: 10%">
@@ -208,7 +208,7 @@ export default {
       })
     },
     searchPositions(){
-       let _this=this;
+        let _this=this;
 
         let publish_date=this.$data.formSearch.publish_date;
         let end_date=this.$data.formSearch.end_date;
@@ -223,14 +223,17 @@ export default {
         if(this.$data.formSearch.end_date) {
           end_date = this.$data.formSearch.end_date.Format('yyyy-MM-dd');
         }else{
-          end_date='2000-01-01';
+          end_date='2050-01-01';
         }
 
+        if(this.$data.state1===''){
+          this.$data.formSearch.departmentName='';
+        }
 
         this.$axios({
           method:'post',
           url:'/admin/searchPositionAfterDeadline?'+'publish_date='+publish_date+'&end_date='+end_date+
-          '&departmentName='+_this.$data.formSearch.department+'&positionName='+_this.$data.formSearch.positionName
+          '&departmentName='+_this.$data.formSearch.departmentName+'&positionName='+_this.$data.formSearch.positionName
         }).then(function (response) {
           _this.$data.tableData=response.data.content;
         })
