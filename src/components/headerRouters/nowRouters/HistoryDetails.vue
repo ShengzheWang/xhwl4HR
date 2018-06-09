@@ -94,6 +94,20 @@
                 </el-table-column>
               </el-table>
             </div>
+            <div class="el-pagination__total page-total">
+              共<a>{{total4Passed}}</a>条
+            </div>
+            <div class="page-select">
+              <el-pagination
+                @size-change="handleSizeChange4Passed"
+                @current-change="handlePageChange4Passed"
+                :current-page="currentPage4Passed"
+                :page-sizes="[5, 10, 20, 30]"
+                :page-size="pageSize4Passed"
+                layout="sizes, prev, pager, next, jumper"
+                :total="total4Passed">
+              </el-pagination>
+            </div>
           </el-tab-pane>
           <el-tab-pane label="已回绝" name="1">
             <div style="width:100%;margin: 0% auto 0% auto">
@@ -127,7 +141,20 @@
                   </template>
                 </el-table-column>
               </el-table>
-
+            </div>
+            <div class="el-pagination__total page-total">
+              共<a>{{total4Refuse}}</a>条
+            </div>
+            <div class="page-select">
+              <el-pagination
+                @size-change="handleSizeChange4Refuse"
+                @current-change="handlePageChange4Refuse"
+                :current-page="currentPage4refuse"
+                :page-sizes="[5, 10, 20, 30]"
+                :page-size="pageSize4Refuse"
+                layout="sizes, prev, pager, next, jumper"
+                :total="total4Refuse">
+              </el-pagination>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -193,24 +220,15 @@
         tableData1: [
 
         ],
-        ResumesFirst:[
-          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
-        ],
-        ResumesHRFirst:[
-          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
-        ],
-        ResumesDepartmentWritten:[
-          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
-        ],
-        ResumesDepartmentInterview:[
-          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
-        ],
-        ResumesHRinterview:[
-          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
-        ],
+        currentPage4Passed:1,
+        total4Passed:0,
+        pageSize4Passed:10,
         ResumesPassed: [
           {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
         ],
+        currentPage4refuse:1,
+        total4Refuse:0,
+        pageSize4Refuse:10,
         ResumesRefuse: [
           {id:'',username:'',sex:'',age:'',highestEducation:'',deliverDate:'',auth:''}
         ]
@@ -230,7 +248,8 @@
         method:'get',
         url:'/admin/Pass/'+_this.$route.query.id
       }).then(function (response) {
-        _this.$data.ResumesPassed=response.data;
+        _this.$data.ResumesPassed=response.data.content;
+        _this.$data.total4Passed=response.data.totalElements
 
       })
 
@@ -238,7 +257,8 @@
         method:'get',
         url:'/admin/Refuse/'+_this.$route.query.id
       }).then(function (response) {
-        _this.$data.ResumesRefuse=response.data;
+        _this.$data.ResumesRefuse=response.data.content;
+        _this.$data.total4Refuse=response.data.totalElements
       })
 
       this.$axios({
@@ -293,6 +313,62 @@
 
         })
 
+      },
+      handleSizeChange4Passed (val) {
+        this.$data.pageSize4Passed = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4Passed,
+            page: _this.$data.currentPage4Passed
+          }),
+          url:'/admin/Pass/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesPassed =response.data.content;
+        })
+      },
+      handlePageChange4Passed (val) {
+        this.$data.currentPage4Passed = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4Passed,
+            page: _this.$data.currentPage4Passed
+          }),
+          url:'/admin/Pass/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesPassed=response.data.content;
+        })
+      },
+      handleSizeChange4Refuse (val) {
+        this.$data.pageSize4Refuse = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4Refuse,
+            page: _this.$data.currentPage4refuse
+          }),
+          url:'/admin/Refuse/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesRefuse =response.data.content;
+        })
+      },
+      handlePageChange4Refuse (val) {
+        this.$data.currentPage4refuse = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4Refuse,
+            page: _this.$data.currentPage4refuse
+          }),
+          url:'/admin/Refuse/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesRefuse=response.data.content;
+        })
       },
       handleClick () {
         switch (this.$data.activeTab) {

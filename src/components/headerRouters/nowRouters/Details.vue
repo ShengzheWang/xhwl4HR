@@ -593,6 +593,13 @@ export default {
         }).then(function (response) {
           _this.$data.ResumesPassed = response.data.content;
           _this.$data.total4Passed=response.data.totalElements
+
+        }).catch(function (error) {
+          _this.$message({
+            type:'error',
+            message:error.response.data.msg
+          })
+
         })
 
         this.$axios({
@@ -614,6 +621,13 @@ export default {
         }).then(function (response) {
           _this.$data.ResumesDepartmentInterview=response.data.content
           _this.$data.total4HRinterview=response.data.totalElements
+
+        }).catch(function (error) {
+          _this.$message({
+            type:'error',
+            message:error.response.data.msg
+          })
+
         })
 
         this.$axios({
@@ -622,6 +636,13 @@ export default {
         }).then(function (response) {
           _this.$data.ResumesDepartmentWritten=response.data.content;
           _this.$data.total4DepartmentWritten=response.data.totalElements
+
+        }).catch(function (error) {
+          _this.$message({
+            type:'error',
+            message:error.response.data.msg
+          })
+
         })
 
 
@@ -639,7 +660,13 @@ export default {
         }).then(function (response) {
           _this.$data.ResumesFirst=response.data.content
           _this.$data.total4ResumesFirst=response.data.totalElements
-          console.log(response)
+
+        }).catch(function (error) {
+          _this.$message({
+            type:'error',
+            message:error.response.data.msg
+          })
+
         })
 
       }
@@ -673,7 +700,13 @@ export default {
     }).then(function (response) {
       _this.$data.ResumesRefuse=response.data.content;
       _this.$data.total4Refuse=response.data.totalElements
-      console.log(response)
+
+    }).catch((err)=>{
+      _this.$data.message({
+        type:'danger',
+        message:err.response.data.msg
+      })
+
     })
 
 
@@ -683,7 +716,13 @@ export default {
     }).then(function (response) {
       _this.$data.ResumesFirst=response.data.content;
       _this.$data.total4ResumesFirst=response.data.totalElements;
-      console.log(response)
+
+    }).catch((err)=>{
+      _this.$data.message({
+        type:'danger',
+        message:err.response.data.msg
+      })
+
     })
 
 
@@ -693,6 +732,13 @@ export default {
     }).then(function (response) {
       _this.$data.ResumesHRFirst=response.data.content;
       _this.$data.total4HRFirst=response.data.totalElements
+
+    }).catch((err)=>{
+      _this.$data.message({
+        type:'danger',
+        message:err.response.data.msg
+      })
+
     })
 
     this.$axios({
@@ -701,6 +747,13 @@ export default {
     }).then(function (response) {
       _this.$data.ResumesDepartmentWritten=response.data.content;
       _this.$data.total4DepartmentWritten=response.data.totalElements
+
+    }).catch((err)=>{
+      _this.$data.message({
+        type:'danger',
+        message:err.response.data.msg
+      })
+
     })
 
 
@@ -710,6 +763,13 @@ export default {
     }).then(function (response) {
       _this.$data.ResumesDepartmentInterview=response.data.content
       _this.$data.totalDepartmentInterview=response.data.totalElements
+
+    }).catch((err)=>{
+      _this.$data.message({
+        type:'danger',
+        message:err.response.data.msg
+      })
+
     })
 
     this.$axios({
@@ -729,8 +789,12 @@ export default {
       method:'get',
       url:'/admin/getDeliverNum/'+_this.$route.query.id
     }).then(function (response) {
-      console.log(response.data)
       _this.$data.deliverNumber=response.data.number
+    }).catch((err)=>{
+      _this.$data.message({
+        type:'danger',
+        message:err.response.data.msg
+      })
     })
 
   },
