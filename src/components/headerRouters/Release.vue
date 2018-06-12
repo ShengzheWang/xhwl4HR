@@ -58,6 +58,9 @@
           <el-form-item label="截至日期" style="" prop="deadline">
             <el-date-picker type="date" placeholder="选择日期" v-model="form.deadline"></el-date-picker>
           </el-form-item>
+          <el-form-item label="预计薪资" style="width: 30%" >
+            <el-input placeholder="预计薪资" v-model="form.salary"></el-input>
+          </el-form-item>
 
         </el-form>
 
@@ -111,6 +114,7 @@
           workSeniority:'',
           education:'',
           recruitingNumbers:'',
+          salary:'',
           deadline:null,
         },
         form2:{
@@ -133,7 +137,8 @@
           recruitingNumbers:'',
           deadline:'',
           jobResponsibilities:'',
-          jobRequirements:''
+          jobRequirements:'',
+          salary:''
         },
         departments:[             //所有的部门
           {name:'人事行政部',index:'1'},
@@ -216,6 +221,7 @@
           _this.$data.form.education=response.data.education;
           _this.$data.form.recruitingNumbers=response.data.recruitingNumbers;
           _this.$data.form.deadline=response.data.deadline;
+          _this.$data.form.salary=response.data.salary;
           _this.$data.form2.jobResponsibilities=response.data.jobResponsibilities;
           _this.$data.form3.jobRequirements=response.data.jobRequirements;
 
@@ -275,6 +281,7 @@
           this.$data.formRelease.recruitmentType=this.$data.form.recruitmentType;
           this.$data.formRelease.education=this.$data.form.education;
           this.$data.formRelease.workPlace=this.$data.form.workPlace;
+          this.$data.formRelease.salary=this.$data.form.salary;
           this.$data.formRelease.jobRequirements=this.$data.form3.jobRequirements;
           this.$data.formRelease.jobResponsibilities=this.$data.form2.jobResponsibilities;
           let that=this;
