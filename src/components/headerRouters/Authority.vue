@@ -24,14 +24,12 @@
       </div>
       <div style="width:80%;margin: 2% auto 0% auto">
         <el-table :data="formAdmins" v-show="!showSearch" stripe class="table" style="width: 100%" v-loading="loading">
-          <el-table-column prop="username" label="工号" style="width: 28%">
+          <el-table-column prop="username" label="工号" style="width: 42%">
           </el-table-column>
-          <el-table-column prop="department" label="部门" style="width: 28%">
+          <el-table-column prop="department" label="部门" style="width: 42%">
             <template slot-scope="scope">
               {{departments[parseInt(formAdmins[scope.$index].department)].name}}
             </template>
-          </el-table-column>
-          <el-table-column prop="password" label="密码" style="width: 28%">
           </el-table-column>
           <el-table-column label="删除"  style="width: 8%">
             <template slot-scope="scope">
