@@ -97,6 +97,7 @@
                                 :disabled="scope.row.auth===0">
                       <i class="icon iconfont icon-toudijindu"></i>
                     </el-button>
+                    <img v-if="scope.row.isRead === 'false'" src="../../../../static/img/isread.png" class="img-isRead">
                   </template>
                 </el-table-column>
               </el-table>
@@ -162,6 +163,7 @@
                       <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
                       <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
                     </el-button>
+                    <img v-if="scope.row.isRead === 'false'" src="../../../../static/img/isread.png" class="img-isRead">
                   </template>
                 </el-table-column>
               </el-table>
@@ -226,6 +228,7 @@
                       <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
                       <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
                     </el-button>
+                    <img v-if="scope.row.isRead === 'false'" src="../../../../static/img/isread.png" class="img-isRead">
                   </template>
                 </el-table-column>
               </el-table>
@@ -290,6 +293,7 @@
                       <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
                       <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
                     </el-button>
+                    <img v-if="scope.row.isRead === 'false'" src="../../../../static/img/isread.png" class="img-isRead">
                   </template>
                 </el-table-column>
               </el-table>
@@ -354,6 +358,7 @@
                       <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
                       <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
                     </el-button>
+                    <img v-if="scope.row.isRead === 'false'" src="../../../../static/img/isread.png" class="img-isRead">
                   </template>
                 </el-table-column>
               </el-table>
@@ -401,12 +406,13 @@
                     </el-button>
                   </template>
                 </el-table-column>
-                <el-table-column label="发送通知" style="width:13%">
+                <el-table-column label="发送通知" style="width:13%;">
                   <template slot-scope="scope">
                     <el-button size="middle" type="text" :disabled="scope.row.isSendEmail==='true'" @click="tell(scope.row,'ResumesPassed')">
                       <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
                       <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
                     </el-button>
+                    <img v-if="scope.row.isRead === 'false'" src="../../../../static/img/isread.png" class="img-isRead">
                   </template>
                 </el-table-column>
               </el-table>
@@ -473,6 +479,7 @@
                       <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
                       <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
                     </el-button>
+                    <img v-if="scope.row.isRead === 'false'" src="../../../../static/img/isread.png" class="img-isRead">
                   </template>
                 </el-table-column>
               </el-table>
@@ -563,43 +570,43 @@
         total4ResumesFirst:0,
         pageSize4ResumesFirst:10,
         ResumesFirst:[
-          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:false}
+          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:'false',isRead:'true'}
         ],
         currentPage4HRFirst:1,
         total4HRFirst:0,
         pageSize4HRFirst:10,
         ResumesHRFirst:[
-          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:false}
+          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:'false',isRead:'true'}
         ],
         total4DepartmentWritten:0,
         pageSize4DepartmentWritten:10,
         currentPage4DepartmentWritten:1,
         ResumesDepartmentWritten:[
-          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:false}
+          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:'false',isRead:'true'}
         ],
         currentPage4DepartmentInterview:1,
         total4DepartmentInterview:0,
         pageSize4DepartmentInterview:10,
         ResumesDepartmentInterview:[
-          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:false}
+          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:'false',isRead:'true'}
         ],
         currentPage4HRinterview:1,
         total4HRinterview:0,
         pageSize4HRinterview:10,
         ResumesHRinterview:[
-          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:false}
+          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:'false',isRead:'true'}
         ],
         currentPage4Passed:1,
         total4Passed:0,
         pageSize4Passed:10,
         ResumesPassed: [
-          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:false}
+          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:'false',isRead:'true'}
         ],
         currentPage4refuse:1,
         total4Refuse:0,
         pageSize4Refuse:10,
         ResumesRefuse: [
-          {id:'',username:'',sex:'',age:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:false}
+          {id:'',username:'',sex:'',age:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:'false',isRead:'true'}
         ],
         formMail:{
           title:'',
@@ -1260,36 +1267,36 @@
   }
 </script>
 <style lang="less">
-  #Details{
-    .card-top{
+  #Details {
+    .card-top {
       width: 14.2%;
       height: 62px;
       background: #38BDFE;
       display: inline-block;
 
-      .card-top-item{
+      .card-top-item {
         display: inline-block;
         width: 50%;
         height: 60px;
         transition: all 0.6s;
         font-size: 0;
-        -webkit-text-size-adjust:none;
+        -webkit-text-size-adjust: none;
 
       }
-      .card-top-item-left{
+      .card-top-item-left {
         background: #ffffff;
         border-bottom-right-radius: 0px;
       }
-      .card-top-item-right{
+      .card-top-item-right {
         background: #ffffff;
         border-bottom-right-radius: 0px;
       }
     }
-    .card-top-active{
-      .card-top-item-left{
+    .card-top-active {
+      .card-top-item-left {
         border-bottom-right-radius: 60px;
       }
-      .card-top-item-right{
+      .card-top-item-right {
         border-bottom-left-radius: 60px;
       }
       /*.card-top-item-0{*/
@@ -1335,61 +1342,64 @@
       /*background: #1476C1;*/
       /*}*/
     }
-    .line{
+    .line {
       border: solid 1px #1476C1;
       margin-top: 0;
     }
-    .page-total{
+    .page-total {
       width: 30%;
       display: inline-block;
       margin-top: 3%;
       margin-right: 0;
       vertical-align: top;
       font-size: 13px;
-      a{
+      a {
         font-weight: bolder;
         font-size: 16px;
       }
     }
-    .page-select{
+    .page-select {
       display: inline-block;
       margin: 3% auto;
       text-align: right;
       width: 69%;
     }
-    .iconfont{
+    .iconfont {
       font-size: 26px;
     }
-    .line{
+    .line {
       border: solid 1px #1476C1;
       margin-top: 0;
     }
-    .el-button{
-      padding:8px 30px
+    .el-button {
+      padding: 8px 30px
     }
-    .el-row{
+    .el-row {
       margin-bottom: 0;
     }
-    .el-col{
+    .el-col {
       margin-bottom: 0;
-      height:30px
+      height: 30px
     }
-    .el-table th{
+    .el-table th {
       text-align: center;
     }
-    .el-table__row{
+    .el-table__row {
       text-align: center;
     }
-    .el-table__header-wrapper th{
+    .el-table__body-wrapper {
+      overflow: visible;
+    }
+    .el-table__header-wrapper th {
       background: #ECF1F7 !important;
     }
-    .el-table__row--striped td{
+    .el-table__row--striped td {
       background: #F6F7FB;
     }
-    .iconfont{
-      color:#1476C1
+    .iconfont {
+      color: #1476C1
     }
-    .el-tabs__header.is-top{
+    .el-tabs__header.is-top {
       border-bottom: none;
     }
     .el-tabs__nav {
@@ -1397,12 +1407,15 @@
       border: none;
 
     }
-    .el-tabs__header{
+    td {
+      overflow: visible;
+    }
+    .el-tabs__header {
       margin-bottom: 0;
     }
-    .el-tabs__item{
-      height:40px;
-      border-radius:40px 40px 40px 40px ;
+    .el-tabs__item {
+      height: 40px;
+      border-radius: 40px 40px 40px 40px;
       box-sizing: border-box;
       border: 2px solid #38BDFE;
       width: 10.2%;
@@ -1413,9 +1426,21 @@
       vertical-align: middle;
       font-weight: bold;
       font-size: 16px;
-      line-height:40px;
+      line-height: 40px;
       background: #ffffff;
-      color:#38BDFE;
+      color: #38BDFE;
+    }
+    .img-isRead {
+      z-index: 999;
+      width: 50px;
+      -moz-transform: rotate(10deg);
+    -webkit-transform: rotate(30deg);;
+    position: absolute;
+    right: 0px;
+    overflow: visible
+    }
+    .cell{
+      overflow: visible;
     }
     .el-tabs__item.is-active{
       background: #38BDFE;
