@@ -1,804 +1,830 @@
 <template>
-    <div id="Details">
-      <div class="block">
-        <div style="width:90%;margin: 2% auto 0 auto">
-          <div style="height: 60px"></div>
+  <div id="Details">
+    <div class="block">
+      <div style="width:90%;margin: 2% auto 0 auto">
+        <div style="height: 60px"></div>
 
-          <el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: '/Now' }">招聘中</el-breadcrumb-item>
-            <el-breadcrumb-item>职位详情</el-breadcrumb-item>
-          </el-breadcrumb>
-          <div class="position-details">
-            <div style="text-align: left;display: inline-block;width: 50%">
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item :to="{ path: '/Now' }">招聘中</el-breadcrumb-item>
+          <el-breadcrumb-item>职位详情</el-breadcrumb-item>
+        </el-breadcrumb>
+        <div class="position-details">
+          <div style="text-align: left;display: inline-block;width: 50%">
             <h1  style="font-size: 28px" class="name">{{form.positionName}}</h1><h2 class="classes">{{form.recruitmentType}}</h2>
-            </div>
-            <div style="text-align: right;display: inline-block;width: 49%">
+          </div>
+          <div style="text-align: right;display: inline-block;width: 49%">
             <h4 class="info-already-got">已收到简历数</h4>
             <div class="already-got">{{deliverNumber}}</div>
-            </div>
-            <div style="width: 100%">
-              <el-row>
-                <el-col :span="6">
-                  <p class="label">工作地点：</p>
-                  <p class="info">{{form.workPlace}}</p>
-                </el-col>
-                <el-col :span="6">
-                  <p class="label">学历要求：</p>
-                  <p class="info">{{form.education}}</p>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="6">
-                  <p class="label">所属部门：</p>
-                  <p class="info">{{departments[Number(form.department)].name}}</p>
-                </el-col>
-                <el-col :span="6">
-                  <p class="label">工作类型：</p>
-                  <p class="info">{{form.positionType}}</p>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="6">
-                  <p class="label">招聘人数：</p>
-                  <p class="info">{{form.recruitingNumbers}}</p>
-                </el-col>
-              </el-row>
-            </div>
-            <h1 style="color: #000000;margin-top: 3%;font-size: 20px">岗位职责
-            </h1>
-              <p  style="font-size: 18px;line-height: 32px" v-html="form.jobResponsibilities"></p>
-            <h1 style="color: #000000;margin-top: 1%;font-size: 20px">职位要求
-            </h1>
-            <p  style="font-size: 18px;line-height: 32px" v-html="form.jobRequirements"></p>
           </div>
-          <el-tabs type="card"  v-model="activeTab" @tab-click="handleClick" style="background: #ffffff">
-            <div style=" font-size: 0;-webkit-text-size-adjust:none;">
-              <div v-for="item in 7" v-bind:class="'card-top '+'card-top-'+item+(item===(Number(activeTab)+1)?' card-top-active':'')">
-                <div  class="card-top-item card-top-item-left"></div>
-                <div  class="card-top-item card-top-item-right"></div>
-              </div>
-            </div>
-            <el-tab-pane label="简历初审" name="0">
-              <div style="width:100%;margin: 0% auto 0 auto">
-                <el-table :data="ResumesFirst" stripe style="width: 100%" class="table0">
-                  <el-table-column prop="username" label="姓名" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="sex" label="性别" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column
-                    label="查看详情"
-                    style="width: 13%">
-                    <template slot-scope="scope">
-                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
-                        <i class="icon iconfont icon-chakanxiangqing"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    label="下载简历"
-                    style="width: 13%"
-                  >
-                    <template slot-scope="scope">
-                      <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
-                        <i class="icon iconfont icon-xiazaijianli"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    label="投递状态"
-                    style="width: 13%"
-                  >
-                  <template slot-scope="scope">
-                      <el-button  @click="changeStatus(scope.$index,'ResumesFirst','ResumesHRFirst')" type="text" size="middle"
-                                  :disabled="scope.row.auth===0">
-                        <i class="icon iconfont icon-toudijindu"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </div>
-              <div class="el-pagination__total page-total">
-                共<a>{{total4ResumesFirst}}</a>条
-              </div>
-              <div class="page-select">
-                <el-pagination
-                  @size-change="handleSizeChange4ResumesFirst"
-                  @current-change="handlePageChange4ResumesFirst"
-                  :current-page="currentPageForResumeFirst"
-                  :page-sizes="[5, 10, 20, 30]"
-                  :page-size="pageSize4ResumesFirst"
-                  layout="sizes, prev, pager, next, jumper"
-                  :total="total4ResumesFirst">
-                </el-pagination>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane label="HR初审" name="1">
-              <div style="width:100%;margin: 0% auto 0 auto">
-                <el-table :data="ResumesHRFirst" stripe style="width: 100%" class="table0">
-                  <el-table-column prop="username" label="姓名" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="sex" label="性别" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column label="查看详情" style="width: 13%">
-                    <template slot-scope="scope">
-                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle"
-                                  :disabled="scope.row.auth===0">
-                        <i class="icon iconfont icon-chakanxiangqing"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    label="下载简历"
-                    style="width: 13%"
-                  >
-                    <template slot-scope="scope">
-                      <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
-                        <i class="icon iconfont icon-xiazaijianli"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    label="投递状态"
-                    style="width: 13%"
-                  >
-                    <template slot-scope="scope">
-                      <el-button  @click="changeStatus(scope.$index,'ResumesHRFirst','ResumesDepartmentWritten')" type="text" size="middle"
-                                  :disabled="scope.row.auth===0">
-                        <i class="icon iconfont icon-toudijindu"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </div>
-              <div class="el-pagination__total page-total">
-                共<a>{{total4HRFirst}}</a>条
-              </div>
-              <div class="page-select">
-                <el-pagination
-                  @size-change="handleSizeChange4HRFirst"
-                  @current-change="handlePageChange4HRFirst"
-                  :current-page="currentPage4HRFirst"
-                  :page-sizes="[5, 10, 20, 30]"
-                  :page-size="pageSize4HRFirst"
-                  layout="sizes, prev, pager, next, jumper"
-                  :total="total4HRFirst">
-                </el-pagination>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane label="部门笔试" name="2">
-              <div style="width:100%;margin: 0% auto 0 auto">
-                <el-table :data="ResumesDepartmentWritten" stripe style="width: 100%" class="table0">
-                  <el-table-column prop="username" label="姓名" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="sex" label="性别" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="HighestEducation" label="最高学历" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column label="查看详情" style="width: 13%">
-                    <template slot-scope="scope">
-                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
-                        <i class="icon iconfont icon-chakanxiangqing"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    label="下载简历"
-                    style="width: 13%"
-                  >
-                    <template slot-scope="scope">
-                      <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
-                        <i class="icon iconfont icon-xiazaijianli"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    label="投递状态"
-                    style="width: 13%"
-                  >
-                    <template slot-scope="scope">
-                      <el-button  @click="changeStatus(scope.$index,'ResumesDepartmentWritten','ResumesDepartmentInterview')" type="text" size="middle"
-                                  :disabled="scope.row.auth===0">
-                        <i class="icon iconfont icon-toudijindu"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </div>
-              <div class="el-pagination__total page-total">
-                共<a>{{total4DepartmentWritten}}</a>条
-              </div>
-              <div class="page-select">
-                <el-pagination
-                  @size-change="handleSizeChange4DepartmentWritten"
-                  @current-change="handlePageChange4DepartmentWritten"
-                  :current-page="currentPage4DepartmentWritten"
-                  :page-sizes="[5, 10, 20, 30]"
-                  :page-size="pageSize4DepartmentWritten"
-                  layout="sizes, prev, pager, next, jumper"
-                  :total="total4DepartmentWritten">
-                </el-pagination>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane label="部门面试" name="3">
-              <div style="width:100%;margin: 0% auto 0 auto">
-                <el-table :data="ResumesDepartmentInterview" stripe style="width: 100%" class="table0">
-                  <el-table-column prop="username" label="姓名" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="sex" label="性别" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column label="查看详情" style="width: 13%">
-                    <template slot-scope="scope">
-                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
-                        <i class="icon iconfont icon-chakanxiangqing"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    label="下载简历"
-                    style="width: 13%"
-                  >
-                    <template slot-scope="scope">
-                      <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
-                        <i class="icon iconfont icon-xiazaijianli"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    label="投递状态"
-                    style="width: 13%"
-                  >
-                    <template slot-scope="scope">
-                      <el-button  @click="changeStatus(scope.$index,'ResumesDepartmentInterview','ResumesHRinterview')" type="text" size="middle"
-                                  :disabled="scope.row.auth===0">
-                        <i class="icon iconfont icon-toudijindu"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </div>
-              <div class="el-pagination__total page-total">
-                共<a>{{total4DepartmentInterview}}</a>条
-              </div>
-              <div class="page-select">
-                <el-pagination
-                  @size-change="handleSizeChange4DepartmentInterview"
-                  @current-change="handlePageChange4DepartmentInterview"
-                  :current-page="currentPage4DepartmentInterview"
-                  :page-sizes="[5, 10, 20, 30]"
-                  :page-size="pageSize4DepartmentInterview"
-                  layout="sizes, prev, pager, next, jumper"
-                  :total="total4DepartmentInterview">
-                </el-pagination>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane label="HR面试" name="4">
-              <div style="width:100%;margin: 0% auto 0 auto">
-                <el-table :data="ResumesHRinterview" stripe style="width: 100%" class="table0" ref="ResumesHRFirst">
-                  <el-table-column prop="username" label="姓名" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="sex" label="性别" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column label="查看详情" style="width: 13%">
-                    <template slot-scope="scope">
-                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
-                        <i class="icon iconfont icon-chakanxiangqing"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    label="下载简历"
-                    style="width: 13%"
-                  >
-                    <template slot-scope="scope">
-                      <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
-                        <i class="icon iconfont icon-xiazaijianli"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    label="投递状态"
-                    style="width: 13%"
-                  >
-                    <template slot-scope="scope">
-                      <el-button  @click="changeStatus(scope.$index,'ResumesHRinterview','ResumesPassed')" type="text" size="middle"
-                                  :disabled="scope.row.auth===0">
-                        <i class="icon iconfont icon-toudijindu"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </div>
-              <div class="el-pagination__total page-total">
-                共<a>{{total4HRinterview}}</a>条
-              </div>
-              <div class="page-select">
-                <el-pagination
-                  @size-change="handleSizeChange4HRInterview"
-                  @current-change="handlePageChange4HRInterview"
-                  :current-page="currentPage4HRinterview"
-                  :page-sizes="[5, 10, 20, 30]"
-                  :page-size="pageSize4HRinterview"
-                  layout="sizes, prev, pager, next, jumper"
-                  :total="total4HRinterview">
-                </el-pagination>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane label="已通过" name="5">
-              <div style="width:100%;margin: 0% auto 0% auto">
-                <el-table :data="ResumesPassed" stripe style="width: 100%" class="table1">
-                  <el-table-column prop="username" label="姓名" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="sex" label="性别" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column label="查看详情" style="width: 13%">
-                    <template slot-scope="scope">
-                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
-                        <i class="icon iconfont icon-chakanxiangqing"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    label="下载简历"
-                    style="width: 13%"
-                  >
-                    <template slot-scope="scope">
-                      <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
-                        <i class="icon iconfont icon-xiazaijianli"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                  <!--
-                  <el-table-column
-                    label="发送通知"
-                    style="width: 13%"
-                  >
-                    <template slot-scope="scope">
-                      <el-button  @click="tell(scope.row,'ResumesPassed')" type="text" size="middle">
-                        <i class="icon iconfont icon-youxiang"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>-->
-                </el-table>
-              </div>
-              <div class="el-pagination__total page-total">
-                共<a>{{total4Passed}}</a>条
-              </div>
-              <div class="page-select">
-                <el-pagination
-                  @size-change="handleSizeChange4Passed"
-                  @current-change="handlePageChange4Passed"
-                  :current-page="currentPage4Passed"
-                  :page-sizes="[5, 10, 20, 30]"
-                  :page-size="pageSize4Passed"
-                  layout="sizes, prev, pager, next, jumper"
-                  :total="total4Passed">
-                </el-pagination>
-              </div>
-            </el-tab-pane>
-              <el-tab-pane label="已回绝" name="6">
-              <div style="width:100%;margin: 0% auto 0% auto">
-                <el-table
-                  :data="ResumesRefuse"
-                  stripe
-                  style="width: 100%" class="table2">
-                  <el-table-column prop="username" label="姓名" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="sex" label="性别" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
-                  </el-table-column>
-                  <el-table-column label="查看详情" style="width: 13%">
-                    <template slot-scope="scope">
-                      <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
-                        <i class="icon iconfont icon-chakanxiangqing"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    label="下载简历"
-                    style="width: 13%"
-                  >
-                    <template slot-scope="scope">
-                      <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
-                        <i class="icon iconfont icon-xiazaijianli"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    label="撤回回绝"
-                    style="width: 13%"
-                  >
-                    <template slot-scope="scope">
-                      <el-button  @click="revokeReject(scope.$index)" type="text" size="middle">
-                        <i class="icon iconfont icon-huifutoudi"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>
-                  <!--
-                  <el-table-column
-                    label="发送通知"
-                    style="width: 13%"
-                  >
-                    <template slot-scope="scope">
-                      <el-button  @click="tell(scope.row,'ResumesRefused')" type="text" size="middle">
-                        <i class="icon iconfont icon-youxiang"></i>
-                      </el-button>
-                    </template>
-                  </el-table-column>-->
-                </el-table>
-              </div>
-                <div class="el-pagination__total page-total">
-                  共<a>{{total4Refuse}}</a>条
-                </div>
-                <div class="page-select">
-                  <el-pagination
-                    @size-change="handleSizeChange4Refuse"
-                    @current-change="handlePageChange4Refuse"
-                    :current-page="currentPage4refuse"
-                    :page-sizes="[5, 10, 20, 30]"
-                    :page-size="pageSize4Refuse"
-                    layout="sizes, prev, pager, next, jumper"
-                    :total="total4Refuse">
-                  </el-pagination>
-                </div>
-            </el-tab-pane>
-          </el-tabs>
-
+          <div style="width: 100%">
+            <el-row>
+              <el-col :span="6">
+                <p class="label">工作地点：</p>
+                <p class="info">{{form.workPlace}}</p>
+              </el-col>
+              <el-col :span="6">
+                <p class="label">学历要求：</p>
+                <p class="info">{{form.education}}</p>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="6">
+                <p class="label">所属部门：</p>
+                <p class="info">{{departments[Number(form.department)].name}}</p>
+              </el-col>
+              <el-col :span="6">
+                <p class="label">工作类型：</p>
+                <p class="info">{{form.positionType}}</p>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="6">
+                <p class="label">招聘人数：</p>
+                <p class="info">{{form.recruitingNumbers}}</p>
+              </el-col>
+            </el-row>
+          </div>
+          <h1 style="color: #000000;margin-top: 3%;font-size: 20px">岗位职责
+          </h1>
+          <p  style="font-size: 18px;line-height: 32px" v-html="form.jobResponsibilities"></p>
+          <h1 style="color: #000000;margin-top: 1%;font-size: 20px">职位要求
+          </h1>
+          <p  style="font-size: 18px;line-height: 32px" v-html="form.jobRequirements"></p>
         </div>
-      </div>
+        <el-tabs type="card"  v-model="activeTab" @tab-click="handleClick" style="background: #ffffff">
+          <div style=" font-size: 0;-webkit-text-size-adjust:none;">
+            <div v-for="item in 7" v-bind:class="'card-top '+'card-top-'+item+(item===(Number(activeTab)+1)?' card-top-active':'')">
+              <div  class="card-top-item card-top-item-left"></div>
+              <div  class="card-top-item card-top-item-right"></div>
+            </div>
+          </div>
+          <el-tab-pane label="简历初审" name="0">
+            <div style="width:100%;margin: 0% auto 0 auto">
+              <el-table :data="ResumesFirst" stripe style="width: 100%" class="table0">
+                <el-table-column prop="username" label="姓名" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="sex" label="性别" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
+                </el-table-column>
+                <el-table-column
+                  label="查看详情"
+                  style="width: 13%">
+                  <template slot-scope="scope">
+                    <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
+                      <i class="icon iconfont icon-chakanxiangqing"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="下载简历"
+                  style="width: 13%"
+                >
+                  <template slot-scope="scope">
+                    <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
+                      <i class="icon iconfont icon-xiazaijianli"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="投递状态"
+                  style="width: 13%"
+                >
+                  <template slot-scope="scope">
+                    <el-button  @click="changeStatus(scope.$index,'ResumesFirst','ResumesHRFirst')" type="text" size="middle"
+                                :disabled="scope.row.auth===0">
+                      <i class="icon iconfont icon-toudijindu"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+            <div class="el-pagination__total page-total">
+              共<a>{{total4ResumesFirst}}</a>条
+            </div>
+            <div class="page-select">
+              <el-pagination
+                @size-change="handleSizeChange4ResumesFirst"
+                @current-change="handlePageChange4ResumesFirst"
+                :current-page="currentPageForResumeFirst"
+                :page-sizes="[5, 10, 20, 30]"
+                :page-size="pageSize4ResumesFirst"
+                layout="sizes, prev, pager, next, jumper"
+                :total="total4ResumesFirst">
+              </el-pagination>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="HR初审" name="1">
+            <div style="width:100%;margin: 0% auto 0 auto">
+              <el-table :data="ResumesHRFirst" stripe style="width: 100%" class="table0">
+                <el-table-column prop="username" label="姓名" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="sex" label="性别" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
+                </el-table-column>
+                <el-table-column label="查看详情" style="width: 13%">
+                  <template slot-scope="scope">
+                    <el-button  @click="resumeDetails(scope.row)" type="text" size="middle"
+                                :disabled="scope.row.auth===0">
+                      <i class="icon iconfont icon-chakanxiangqing"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="下载简历"
+                  style="width: 13%"
+                >
+                  <template slot-scope="scope">
+                    <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
+                      <i class="icon iconfont icon-xiazaijianli"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="投递状态"
+                  style="width: 13%"
+                >
+                  <template slot-scope="scope">
+                    <el-button  @click="changeStatus(scope.$index,'ResumesHRFirst','ResumesDepartmentWritten')" type="text" size="middle"
+                                :disabled="scope.row.auth===0">
+                      <i class="icon iconfont icon-toudijindu"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column label="发送通知" style="width:13%">
+                  <template slot-scope="scope">
+                    <el-button size="middle" type="text" :disabled="scope.row.isSendEmail==='true'" @click="tell(scope.row,'ResumesHRFirst')">
+                      <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
+                      <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+            <div class="el-pagination__total page-total">
+              共<a>{{total4HRFirst}}</a>条
+            </div>
+            <div class="page-select">
+              <el-pagination
+                @size-change="handleSizeChange4HRFirst"
+                @current-change="handlePageChange4HRFirst"
+                :current-page="currentPage4HRFirst"
+                :page-sizes="[5, 10, 20, 30]"
+                :page-size="pageSize4HRFirst"
+                layout="sizes, prev, pager, next, jumper"
+                :total="total4HRFirst">
+              </el-pagination>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="部门笔试" name="2">
+            <div style="width:100%;margin: 0% auto 0 auto">
+              <el-table :data="ResumesDepartmentWritten" stripe style="width: 100%" class="table0">
+                <el-table-column prop="username" label="姓名" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="sex" label="性别" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
+                </el-table-column>
+                <el-table-column label="查看详情" style="width: 13%">
+                  <template slot-scope="scope">
+                    <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
+                      <i class="icon iconfont icon-chakanxiangqing"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="下载简历"
+                  style="width: 13%"
+                >
+                  <template slot-scope="scope">
+                    <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
+                      <i class="icon iconfont icon-xiazaijianli"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="投递状态"
+                  style="width: 13%"
+                >
+                  <template slot-scope="scope">
+                    <el-button  @click="changeStatus(scope.$index,'ResumesDepartmentWritten','ResumesDepartmentInterview')" type="text" size="middle"
+                                :disabled="scope.row.auth===0">
+                      <i class="icon iconfont icon-toudijindu"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column label="发送通知" style="width:13%">
+                  <template slot-scope="scope">
+                    <el-button size="middle" type="text" :disabled="scope.row.isSendEmail==='true'" @click="tell(scope.row,'ResumesDepartmentWritten')">
+                      <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
+                      <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+            <div class="el-pagination__total page-total">
+              共<a>{{total4DepartmentWritten}}</a>条
+            </div>
+            <div class="page-select">
+              <el-pagination
+                @size-change="handleSizeChange4DepartmentWritten"
+                @current-change="handlePageChange4DepartmentWritten"
+                :current-page="currentPage4DepartmentWritten"
+                :page-sizes="[5, 10, 20, 30]"
+                :page-size="pageSize4DepartmentWritten"
+                layout="sizes, prev, pager, next, jumper"
+                :total="total4DepartmentWritten">
+              </el-pagination>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="部门面试" name="3">
+            <div style="width:100%;margin: 0% auto 0 auto">
+              <el-table :data="ResumesDepartmentInterview" stripe style="width: 100%" class="table0">
+                <el-table-column prop="username" label="姓名" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="sex" label="性别" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
+                </el-table-column>
+                <el-table-column label="查看详情" style="width: 13%">
+                  <template slot-scope="scope">
+                    <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
+                      <i class="icon iconfont icon-chakanxiangqing"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="下载简历"
+                  style="width: 13%"
+                >
+                  <template slot-scope="scope">
+                    <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
+                      <i class="icon iconfont icon-xiazaijianli"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="投递状态"
+                  style="width: 13%"
+                >
+                  <template slot-scope="scope">
+                    <el-button  @click="changeStatus(scope.$index,'ResumesDepartmentInterview','ResumesHRinterview')" type="text" size="middle"
+                                :disabled="scope.row.auth===0">
+                      <i class="icon iconfont icon-toudijindu"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column label="发送通知" style="width:13%">
+                  <template slot-scope="scope">
+                    <el-button size="middle" type="text" :disabled="scope.row.isSendEmail==='true'" @click="tell(scope.row,'ResumesDepartmentInterview')">
+                      <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
+                      <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+            <div class="el-pagination__total page-total">
+              共<a>{{total4DepartmentInterview}}</a>条
+            </div>
+            <div class="page-select">
+              <el-pagination
+                @size-change="handleSizeChange4DepartmentInterview"
+                @current-change="handlePageChange4DepartmentInterview"
+                :current-page="currentPage4DepartmentInterview"
+                :page-sizes="[5, 10, 20, 30]"
+                :page-size="pageSize4DepartmentInterview"
+                layout="sizes, prev, pager, next, jumper"
+                :total="total4DepartmentInterview">
+              </el-pagination>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="HR面试" name="4">
+            <div style="width:100%;margin: 0% auto 0 auto">
+              <el-table :data="ResumesHRinterview" stripe style="width: 100%" class="table0" ref="ResumesHRinterview">
+                <el-table-column prop="username" label="姓名" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="sex" label="性别" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
+                </el-table-column>
+                <el-table-column label="查看详情" style="width: 13%">
+                  <template slot-scope="scope">
+                    <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
+                      <i class="icon iconfont icon-chakanxiangqing"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="下载简历"
+                  style="width: 13%"
+                >
+                  <template slot-scope="scope">
+                    <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
+                      <i class="icon iconfont icon-xiazaijianli"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="投递状态"
+                  style="width: 13%"
+                >
+                  <template slot-scope="scope">
+                    <el-button  @click="changeStatus(scope.$index,'ResumesHRinterview','ResumesPassed')" type="text" size="middle"
+                                :disabled="scope.row.auth===0">
+                      <i class="icon iconfont icon-toudijindu"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column label="发送通知" style="width:13%">
+                  <template slot-scope="scope">
+                    <el-button size="middle" type="text" :disabled="scope.row.isSendEmail==='true'" @click="tell(scope.row,'ResumesHRinterview')">
+                      <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
+                      <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+            <div class="el-pagination__total page-total">
+              共<a>{{total4HRinterview}}</a>条
+            </div>
+            <div class="page-select">
+              <el-pagination
+                @size-change="handleSizeChange4HRInterview"
+                @current-change="handlePageChange4HRInterview"
+                :current-page="currentPage4HRinterview"
+                :page-sizes="[5, 10, 20, 30]"
+                :page-size="pageSize4HRinterview"
+                layout="sizes, prev, pager, next, jumper"
+                :total="total4HRinterview">
+              </el-pagination>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="已通过" name="5">
+            <div style="width:100%;margin: 0% auto 0% auto">
+              <el-table :data="ResumesPassed" stripe style="width: 100%" class="table1">
+                <el-table-column prop="username" label="姓名" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="sex" label="性别" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
+                </el-table-column>
+                <el-table-column label="查看详情" style="width: 13%">
+                  <template slot-scope="scope">
+                    <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
+                      <i class="icon iconfont icon-chakanxiangqing"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="下载简历"
+                  style="width: 13%"
+                >
+                  <template slot-scope="scope">
+                    <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
+                      <i class="icon iconfont icon-xiazaijianli"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column label="发送通知" style="width:13%">
+                  <template slot-scope="scope">
+                    <el-button size="middle" type="text" :disabled="scope.row.isSendEmail==='true'" @click="tell(scope.row,'ResumesPassed')">
+                      <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
+                      <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+            <div class="el-pagination__total page-total">
+              共<a>{{total4Passed}}</a>条
+            </div>
+            <div class="page-select">
+              <el-pagination
+                @size-change="handleSizeChange4Passed"
+                @current-change="handlePageChange4Passed"
+                :current-page="currentPage4Passed"
+                :page-sizes="[5, 10, 20, 30]"
+                :page-size="pageSize4Passed"
+                layout="sizes, prev, pager, next, jumper"
+                :total="total4Passed">
+              </el-pagination>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="已回绝" name="6">
+            <div style="width:100%;margin: 0% auto 0% auto">
+              <el-table
+                :data="ResumesRefuse"
+                stripe
+                style="width: 100%" class="table2">
+                <el-table-column prop="username" label="姓名" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="sex" label="性别" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
+                </el-table-column>
+                <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
+                </el-table-column>
+                <el-table-column label="查看详情" style="width: 13%">
+                  <template slot-scope="scope">
+                    <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
+                      <i class="icon iconfont icon-chakanxiangqing"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="下载简历"
+                  style="width: 13%"
+                >
+                  <template slot-scope="scope">
+                    <el-button  @click="resumeDownload(scope.row)" type="text" size="middle">
+                      <i class="icon iconfont icon-xiazaijianli"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="撤回回绝"
+                  style="width: 13%"
+                >
+                  <template slot-scope="scope">
+                    <el-button  @click="revokeReject(scope.$index)" type="text" size="middle">
+                      <i class="icon iconfont icon-huifutoudi"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+                <el-table-column label="发送通知" style="width:13%">
+                  <template slot-scope="scope">
+                    <el-button size="middle" type="text" :disabled="scope.row.isSendEmail==='true'" @click="tell(scope.row,'ResumesRefuse')">
+                      <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
+                      <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
+                    </el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+            <div class="el-pagination__total page-total">
+              共<a>{{total4Refuse}}</a>条
+            </div>
+            <div class="page-select">
+              <el-pagination
+                @size-change="handleSizeChange4Refuse"
+                @current-change="handlePageChange4Refuse"
+                :current-page="currentPage4refuse"
+                :page-sizes="[5, 10, 20, 30]"
+                :page-size="pageSize4Refuse"
+                layout="sizes, prev, pager, next, jumper"
+                :total="total4Refuse">
+              </el-pagination>
+            </div>
+          </el-tab-pane>
+        </el-tabs>
 
+      </div>
     </div>
+
+  </div>
 </template>
 <script>
-import ElFormItem from '../../../../node_modules/element-ui/packages/form/src/form-item.vue'
-import ElButton from '../../../../node_modules/element-ui/packages/button/src/button.vue'
-import ElForm from '../../../../node_modules/element-ui/packages/form/src/form.vue'
-import ElIcon from '../../../../node_modules/element-ui/packages/icon/src/icon.vue'
-import ElRow from 'element-ui/packages/row/src/row'
-import ElCol from 'element-ui/packages/col/src/col'
-export default {
-  components: {
-    ElCol,
-    ElRow,
-    ElIcon,
-    ElForm,
-    ElButton,
-    ElFormItem},
-  name: 'Details',
-  data () {
-    return {
-      mailShow:false,
-      form: {
-        id:'',
-        positionName: '',
-        recruitmentType: '',
-        num: 0,
-        workPlace: '',
-        education: '',
-        assessmentDepartment: '',
-        department: '',
-        jobResponsibilities: '',
-        jobRequirements: '',
-        deadline:'',
-        positionType:'',
-        resumeAuditDepartment:'',
-        recruitingNumbers:''
-      },
-      deliverNumber:'',
-      borderColor: '#1476C1',
-      activeTab: 0,
-      departments:[             //所有的部门
-        {name:'人事行政部',index:'1'},
-        {name:'财务管理部',index:'2'},
-        {name:'部门管理部',index:'3'},
-        {name:'市场开发部',index:'4'},
-        {name:'工程技术部',index:'5'},
-        {name:'运维及质量安全部',index:'6'},
-        {name:'研发设计部',index:'7'},
-        {name:'华南办事处',index:'8'},
-        {name:'深圳办事处',index:'9'},
-        {name:'北方办事处',index:'10'},
-        {name:'西部办事处',index:'11'},
-        {name:'华东办事处',index:'12'},
-        {name:'华中办事处',index:'13'},
-        {name:'华北办事处',index:'14'}
-      ],
-      tableData1: [
-        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
-        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
-        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
-        {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'}
-      ],
-      currentPageForResumeFirst:1,
-      total4ResumesFirst:0,
-      pageSize4ResumesFirst:10,
-      ResumesFirst:[
-        {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
-      ],
-      currentPage4HRFirst:1,
-      total4HRFirst:0,
-      pageSize4HRFirst:10,
-      ResumesHRFirst:[
-        {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
-      ],
-      total4DepartmentWritten:0,
-      pageSize4DepartmentWritten:10,
-      currentPage4DepartmentWritten:1,
-      ResumesDepartmentWritten:[
-        {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
-      ],
-      currentPage4DepartmentInterview:1,
-      total4DepartmentInterview:0,
-      pageSize4DepartmentInterview:10,
-      ResumesDepartmentInterview:[
-        {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
-      ],
-      currentPage4HRinterview:1,
-      total4HRinterview:0,
-      pageSize4HRinterview:10,
-      ResumesHRinterview:[
-        {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
-      ],
-      currentPage4Passed:1,
-      total4Passed:0,
-      pageSize4Passed:10,
-      ResumesPassed: [
-        {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:''}
+  import ElFormItem from '../../../../node_modules/element-ui/packages/form/src/form-item.vue'
+  import ElButton from '../../../../node_modules/element-ui/packages/button/src/button.vue'
+  import ElForm from '../../../../node_modules/element-ui/packages/form/src/form.vue'
+  import ElIcon from '../../../../node_modules/element-ui/packages/icon/src/icon.vue'
+  import ElRow from 'element-ui/packages/row/src/row'
+  import ElCol from 'element-ui/packages/col/src/col'
+  export default {
+    components: {
+      ElCol,
+      ElRow,
+      ElIcon,
+      ElForm,
+      ElButton,
+      ElFormItem},
+    name: 'Details',
+    data () {
+      return {
+        mailShow:false,
+        form: {
+          id:'',
+          positionName: '',
+          recruitmentType: '',
+          num: 0,
+          workPlace: '',
+          education: '',
+          assessmentDepartment: '',
+          department: '',
+          jobResponsibilities: '',
+          jobRequirements: '',
+          deadline:'',
+          positionType:'',
+          resumeAuditDepartment:'',
+          recruitingNumbers:''
+        },
+        deliverNumber:'',
+        borderColor: '#1476C1',
+        activeTab: 0,
+        departments:[             //所有的部门
+          {name:'人事行政部',index:'1'},
+          {name:'财务管理部',index:'2'},
+          {name:'部门管理部',index:'3'},
+          {name:'市场开发部',index:'4'},
+          {name:'工程技术部',index:'5'},
+          {name:'运维及质量安全部',index:'6'},
+          {name:'研发设计部',index:'7'},
+          {name:'华南办事处',index:'8'},
+          {name:'深圳办事处',index:'9'},
+          {name:'北方办事处',index:'10'},
+          {name:'西部办事处',index:'11'},
+          {name:'华东办事处',index:'12'},
+          {name:'华中办事处',index:'13'},
+          {name:'华北办事处',index:'14'}
         ],
-      currentPage4refuse:1,
-      total4Refuse:0,
-      pageSize4Refuse:10,
-      ResumesRefuse: [
-        {id:'',username:'',sex:'',age:'',highestEducation:'',deliverDate:'',auth:''}
-      ],
-      formMail:{
-        title:'',
-        component:''
+        tableData1: [
+          {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
+          {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
+          {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'},
+          {name: '李新阳', sex: '男', age: '20', degree: '本科', date: '2018-1-1'}
+        ],
+        currentPageForResumeFirst:1,
+        total4ResumesFirst:0,
+        pageSize4ResumesFirst:10,
+        ResumesFirst:[
+          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:false}
+        ],
+        currentPage4HRFirst:1,
+        total4HRFirst:0,
+        pageSize4HRFirst:10,
+        ResumesHRFirst:[
+          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:false}
+        ],
+        total4DepartmentWritten:0,
+        pageSize4DepartmentWritten:10,
+        currentPage4DepartmentWritten:1,
+        ResumesDepartmentWritten:[
+          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:false}
+        ],
+        currentPage4DepartmentInterview:1,
+        total4DepartmentInterview:0,
+        pageSize4DepartmentInterview:10,
+        ResumesDepartmentInterview:[
+          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:false}
+        ],
+        currentPage4HRinterview:1,
+        total4HRinterview:0,
+        pageSize4HRinterview:10,
+        ResumesHRinterview:[
+          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:false}
+        ],
+        currentPage4Passed:1,
+        total4Passed:0,
+        pageSize4Passed:10,
+        ResumesPassed: [
+          {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:false}
+        ],
+        currentPage4refuse:1,
+        total4Refuse:0,
+        pageSize4Refuse:10,
+        ResumesRefuse: [
+          {id:'',username:'',sex:'',age:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:false}
+        ],
+        formMail:{
+          title:'',
+          component:''
+        }
       }
-    }
-  },
-  watch:{
+    },
+    watch:{
 
-    ResumesRefuse:{
-      handler(old,val){
-        let _this=this;
+      ResumesRefuse:{
+        handler(old,val){
+          let _this=this;
 
-        this.$axios({         //获取已通过名单
-          method: 'get',
-          url: '/admin/Pass/' + _this.$route.query.id
-        }).then(function (response) {
-          _this.$data.ResumesPassed = response.data.content;
-          _this.$data.total4Passed=response.data.totalElements
+          this.$axios({         //获取已通过名单
+            method: 'get',
+            url: '/admin/Pass/' + _this.$route.query.id
+          }).then(function (response) {
+            _this.$data.ResumesPassed = response.data.content;
+            _this.$data.total4Passed=response.data.totalElements
 
-        }).catch(function (error) {
-          _this.$message({
-            type:'error',
-            message:error.response.data.msg
+          }).catch(function (error) {
+            _this.$message({
+              type:'error',
+              message:error.response.data.msg
+            })
+
           })
 
-        })
-
-        this.$axios({
-          method:'get',
-          url:'/admin/HRInterview/'+_this.$route.query.id
-        }).then(function (response) {
-          _this.$data.ResumesHRinterview=response.data.content
-          _this.$data.total4HRinterview=response.data.totalElements
-        }).catch(function (error) {
-          _this.$message({
-            type:'error',
-            message:error.response.data.msg
-          })
-        })
-
-        this.$axios({
-          method:'get',
-          url:'/admin/DepartmentInterview/'+_this.$route.query.id
-        }).then(function (response) {
-          _this.$data.ResumesDepartmentInterview=response.data.content
-          _this.$data.total4HRinterview=response.data.totalElements
-
-        }).catch(function (error) {
-          _this.$message({
-            type:'error',
-            message:error.response.data.msg
+          this.$axios({
+            method:'get',
+            url:'/admin/HRInterview/'+_this.$route.query.id
+          }).then(function (response) {
+            _this.$data.ResumesHRinterview=response.data.content
+            _this.$data.total4HRinterview=response.data.totalElements
+          }).catch(function (error) {
+            _this.$message({
+              type:'error',
+              message:error.response.data.msg
+            })
           })
 
-        })
+          this.$axios({
+            method:'get',
+            url:'/admin/DepartmentInterview/'+_this.$route.query.id
+          }).then(function (response) {
+            _this.$data.ResumesDepartmentInterview=response.data.content
+            _this.$data.total4HRinterview=response.data.totalElements
 
-        this.$axios({
-          method:'get',
-          url:"/admin/DepartmentWritten/"+_this.$route.query.id
-        }).then(function (response) {
-          _this.$data.ResumesDepartmentWritten=response.data.content;
-          _this.$data.total4DepartmentWritten=response.data.totalElements
+          }).catch(function (error) {
+            _this.$message({
+              type:'error',
+              message:error.response.data.msg
+            })
 
-        }).catch(function (error) {
-          _this.$message({
-            type:'error',
-            message:error.response.data.msg
           })
 
-        })
+          this.$axios({
+            method:'get',
+            url:"/admin/DepartmentWritten/"+_this.$route.query.id
+          }).then(function (response) {
+            _this.$data.ResumesDepartmentWritten=response.data.content;
+            _this.$data.total4DepartmentWritten=response.data.totalElements
 
+          }).catch(function (error) {
+            _this.$message({
+              type:'error',
+              message:error.response.data.msg
+            })
 
-        this.$axios({
-          method:'get',
-          url:'/admin/HRFristReview/'+_this.$route.query.id
-        }).then(function (response) {
-          _this.$data.ResumesHRFirst=response.data.content;
-          _this.$data.total4HRFirst=response.data.totalElements
-        })
-
-        this.$axios({
-          method:'get',
-          url:'/admin/ResumeReview/'+_this.$route.query.id
-        }).then(function (response) {
-          _this.$data.ResumesFirst=response.data.content
-          _this.$data.total4ResumesFirst=response.data.totalElements
-
-        }).catch(function (error) {
-          _this.$message({
-            type:'error',
-            message:error.response.data.msg
           })
 
-        })
 
+          this.$axios({
+            method:'get',
+            url:'/admin/HRFristReview/'+_this.$route.query.id
+          }).then(function (response) {
+            _this.$data.ResumesHRFirst=response.data.content;
+            _this.$data.total4HRFirst=response.data.totalElements
+          })
+
+          this.$axios({
+            method:'get',
+            url:'/admin/ResumeReview/'+_this.$route.query.id
+          }).then(function (response) {
+            _this.$data.ResumesFirst=response.data.content
+            _this.$data.total4ResumesFirst=response.data.totalElements
+
+          }).catch(function (error) {
+            _this.$message({
+              type:'error',
+              message:error.response.data.msg
+            })
+
+          })
+
+        }
       }
-    }
-  },
-  created(){
-    let _this=this
-    this.$axios({
-      method:'get',
-      url:'/admin/position/'+_this.$route.query.id,
-    }).then(function (response) {
+    },
+    created(){
+      let _this=this
+      this.$axios({
+        method:'get',
+        url:'/admin/position/'+_this.$route.query.id,
+      }).then(function (response) {
         _this.$data.form=response.data;
-    })
-
-    this.$axios({         //获取已通过名单
-      method:'get',
-      url:'/admin/Pass/'+_this.$route.query.id
-    }).then(function (response) {
-      _this.$data.ResumesPassed=response.data.content;
-      _this.$data.total4Passed=response.data.totalElements
-    }).catch((err)=>{
-      _this.$data.message({
-        type:'danger',
-        message:err.response.data.msg
-      })
-    })
-
-    this.$axios({         //获取已拒绝简历名单
-      method:'get',
-      url:'/admin/Refuse/'+_this.$route.query.id+'?page=1&size=10'
-    }).then(function (response) {
-      _this.$data.ResumesRefuse=response.data.content;
-      _this.$data.total4Refuse=response.data.totalElements
-
-    }).catch((err)=>{
-      _this.$data.message({
-        type:'danger',
-        message:err.response.data.msg
       })
 
-    })
-
-
-    this.$axios({
-      method:'get',
-      url:'/admin/ResumeReview/'+_this.$route.query.id
-    }).then(function (response) {
-      _this.$data.ResumesFirst=response.data.content;
-      _this.$data.total4ResumesFirst=response.data.totalElements;
-
-    }).catch((err)=>{
-      _this.$data.message({
-        type:'danger',
-        message:err.response.data.msg
+      this.$axios({         //获取已通过名单
+        method:'get',
+        url:'/admin/Pass/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesPassed=response.data.content;
+        _this.$data.total4Passed=response.data.totalElements
+      }).catch((err)=>{
+        _this.$data.message({
+          type:'danger',
+          message:err.response.data.msg
+        })
       })
 
-    })
+      this.$axios({         //获取已拒绝简历名单
+        method:'get',
+        url:'/admin/Refuse/'+_this.$route.query.id+'?page=1&size=10'
+      }).then(function (response) {
+        _this.$data.ResumesRefuse=response.data.content;
+        _this.$data.total4Refuse=response.data.totalElements
 
+      }).catch((err)=>{
+        _this.$data.message({
+          type:'danger',
+          message:err.response.data.msg
+        })
 
-    this.$axios({
-      method:'get',
-      url:'/admin/HRFristReview/'+_this.$route.query.id+'?page=1&size=10'
-    }).then(function (response) {
-      _this.$data.ResumesHRFirst=response.data.content;
-      _this.$data.total4HRFirst=response.data.totalElements
-
-    }).catch((err)=>{
-      _this.$data.message({
-        type:'danger',
-        message:err.response.data.msg
       })
 
-    })
 
-    this.$axios({
-      method:'get',
-      url:"/admin/DepartmentWritten/"+_this.$route.query.id+'?page=1&size=10'
-    }).then(function (response) {
-      _this.$data.ResumesDepartmentWritten=response.data.content;
-      _this.$data.total4DepartmentWritten=response.data.totalElements
+      this.$axios({
+        method:'get',
+        url:'/admin/ResumeReview/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.ResumesFirst=response.data.content;
+        _this.$data.total4ResumesFirst=response.data.totalElements;
 
-    }).catch((err)=>{
-      _this.$data.message({
-        type:'danger',
-        message:err.response.data.msg
+      }).catch((err)=>{
+        _this.$data.message({
+          type:'danger',
+          message:err.response.data.msg
+        })
+
       })
 
-    })
 
+      this.$axios({
+        method:'get',
+        url:'/admin/HRFristReview/'+_this.$route.query.id+'?page=1&size=10'
+      }).then(function (response) {
+        _this.$data.ResumesHRFirst=response.data.content;
+        _this.$data.total4HRFirst=response.data.totalElements
 
-    this.$axios({
-      method:'get',
-      url:'/admin/DepartmentInterview/'+_this.$route.query.id+'?page=1&size=10'
-    }).then(function (response) {
-      _this.$data.ResumesDepartmentInterview=response.data.content
-      _this.$data.totalDepartmentInterview=response.data.totalElements
+      }).catch((err)=>{
+        _this.$data.message({
+          type:'danger',
+          message:err.response.data.msg
+        })
 
-    }).catch((err)=>{
-      _this.$data.message({
-        type:'danger',
-        message:err.response.data.msg
       })
 
-    })
+      this.$axios({
+        method:'get',
+        url:"/admin/DepartmentWritten/"+_this.$route.query.id+'?page=1&size=10'
+      }).then(function (response) {
+        _this.$data.ResumesDepartmentWritten=response.data.content;
+        _this.$data.total4DepartmentWritten=response.data.totalElements
 
-    this.$axios({
-      method:'get',
-      url:'/admin/HRInterview/'+_this.$route.query.id+'?page=1&size=10'
-    }).then(function (response) {
-      _this.$data.ResumesHRinterview=response.data.content
-      _this.$data.total4HRinterview=response.data.totalElements
-    }).catch(function (error) {
-      _this.$message({
-        type:'error',
-        message:error.response.data.msg
+      }).catch((err)=>{
+        _this.$data.message({
+          type:'danger',
+          message:err.response.data.msg
+        })
+
       })
-    })
 
-    this.$axios({
-      method:'get',
-      url:'/admin/getDeliverNum/'+_this.$route.query.id
-    }).then(function (response) {
-      _this.$data.deliverNumber=response.data.number
-    }).catch((err)=>{
-      _this.$data.message({
-        type:'danger',
-        message:err.response.data.msg
+
+      this.$axios({
+        method:'get',
+        url:'/admin/DepartmentInterview/'+_this.$route.query.id+'?page=1&size=10'
+      }).then(function (response) {
+        _this.$data.ResumesDepartmentInterview=response.data.content
+        _this.$data.totalDepartmentInterview=response.data.totalElements
+
+      }).catch((err)=>{
+        _this.$data.message({
+          type:'danger',
+          message:err.response.data.msg
+        })
+
       })
-    })
 
-  },
-  updated(){
+      this.$axios({
+        method:'get',
+        url:'/admin/HRInterview/'+_this.$route.query.id+'?page=1&size=10'
+      }).then(function (response) {
+        _this.$data.ResumesHRinterview=response.data.content
+        _this.$data.total4HRinterview=response.data.totalElements
+      }).catch(function (error) {
+        _this.$message({
+          type:'error',
+          message:error.response.data.msg
+        })
+      })
+
+      this.$axios({
+        method:'get',
+        url:'/admin/getDeliverNum/'+_this.$route.query.id
+      }).then(function (response) {
+        _this.$data.deliverNumber=response.data.number
+      }).catch((err)=>{
+        _this.$data.message({
+          type:'danger',
+          message:err.response.data.msg
+        })
+      })
+
+    },
+    updated(){
 
       if(this.$data.form.recruitmentType==='1'){
         this.$data.form.recruitmentType='校园招聘'
@@ -808,394 +834,430 @@ export default {
         this.$data.form.recruitmentType='实习生招聘'
       }
       this.$data.form.jobResponsibilities = this.$data.form.jobResponsibilities.replace('\n','<br>')
-    this.$data.form.jobRequirements = this.$data.form.jobRequirements.replace('\n','<br>')
+      this.$data.form.jobRequirements = this.$data.form.jobRequirements.replace('\n','<br>')
 
-  },
-  methods: {
-    changeStatus(row,formName,formName1){
+    },
+    methods: {
+      changeStatus(row,formName,formName1){
 
-      let NextForm='';
-      let NextForm1='';
-      if(formName==='ResumesFirst'){
-        NextForm='简历初审'
-        NextForm1='HR初审'
-      }else if(formName==='ResumesHRFirst'){
-        NextForm='HR初审'
-        NextForm1='部门笔试'
-      }else if(formName==='ResumesDepartmentWritten'){
-        NextForm='部门笔试'
-        NextForm1='部门面试'
-      }else if(formName==='ResumesDepartmentInterview'){
-        NextForm='部门面试'
-        NextForm1='HR面试'
-      }else if(formName==='ResumesHRinterview'){
-        NextForm='HR面试'
-      }
-      let _this=this;
-      let name=this.$data[formName][row].username;
-      let id=this.$data[formName][row].id;
+        let NextForm='';
+        let NextForm1='';
+        if(formName==='ResumesFirst'){
+          NextForm='简历初审'
+          NextForm1='HR初审'
+        }else if(formName==='ResumesHRFirst'){
+          NextForm='HR初审'
+          NextForm1='部门笔试'
+        }else if(formName==='ResumesDepartmentWritten'){
+          NextForm='部门笔试'
+          NextForm1='部门面试'
+        }else if(formName==='ResumesDepartmentInterview'){
+          NextForm='部门面试'
+          NextForm1='HR面试'
+        }else if(formName==='ResumesHRinterview'){
+          NextForm='HR面试'
+        }
+        let _this=this;
+        let name=this.$data[formName][row].username;
+        let id=this.$data[formName][row].id;
 
-      this.$confirm('请确定您将对 '+_this.$data[formName][row].username+' 进行操作（下一步将无法取消）','重要',{
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-      }).then(()=>{
-        _this.$confirm('请选择你对 '+_this.$data[formName][row].username+'的操作?', '提示', {
-          confirmButtonText: '审核完成，进入下一步',
-          cancelButtonText: '回绝',
+        this.$confirm('请确定您将对 '+_this.$data[formName][row].username+' 进行操作（下一步将无法取消）','重要',{
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
           type: 'warning',
-          showClose:false,
-          beforeClose: (action, instance, done) => {
-            console.log(action)
-            console.log(done)
-            done();
-          }
+        }).then(()=>{
+          _this.$confirm('请选择你对 '+_this.$data[formName][row].username+'的操作?', '提示', {
+            confirmButtonText: '审核完成，进入下一步',
+            cancelButtonText: '回绝',
+            type: 'warning',
+            showClose:false,
+            beforeClose: (action, instance, done) => {
+              console.log(action)
+              console.log(done)
+              done();
+            }
+          }).then(() => {
+            _this.$axios({
+              method:'put',
+              url:'/admin/passToNext/'+_this.$data[formName][row].id
+            }).then(function (response) {
+              _this.$message({
+                type:'success',
+                message:'进入下一步成功！'
+              })
+              _this.$data[formName1].push(_this.$data[formName][row])
+              _this.$data[formName].splice(row,1)
+              // _this.$router.push({
+              //   path: '/SendMail',
+              //   query: {
+              //     id: id,
+              //     name: name,
+              //     detailsId: _this.$route.query.id,
+              //     type: 'passed',
+              //     step:NextForm,
+              //     stepNext:NextForm1,
+              //     positionName:_this.$data.form.positionName
+              //   }
+              // })
+            }).catch((error)=>{
+              _this.$message({
+                type:'error',
+                message:'进入下一步失败！请查看是否有权限'
+              })
+            })
+          }).catch(() => {
+            _this.$axios({
+              method:'put',
+              url:'/admin/giveRefuse/'+_this.$data[formName][row].id
+            }).then((response)=>{
+              _this.$message({
+                type:'success',
+                message:'回绝成功！'
+              })
+
+              _this.$data.ResumesRefuse.push(_this.$data[formName][row])
+              _this.$data[formName].splice(row,1)
+              // _this.$router.push({
+              //   path: '/SendMail',
+              //   query: {
+              //     id: id,
+              //     name: name,
+              //     detailsId: _this.$route.query.id,
+              //     type: 'reject',
+              //     step:NextForm,
+              //     stepNext:NextForm1,
+              //     positionName:_this.$data.form.positionName
+              //   }
+              // })
+            }).catch((error)=>{
+              _this.$message({
+                type:'error',
+                message:'回绝失败！请查看是否有权限'
+              })
+            })
+          });
+        }).catch(()=>{
+
+        })
+      },
+
+
+      /**
+       * 邮件发送函数
+       * @param row
+       * @param formName
+       */
+      tell(row,formName){
+
+        let NextForm='';
+        let NextForm1='';
+        let type='passed';
+        if(formName==='ResumesFirst'){
+          NextForm='简历初审'
+          NextForm1='HR初审'
+        }else if(formName==='ResumesHRFirst'){
+          NextForm='简历初审'
+          NextForm1='HR初审'
+        }else if(formName==='ResumesDepartmentWritten'){
+          NextForm='HR初审'
+          NextForm1='部门笔试'
+        }else if(formName==='ResumesDepartmentInterview'){
+          NextForm='部门笔试'
+          NextForm1='部门面试'
+        }else if(formName==='ResumesHRinterview'){
+          NextForm='部门面试'
+          NextForm1='HR面试'
+        }else if(formName==='ResumesPassed'){
+          NextForm='已通过'
+        }
+        if(formName==='ResumesRefuse'){
+          type='reject'
+        }
+        let _this=this;
+        let name=row.username;
+        let id=row.id;
+
+
+        this.$confirm('确定对 ' + row.username + '发送邮件?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+        }).then(() => {
+          _this.$router.push({
+            path: '/SendMail',
+            query: {
+              id: id,       //求职者id
+              name: name,   //求职者名字
+              detailsId: _this.$route.query.id, //职位id
+              type: type,   //邮件类型
+              step:NextForm,  //上一步是哪一步
+              stepNext:NextForm1,   //下一步骤
+              positionName:_this.$data.form.positionName  //职位名
+
+            }
+          })
+        }).catch((err)=>{})
+      },
+      revokeReject(row){
+        let _this=this;
+        this.$confirm('确定对 '+_this.$data.ResumesRefuse[row].username+'撤销回绝?', '提示', {
+          confirmButtonText: '撤销',
+          cancelButtonText: '取消',
+          type: 'warning'
         }).then(() => {
           _this.$axios({
-            method:'put',
-            url:'/admin/passToNext/'+_this.$data[formName][row].id
+            method: 'put',
+            url: '/admin/cancelRefuse/' + _this.$data.ResumesRefuse[row].id
           }).then(function (response) {
             _this.$message({
-              type:'success',
-              message:'进入下一步成功！'
+              type: 'success',
+              message: '操作成功'
             })
-            _this.$data[formName1].push(_this.$data[formName][row])
-            _this.$data[formName].splice(row,1)
-            _this.$router.push({
-              path: '/SendMail',
-              query: {
-                id: id,
-                name: name,
-                detailsId: _this.$route.query.id,
-                type: 'passed',
-                step:NextForm,
-                stepNext:NextForm1,
-                positionName:_this.$data.form.positionName
-              }
-            })
-          }).catch((error)=>{
+            _this.$data.ResumesRefuse.splice(row, 1)
+          }).catch((error) => {
             _this.$message({
-              type:'error',
-              message:'进入下一步失败！请查看是否有权限'
+              type: 'error',
+              message: '操作失败'
             })
           })
-        }).catch(() => {
-          _this.$axios({
-            method:'put',
-            url:'/admin/giveRefuse/'+_this.$data[formName][row].id
-          }).then((response)=>{
-            _this.$message({
-              type:'success',
-              message:'回绝成功！'
-            })
-            _this.$data.ResumesRefuse.push(_this.$data[formName][row])
-            _this.$data[formName].splice(row,1)
-            _this.$router.push({
-              path: '/SendMail',
-              query: {
-                id: id,
-                name: name,
-                detailsId: _this.$route.query.id,
-                type: 'reject',
-                step:NextForm,
-                stepNext:NextForm1,
-                positionName:_this.$data.form.positionName
-              }
-            })
-          }).catch((error)=>{
-            _this.$message({
-              type:'error',
-              message:'回绝失败！请查看是否有权限'
-            })
-          })
-        });
-      }).catch(()=>{
-
-      })
-    },
-
-    tell(row,formName){
-      let _this=this;
-      let flag=false;
-
-      this.$confirm('确定对 ' + row.username + '发送邮件?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-      }).then(() => {
-        _this.$router.push({
-          path: '/SendMail',
-          query: {
-            positionName:_this.$data.positionName,
-            address:_this.$data.workPlace,
-            id: row.id,
-            name: row.username,
-            detailsId:_this.$route.query.id,
-            type: formName
-          }
-        })
-      }).catch((err)=>{})
-    },
-    revokeReject(row){
-      let _this=this;
-      this.$confirm('确定对 '+_this.$data.ResumesRefuse[row].username+'撤销回绝?', '提示', {
-        confirmButtonText: '撤销',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        _this.$axios({
-          method: 'put',
-          url: '/admin/cancelRefuse/' + _this.$data.ResumesRefuse[row].id
+        }).catch(() => {});
+      },
+      resumeDetails (it) {
+        this.$router.push({ path: '/ResumeDetails' , query: {id:it.id}})
+      },
+      resumeDownload(it){
+        console.log(it)
+        const id = it['id']
+        this.$axios({
+          method:'get',
+          url:'/admin/downloadResume/'+ id,
+          responseType: 'blob'
         }).then(function (response) {
-          _this.$message({
-            type: 'success',
-            message: '操作成功'
-          })
-          _this.$data.ResumesRefuse.splice(row, 1)
-        }).catch((error) => {
-          _this.$message({
-            type: 'error',
-            message: '操作失败'
-          })
+          const data = response.data
+          if (!data) {
+            return
+          }
+          let url = window.URL.createObjectURL(new Blob([data]))
+          let link = document.createElement('a')
+          link.style.display = 'none'
+          link.href = url
+          link.setAttribute('download', it.id+'_'+it.username+'_简历.pdf')
+
+          document.body.appendChild(link)
+          link.click()
+        }).catch(function(error){
+
         })
-      }).catch(() => {});
-    },
-    resumeDetails (it) {
-      this.$router.push({ path: '/ResumeDetails' , query: {id:it.id}})
-    },
-    resumeDownload(it){
-      console.log(it)
-      const id = it['id']
-      this.$axios({
-        method:'get',
-        url:'/admin/downloadResume/'+ id,
-        responseType: 'blob'
-      }).then(function (response) {
-        const data = response.data
-        if (!data) {
-          return
+
+      },
+      handleClick () {
+        switch (this.$data.activeTab) {
+          case '0':this.$data.borderColor = '#1476C1'
+            break
+          case '1':this.$data.borderColor = '#E01B2F'
+            break
+          case '2':this.$data.borderColor = '#707070'
+            break
         }
-        let url = window.URL.createObjectURL(new Blob([data]))
-        let link = document.createElement('a')
-        link.style.display = 'none'
-        link.href = url
-        link.setAttribute('download', it.id+'_'+it.username+'_简历.pdf')
+      },
+      handleSizeChange4DepartmentWritten (val) {
+        this.$data.pageSize4DepartmentWritten = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4DepartmentWritten,
+            page: _this.$data.currentPage4DepartmentWritten
+          }),
+          url:'/admin/DepartmentWritten/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesDepartmentWritten =response.data.content;
+        })
+      },
+      handlePageChange4DepartmentWritten (val) {
+        this.$data.currentPage4DepartmentWritten = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4DepartmentWritten,
+            page: _this.$data.currentPage4DepartmentWritten
+          }),
+          url:'/admin/DepartmentWritten/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesDepartmentWritten=response.data.content;
+        })
+      },
+      handleSizeChange4ResumesFirst (val) {
+        this.$data.pageSize4ResumesFirst = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4ResumesFirst,
+            page: _this.$data.currentPageForResumesFirst
+          }),
+          url:'/admin/ResumeReview/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesFirst =response.data.content;
+        })
 
-        document.body.appendChild(link)
-        link.click()
-      }).catch(function(error){
-
-      })
-
-    },
-    handleClick () {
-      switch (this.$data.activeTab) {
-        case '0':this.$data.borderColor = '#1476C1'
-          break
-        case '1':this.$data.borderColor = '#E01B2F'
-          break
-        case '2':this.$data.borderColor = '#707070'
-          break
-      }
-    },
-    handleSizeChange4DepartmentWritten (val) {
-      this.$data.pageSize4DepartmentWritten = val
-      let _this=this
-      this.$axios({
-        method: 'get',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize4DepartmentWritten,
-          page: _this.$data.currentPage4DepartmentWritten
-        }),
-        url:'/admin/DepartmentWritten/'+_this.$route.query.id
-      }).then(function (response) {
-        _this.$data.ResumesDepartmentWritten =response.data.content;
-      })
-    },
-    handlePageChange4DepartmentWritten (val) {
-      this.$data.currentPage4DepartmentWritten = val
-      let _this=this
-      this.$axios({
-        method: 'get',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize4DepartmentWritten,
-          page: _this.$data.currentPage4DepartmentWritten
-        }),
-        url:'/admin/DepartmentWritten/'+_this.$route.query.id
-      }).then(function (response) {
-        _this.$data.ResumesDepartmentWritten=response.data.content;
-      })
-    },
-    handleSizeChange4ResumesFirst (val) {
-      this.$data.pageSize4ResumesFirst = val
-      let _this=this
-      this.$axios({
-        method: 'get',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize4ResumesFirst,
-          page: _this.$data.currentPageForResumesFirst
-        }),
-        url:'/admin/ResumeReview/'+_this.$route.query.id
-      }).then(function (response) {
-        _this.$data.ResumesFirst =response.data.content;
-      })
-
-    },
-    handlePageChange4ResumesFirst (val) {
-      this.$data.currentPageForResumesFirst = val
-      let _this=this
-      this.$axios({
-        method: 'get',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize4ResumesFirst,
-          page: _this.$data.currentPageForResumesFirst
-        }),
-        url:'/admin/ResumeReview/'+_this.$route.query.id
-      }).then(function (response) {
-        _this.$data.ResumesFirst=response.data.content;
-      })
-    },
-    handleSizeChange4HRFirst (val) {
-      this.$data.pageSize4HRFirst = val
-      let _this=this
-      this.$axios({
-        method: 'get',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize4HRFirst,
-          page: _this.$data.currentPage4HRFirst
-        }),
-        url:'/admin/HRFristReview/'+_this.$route.query.id
-      }).then(function (response) {
-        _this.$data.ResumesHRFirst =response.data.content;
-      })
-    },
-    handlePageChange4HRFirst (val) {
-      this.$data.currentPage4HRFirst = val
-      let _this=this
-      this.$axios({
-        method: 'get',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize4HRFirst,
-          page: _this.$data.currentPage4HRFirst
-        }),
-        url:'/admin/ResumeReview/'+_this.$route.query.id
-      }).then(function (response) {
-        _this.$data.ResumesHRFirst=response.data.content;
-      })
-    },
-    handleSizeChange4DepartmentInterview (val) {
-      this.$data.pageSize4DepartmentInterview = val
-      let _this=this
-      this.$axios({
-        method: 'get',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize4DepartmentInterview,
-          page: _this.$data.currentPage4DepartmentInterview
-        }),
-        url:'/admin/DepartmentInterview/'+_this.$route.query.id
-      }).then(function (response) {
-        _this.$data.ResumesDepartmentInterview =response.data.content;
-      })
-    },
-    handlePageChange4DepartmentInterview (val) {
-      this.$data.currentPage4DepartmentInterview = val
-      let _this=this
-      this.$axios({
-        method: 'get',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize4DepartmentInterview,
-          page: _this.$data.currentPage4DepartmentInterview
-        }),
-        url:'/admin/DepartmentInterview/'+_this.$route.query.id
-      }).then(function (response) {
-        _this.$data.ResumesDepartmentInterview=response.data.content;
-      })
-    },
-    handleSizeChange4HRInterview (val) {
-      this.$data.pageSize4HRinterview = val
-      let _this=this
-      this.$axios({
-        method: 'get',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize4HRinterview,
-          page: _this.$data.currentPage4HRinterview
-        }),
-        url:'/admin/HRInterview/'+_this.$route.query.id
-      }).then(function (response) {
-        _this.$data.ResumesHRInterview =response.data.content;
-      })
-    },
-    handlePageChange4HRInterview (val) {
-      this.$data.currentPage4HRinterview = val
-      let _this=this
-      this.$axios({
-        method: 'get',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize4HRinterview,
-          page: _this.$data.currentPage4HRinterview
-        }),
-        url:'/admin/HRInterview/'+_this.$route.query.id
-      }).then(function (response) {
-        _this.$data.ResumesHRinterview=response.data.content;
-      })
-    },
-    handleSizeChange4Passed (val) {
-      this.$data.pageSize4Passed = val
-      let _this=this
-      this.$axios({
-        method: 'get',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize4Passed,
-          page: _this.$data.currentPage4Passed
-        }),
-        url:'/admin/Pass/'+_this.$route.query.id
-      }).then(function (response) {
-        _this.$data.ResumesPassed =response.data.content;
-      })
-    },
-    handlePageChange4Passed (val) {
-      this.$data.currentPage4Passed = val
-      let _this=this
-      this.$axios({
-        method: 'get',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize4Passed,
-          page: _this.$data.currentPage4Passed
-        }),
-        url:'/admin/Pass/'+_this.$route.query.id
-      }).then(function (response) {
-        _this.$data.ResumesPassed=response.data.content;
-      })
-    },
-    handleSizeChange4Refuse (val) {
-      this.$data.pageSize4Refuse = val
-      let _this=this
-      this.$axios({
-        method: 'get',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize4Refuse,
-          page: _this.$data.currentPage4refuse
-        }),
-        url:'/admin/Refuse/'+_this.$route.query.id
-      }).then(function (response) {
-        _this.$data.ResumesRefuse =response.data.content;
-      })
-    },
-    handlePageChange4Refuse (val) {
-      this.$data.currentPage4refuse = val
-      let _this=this
-      this.$axios({
-        method: 'get',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize4Refuse,
-          page: _this.$data.currentPage4refuse
-        }),
-        url:'/admin/Refuse/'+_this.$route.query.id
-      }).then(function (response) {
-        _this.$data.ResumesRefuse=response.data.content;
-      })
-    },
+      },
+      handlePageChange4ResumesFirst (val) {
+        this.$data.currentPageForResumesFirst = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4ResumesFirst,
+            page: _this.$data.currentPageForResumesFirst
+          }),
+          url:'/admin/ResumeReview/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesFirst=response.data.content;
+        })
+      },
+      handleSizeChange4HRFirst (val) {
+        this.$data.pageSize4HRFirst = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4HRFirst,
+            page: _this.$data.currentPage4HRFirst
+          }),
+          url:'/admin/HRFristReview/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesHRFirst =response.data.content;
+        })
+      },
+      handlePageChange4HRFirst (val) {
+        this.$data.currentPage4HRFirst = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4HRFirst,
+            page: _this.$data.currentPage4HRFirst
+          }),
+          url:'/admin/ResumeReview/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesHRFirst=response.data.content;
+        })
+      },
+      handleSizeChange4DepartmentInterview (val) {
+        this.$data.pageSize4DepartmentInterview = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4DepartmentInterview,
+            page: _this.$data.currentPage4DepartmentInterview
+          }),
+          url:'/admin/DepartmentInterview/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesDepartmentInterview =response.data.content;
+        })
+      },
+      handlePageChange4DepartmentInterview (val) {
+        this.$data.currentPage4DepartmentInterview = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4DepartmentInterview,
+            page: _this.$data.currentPage4DepartmentInterview
+          }),
+          url:'/admin/DepartmentInterview/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesDepartmentInterview=response.data.content;
+        })
+      },
+      handleSizeChange4HRInterview (val) {
+        this.$data.pageSize4HRinterview = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4HRinterview,
+            page: _this.$data.currentPage4HRinterview
+          }),
+          url:'/admin/HRInterview/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesHRInterview =response.data.content;
+        })
+      },
+      handlePageChange4HRInterview (val) {
+        this.$data.currentPage4HRinterview = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4HRinterview,
+            page: _this.$data.currentPage4HRinterview
+          }),
+          url:'/admin/HRInterview/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesHRinterview=response.data.content;
+        })
+      },
+      handleSizeChange4Passed (val) {
+        this.$data.pageSize4Passed = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4Passed,
+            page: _this.$data.currentPage4Passed
+          }),
+          url:'/admin/Pass/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesPassed =response.data.content;
+        })
+      },
+      handlePageChange4Passed (val) {
+        this.$data.currentPage4Passed = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4Passed,
+            page: _this.$data.currentPage4Passed
+          }),
+          url:'/admin/Pass/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesPassed=response.data.content;
+        })
+      },
+      handleSizeChange4Refuse (val) {
+        this.$data.pageSize4Refuse = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4Refuse,
+            page: _this.$data.currentPage4refuse
+          }),
+          url:'/admin/Refuse/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesRefuse =response.data.content;
+        })
+      },
+      handlePageChange4Refuse (val) {
+        this.$data.currentPage4refuse = val
+        let _this=this
+        this.$axios({
+          method: 'get',
+          data: _this.$qs.stringify({
+            size: _this.$data.pageSize4Refuse,
+            page: _this.$data.currentPage4refuse
+          }),
+          url:'/admin/Refuse/'+_this.$route.query.id
+        }).then(function (response) {
+          _this.$data.ResumesRefuse=response.data.content;
+        })
+      },
+    }
   }
-}
 </script>
 <style lang="less">
   #Details{
@@ -1231,46 +1293,46 @@ export default {
         border-bottom-left-radius: 60px;
       }
       /*.card-top-item-0{*/
-        /*display: inline-block;*/
-        /*margin: 0;*/
-        /*width: 10%;*/
-        /*height: 40px;*/
-        /*background: #1476C1;*/
+      /*display: inline-block;*/
+      /*margin: 0;*/
+      /*width: 10%;*/
+      /*height: 40px;*/
+      /*background: #1476C1;*/
       /*}*/
       /*.card-top-item-1{*/
-        /*display: inline-block;*/
-        /*margin: 0;*/
-        /*width: 8%;*/
-        /*height: 28px;*/
-        /*background: #1476C1;*/
+      /*display: inline-block;*/
+      /*margin: 0;*/
+      /*width: 8%;*/
+      /*height: 28px;*/
+      /*background: #1476C1;*/
       /*}*/
       /*.card-top-item-2{*/
-        /*display: inline-block;*/
-        /*margin: 0;*/
-        /*width: 8%;*/
-        /*height: 18px;*/
-        /*background: #1476C1;*/
+      /*display: inline-block;*/
+      /*margin: 0;*/
+      /*width: 8%;*/
+      /*height: 18px;*/
+      /*background: #1476C1;*/
       /*}*/
       /*.card-top-item-3{*/
-        /*display: inline-block;*/
-        /*margin: 0;*/
-        /*width:8%;*/
-        /*height: 12px;*/
-        /*background: #1476C1;*/
+      /*display: inline-block;*/
+      /*margin: 0;*/
+      /*width:8%;*/
+      /*height: 12px;*/
+      /*background: #1476C1;*/
       /*}*/
       /*.card-top-item-4{*/
-        /*display: inline-block;*/
-        /*margin: 0;*/
-        /*width: 8%;*/
-        /*height: 8px;*/
-        /*background: #1476C1;*/
+      /*display: inline-block;*/
+      /*margin: 0;*/
+      /*width: 8%;*/
+      /*height: 8px;*/
+      /*background: #1476C1;*/
       /*}*/
       /*.card-top-item-5{*/
-        /*display: inline-block;*/
-        /*margin: 0;*/
-        /*width: 8%;*/
-        /*height: 4px;*/
-        /*background: #1476C1;*/
+      /*display: inline-block;*/
+      /*margin: 0;*/
+      /*width: 8%;*/
+      /*height: 4px;*/
+      /*background: #1476C1;*/
       /*}*/
     }
     .line{
@@ -1318,15 +1380,15 @@ export default {
     .el-table__row{
       text-align: center;
     }
-      .el-table__header-wrapper th{
-        background: #ECF1F7 !important;
-      }
-      .el-table__row--striped td{
-        background: #F6F7FB;
-      }
-      .iconfont{
-        color:#1476C1
-      }
+    .el-table__header-wrapper th{
+      background: #ECF1F7 !important;
+    }
+    .el-table__row--striped td{
+      background: #F6F7FB;
+    }
+    .iconfont{
+      color:#1476C1
+    }
     .el-tabs__header.is-top{
       border-bottom: none;
     }
