@@ -1,6 +1,8 @@
 <template>
   <div id="app" style="min-width:1200px">
-    <XhwlHeader v-if="$route.path!='/ResumeDetails'" @isSuperAdmin="changeSuperAdmin" ></XhwlHeader>
+    <keep-alive>
+    <XhwlHeader v-show="$route.path!='/ResumeDetails'" @isSuperAdmin="changeSuperAdmin" ></XhwlHeader>
+    </keep-alive>
     <div v-if="$route.path!='/ResumeDetails'" style="width: 80%;margin: 0 auto;height: 100%;vertical-align: top">
       <div v-bind:style="'display: inline-block;width: 15%;position:relative;height:'+(height+20)+'px'">
         <XhwlMenu :isSuperAdmin="isSuperAdmin"></XhwlMenu>
@@ -10,7 +12,9 @@
       </div>
     </div>
     <div v-else>
+      <keep-alive>
       <router-view ></router-view>
+        </keep-alive>
     </div>
   </div>
 </template>

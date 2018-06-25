@@ -1,5 +1,6 @@
 <template>
   <div id="ResumeDetails">
+    <el-button icon="el-icon-back" @click="back()" style="position: fixed;top:100px;right: 10%;opacity:0.9;z-index: 9999"></el-button>
     <div style="width: 100%;height: 470px;overflow:hidden;position:relative;vertical-align:middle;z-index: 5;;background:top rgba(19,118,190,0.3)">
       <div style="width: 100%;height:auto;z-index: 3">
         <img style="width:100%;top:-900px;position:absolute;left: 0px;z-index: 0" class="blur" v-if="imgUrl" :src="imgUrl">
@@ -348,6 +349,9 @@ export default {
     }
   },
   methods: {
+    back(){
+      this.$router.back(-1)
+    },
     resumeDownload(){
       let _this = this
       const id = this.$route.query.id
