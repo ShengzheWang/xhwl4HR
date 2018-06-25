@@ -75,6 +75,8 @@
                 </el-table-column>
                 <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
                 </el-table-column>
+                <el-table-column  v-if="form.recruitmentType==='社会招聘'" prop="workSeniority" label="工作年限" style="width: 16%">
+                </el-table-column>
                 <el-table-column
                   label="查看详情"
                   style="width: 13%">
@@ -139,6 +141,8 @@
                 <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
                 </el-table-column>
                 <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
+                </el-table-column>
+                <el-table-column  v-if="form.recruitmentType==='社会招聘'" prop="workSeniority" label="工作年限" style="width: 16%">
                 </el-table-column>
                 <el-table-column label="查看详情" style="width: 13%">
                   <template slot-scope="scope">
@@ -212,6 +216,8 @@
                 </el-table-column>
                 <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
                 </el-table-column>
+                <el-table-column  v-if="form.recruitmentType==='社会招聘'" prop="workSeniority" label="工作年限" style="width: 16%">
+                </el-table-column>
                 <el-table-column label="查看详情" style="width: 13%">
                   <template slot-scope="scope">
                     <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
@@ -282,6 +288,8 @@
                 <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
                 </el-table-column>
                 <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
+                </el-table-column>
+                <el-table-column  v-if="form.recruitmentType==='社会招聘'" prop="workSeniority" label="工作年限" style="width: 16%">
                 </el-table-column>
                 <el-table-column label="查看详情" style="width: 13%">
                   <template slot-scope="scope">
@@ -354,6 +362,8 @@
                 </el-table-column>
                 <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
                 </el-table-column>
+                <el-table-column  v-if="form.recruitmentType==='社会招聘'" prop="workSeniority" label="工作年限" style="width: 16%">
+                </el-table-column>
                 <el-table-column label="查看详情" style="width: 13%">
                   <template slot-scope="scope">
                     <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
@@ -425,6 +435,8 @@
                 </el-table-column>
                 <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
                 </el-table-column>
+                <el-table-column  v-if="form.recruitmentType==='社会招聘'" prop="workSeniority" label="工作年限" style="width: 16%">
+                </el-table-column>
                 <el-table-column label="查看详情" style="width: 13%">
                   <template slot-scope="scope">
                     <el-button  @click="resumeDetails(scope.row)" type="text" size="middle">
@@ -487,6 +499,8 @@
                 <el-table-column prop="highestEducation" label="最高学历" style="width: 16%">
                 </el-table-column>
                 <el-table-column prop="deliverDate" label="投递时间" style="width: 16%">
+                </el-table-column>
+                <el-table-column  v-if="form.recruitmentType==='社会招聘'" prop="workSeniority" label="工作年限" style="width: 16%">
                 </el-table-column>
                 <el-table-column label="查看详情" style="width: 13%">
                   <template slot-scope="scope">
