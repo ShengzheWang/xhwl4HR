@@ -182,7 +182,7 @@ export default {
           url:'/admin/positions'
         }).then(function (response) {
           _this.$data.tableData=response.data.content;
-          _this.$data.loading = false
+          _this.$data.loading = false;
           _this.$data.total=response.data.totalElements;
         })
       }
@@ -254,9 +254,14 @@ export default {
           url: '/admin/positions?' + 'lastDate=' + SearchDate2 +
           '&earlyDate=' + SearchDate1 +
           '&department=' + _this.$data.formSearch.department+
-            '&positionName='+_this.$data.formSearch.positionName
+            '&positionName='+_this.$data.formSearch.positionName,
+          data:_this.$qs.stringify({
+            page:_this.$data.currentPage,
+            size:_this.$data.pageSize
+          })
         }).then(function (response) {
           _this.$data.tableData = response.data.content;
+          _this.$data.total=response.data.totalElements;
         })
       }
     },
@@ -281,32 +286,34 @@ export default {
     },
 
     handleSizeChange (val) {
-      this.$data.pageSize = val
-      let _this=this
-      this.$axios({
-        method: 'post',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize,
-          page: _this.$data.currentPage
-        }),
-        url:'/admin/positions'
-      }).then(function (response) {
-        _this.$data.tableData=response.data.content;
-      })
+      this.$data.pageSize = val;
+      this.SearchPositions();
+      // let _this=this
+      // this.$axios({
+      //   method: 'post',
+      //   data: _this.$qs.stringify({
+      //     size: _this.$data.pageSize,
+      //     page: _this.$data.currentPage
+      //   }),
+      //   url:'/admin/positions'
+      // }).then(function (response) {
+      //   _this.$data.tableData=response.data.content;
+      // })
     },
     handlePageChange (val) {
-      this.$data.currentPage = val
-      let _this=this
-      this.$axios({
-        method: 'post',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize,
-          page: _this.$data.currentPage
-        }),
-        url:'/admin/positions'
-      }).then(function (response) {
-        _this.$data.tableData=response.data.content;
-      })
+      this.$data.currentPage = val;
+      this.SearchPositions();
+      // let _this=this
+      // this.$axios({
+      //   method: 'post',
+      //   data: _this.$qs.stringify({
+      //     size: _this.$data.pageSize,
+      //     page: _this.$data.currentPage
+      //   }),
+      //   url:'/admin/positions'
+      // }).then(function (response) {
+      //   _this.$data.tableData=response.data.content;
+      // })
     },
     handleClick (row) {
       this.$router.push({path:'/Details',query:{id:row.id}})
