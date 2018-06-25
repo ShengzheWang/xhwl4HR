@@ -6,19 +6,19 @@
         <el-form ref="formSearch" :model="formSearch" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">
           <el-form-item >
             <el-col style="width: 38%">
-              <el-date-picker type="date" prefix-icon="start-time-icon" class="start-time" placeholder="发布日期-起" v-model="formSearch.publish_date" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" prefix-icon="start-time-icon" class="start-time" placeholder="发布日期-起" v-model="SearchConditions.publish_date" style="width: 100%;"></el-date-picker>
             </el-col>
             <el-col style="width: 2%">
               <div style="width: 100%;height: 50px;color:#1476C1;text-align: center;font-size: 30px;vertical-align: middle;border-top:#1476C1 solid 2px;border-bottom: #1476C1 solid 2px ">|</div>
             </el-col>
             <el-col style="width: 38%">
-              <el-date-picker type="date" prefix-icon="end-time-icon" class="end-time" placeholder="发布日期-终" v-model="formSearch.end_date" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" prefix-icon="end-time-icon" class="end-time" placeholder="发布日期-终" v-model="SearchConditions.end_date" style="width: 100%;"></el-date-picker>
             </el-col>
           </el-form-item>
 
             <el-col style="width: 38%">
               <el-form-item >
-            <el-input v-model="formSearch.positionName" prefix-icon="name-icon" placeholder="职位名称" class="input-name" ></el-input>
+            <el-input v-model="SearchConditions.positionName" prefix-icon="name-icon" placeholder="职位名称" class="input-name" ></el-input>
               </el-form-item>
             </el-col>
             <el-col style="width: 2%">
@@ -140,6 +140,12 @@ export default {
         departmentName:'',
         positionName:''
       },
+      SearchConditions:{
+        publish_date:'',
+        end_date:'',
+        departmentName:'',
+        positionName:''
+      },
       departments:[             //所有的部门
         {name:'人事行政部',index:'1'},
         {name:'财务管理部',index:'2'},
@@ -210,6 +216,11 @@ export default {
     searchPositions(){
         let _this=this;
 
+        this.$data.formSearch.earlyDate=this.$data.SearchConditions.earlyDate;
+        this.$data.formSearch.end_date=this.$data.SearchConditions.endDate;
+        this.$data.formSearch.department=this.$data.SearchConditions.department;
+        this.$data.formSearch.positionName=this.$data.SearchConditions.positionName;
+
         let publish_date=this.$data.formSearch.publish_date;
         let end_date=this.$data.formSearch.end_date;
 
@@ -239,10 +250,8 @@ export default {
         })
 
     },
-    handleSizeChange (val) {
-      this.$data.pageSize = val
+    findJobs(){
       let _this=this;
-
       let publish_date=this.$data.formSearch.publish_date;
       let end_date=this.$data.formSearch.end_date;
 
@@ -266,58 +275,27 @@ export default {
       this.$axios({
         method:'post',
         url:'/admin/searchPositionAfterDeadline?'+'publish_date='+publish_date+'&end_date='+end_date+
-        '&departmentName='+_this.$data.formSearch.departmentName+'&positionName='+_this.$data.formSearch.positionName,
-        data:_this.$qs.stringify({
-          page:_this.$data.currentPage,
-          size:_this.$data.pageSize
-        })
+        '&departmentName='+_this.$data.formSearch.departmentName+'&positionName='+_this.$data.formSearch.positionName
       }).then(function (response) {
         _this.$data.tableData=response.data.content;
-        _this.$data.total=response.data.totalElements;
       })
+
+    },
+    handleSizeChange (val) {
+      this.$data.pageSize = val;
+      this.$data.currentPage=1;
+      this.findJobs()
     },
     handlePageChange (val) {
-      let _this=this;
-
-      let publish_date=this.$data.formSearch.publish_date;
-      let end_date=this.$data.formSearch.end_date;
-
-
-      if(this.$data.formSearch.publish_date) {
-        publish_date = this.$data.formSearch.publish_date.Format('yyyy-MM-dd');
-      }else{
-        publish_date='2000-01-01';
-      }
-
-      if(this.$data.formSearch.end_date) {
-        end_date = this.$data.formSearch.end_date.Format('yyyy-MM-dd');
-      }else{
-        end_date='2050-01-01';
-      }
-
-      if(this.$data.state1===''){
-        this.$data.formSearch.departmentName='';
-      }
-
-      this.$axios({
-        method:'post',
-        url:'/admin/searchPositionAfterDeadline?'+'publish_date='+publish_date+'&end_date='+end_date+
-        '&departmentName='+_this.$data.formSearch.departmentName+'&positionName='+_this.$data.formSearch.positionName,
-        data:_this.$qs.stringify({
-          page:_this.$data.currentPage,
-          size:_this.$data.pageSize
-        })
-      }).then(function (response) {
-        _this.$data.tableData=response.data.content;
-        _this.$data.total=response.data.totalElements;
-      })
+      this.$data.currentPage=val;
+      this.findJobs();
     },
     handleClick (row) {
       //console.log(row);
       this.$router.push({path:'/HistoryDetails',query:{id:row.id}})
     },
     handleSelect1(item) {       //部门选择
-      this.$data.formSearch.department=item.index;
+      this.$data.SearchConditions.department=item.index;
     },
     querySearch(queryString, cb) {
       var AllDepartments = this.AllDepartments;

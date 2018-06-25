@@ -6,19 +6,19 @@
         <el-form ref="formSearch" :model="formSearch" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">
           <el-form-item >
             <el-col style="width: 38%">
-              <el-date-picker type="date" prefix-icon="start-time-icon" class="start-time" placeholder="发布日期-起" v-model="formSearch.earlyDate" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" prefix-icon="start-time-icon" class="start-time" placeholder="发布日期-起" v-model="SearchConditions.earlyDate" style="width: 100%;"></el-date-picker>
             </el-col>
             <el-col style="width: 2%">
               <div style="width: 100%;height: 50px;color:#1476C1;text-align: center;font-size: 30px;vertical-align: middle;border-top:#1476C1 solid 2px;border-bottom: #1476C1 solid 2px ">|</div>
             </el-col>
             <el-col style="width: 38%">
-              <el-date-picker type="date" prefix-icon="end-time-icon" class="end-time" placeholder="发布日期-终" v-model="formSearch.lastDate" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" prefix-icon="end-time-icon" class="end-time" placeholder="发布日期-终" v-model="SearchConditions.lastDate" style="width: 100%;"></el-date-picker>
             </el-col>
           </el-form-item>
 
             <el-col style="width: 38%">
               <el-form-item >
-            <el-input v-model="formSearch.positionName" prefix-icon="name-icon" placeholder="职位名称" class="input-name" ></el-input>
+            <el-input v-model="SearchConditions.positionName" prefix-icon="name-icon" placeholder="职位名称" class="input-name" ></el-input>
               </el-form-item>
             </el-col>
             <el-col style="width: 2%">
@@ -148,6 +148,12 @@ export default {
           department:'',
           positionName:''
         },
+      SearchConditions:{
+        earlyDate:null,
+        lastDate:null,
+        department:'',
+        positionName:''
+      },
       tableData: [{positionName: '', department: '1', workPlace: '', publishDate: '', deadline: '',recruitmentType:'',id:''
       }],
       departments:[             //所有的部门
@@ -167,7 +173,8 @@ export default {
         {name:'华北办事处',index:'14'}
       ],
 
-      AllDepartments:[]
+      AllDepartments:[],
+      isSearch:false
    }
   },
   watch:{ //从修改和新建职位的页面跳转回来时需要进行更新
@@ -220,9 +227,15 @@ export default {
     },
     SearchPositions(){
       let _this=this;
+      this.$data.formSearch.earlyDate=this.$data.SearchConditions.earlyDate;
+      this.$data.formSearch.end_date=this.$data.SearchConditions.endDate;
+      this.$data.formSearch.department=this.$data.SearchConditions.department;
+      this.$data.formSearch.positionName=this.$data.SearchConditions.positionName;
+
       let SearchDate1='';
       let SearchDate2='';
       if(_this.$data.formSearch.lastDate===''&&_this.$data.formSearch.earlyDate===''&&_this.$data.state1===''&&_this.$data.formSearch.positionName===''){
+        _this.$data.isSearch=false;
         this.$axios({
           method: 'post',
           data: _this.$qs.stringify({
@@ -236,6 +249,7 @@ export default {
           _this.$data.total=response.data.totalElements;
         })
       }else {
+        _this.$data.isSearch=true;
         if(_this.$data.state1===''){
           _this.$data.formSearch.department='';
         }
@@ -249,6 +263,7 @@ export default {
           SearchDate2=_this.$data.formSearch.lastDate.Format('yyyy-MM-dd');
           //console.log(SearchDate2)
         }
+
         this.$axios({
           method: 'post',
           url: '/admin/positions?' + 'lastDate=' + SearchDate2 +
@@ -256,7 +271,7 @@ export default {
           '&department=' + _this.$data.formSearch.department+
             '&positionName='+_this.$data.formSearch.positionName,
           data:_this.$qs.stringify({
-            page:_this.$data.currentPage,
+            page:1,
             size:_this.$data.pageSize
           })
         }).then(function (response) {
@@ -287,22 +302,51 @@ export default {
 
     handleSizeChange (val) {
       this.$data.pageSize = val;
-      this.SearchPositions();
-      // let _this=this
-      // this.$axios({
-      //   method: 'post',
-      //   data: _this.$qs.stringify({
-      //     size: _this.$data.pageSize,
-      //     page: _this.$data.currentPage
-      //   }),
-      //   url:'/admin/positions'
-      // }).then(function (response) {
-      //   _this.$data.tableData=response.data.content;
-      // })
+      this.$data.currentPage=1;
+      this.findJobs();
+    },
+    findJobs(){
+      let _this=this;
+      let SearchDate1='';
+      let SearchDate2='';
+      let department=''
+      let positionName=''
+
+        if (_this.$data.state1 === '') {
+          _this.$data.formSearch.department = '';
+        }
+        if (_this.$data.formSearch.earlyDate !== null) {
+          console.log(_this.$data.formSearch.earlyDate)
+          SearchDate1 = _this.$data.formSearch.earlyDate.Format('yyyy-MM-dd');
+        } else {
+        }
+        if (_this.$data.formSearch.lastDate !== null) {
+          SearchDate2 = _this.$data.formSearch.lastDate.Format('yyyy-MM-dd');
+        }
+
+        department = this.$data.formSearch.department
+        positionName = this.$data.formSearch.positionName
+
+        this.$axios({
+          method: 'post',
+          url: '/admin/positions?' + 'lastDate=' + SearchDate2 +
+          '&earlyDate=' + SearchDate1 +
+          '&department=' + department +
+          '&positionName=' + positionName,
+          data: _this.$qs.stringify({
+            page: _this.$data.currentPage,
+            size: _this.$data.pageSize
+          })
+        }).then(function (response) {
+          _this.$data.tableData = response.data.content;
+          _this.$data.total = response.data.totalElements;
+        })
+
     },
     handlePageChange (val) {
       this.$data.currentPage = val;
-      this.SearchPositions();
+      this.$data.isSearch=false;
+      this.findJobs();
       // let _this=this
       // this.$axios({
       //   method: 'post',
@@ -320,7 +364,7 @@ export default {
 
     },
     handleSelect1(item) {       //部门选择
-      this.$data.formSearch.department=item.index;
+      this.$data.SearchConditions.department=item.index;
     },
     querySearch(queryString, cb) {
       var AllDepartments = this.AllDepartments;
