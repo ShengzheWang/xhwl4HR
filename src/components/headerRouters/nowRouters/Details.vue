@@ -59,6 +59,12 @@
             </div>
           </div>
           <el-tab-pane label="简历初审" name="0">
+            <div slot="label" style="overflow: visible"> 简历初审
+              <div  v-if="formIsRead.ResumeReview!=0" style="display:inline-block;background:red;color: white;
+              position: absolute;right: -10px;top:-10px;height: 26px;width:26px;border-radius: 26px;opacity:0.9;line-height: 26px;font-size: 20px">
+                {{formIsRead.ResumeReview}}
+              </div>
+            </div>
             <div style="width:100%;margin: 0% auto 0 auto">
               <el-table :data="ResumesFirst" stripe style="width: 100%" class="table0">
                 <el-table-column prop="username" label="姓名" style="width: 16%">
@@ -118,6 +124,12 @@
             </div>
           </el-tab-pane>
           <el-tab-pane label="HR初审" name="1">
+            <div slot="label" style="overflow: visible"> HR初审
+              <div  v-if="formIsRead.HRFristReview!=0" style="display:inline-block;background:red;color: white;
+              position: absolute;right: -10px;top:-10px;height: 26px;width:26px;border-radius: 26px;opacity:0.9;line-height: 26px;font-size: 20px">
+                {{formIsRead.HRFristReview}}
+              </div>
+            </div>
             <div style="width:100%;margin: 0% auto 0 auto">
               <el-table :data="ResumesHRFirst" stripe style="width: 100%" class="table0">
                 <el-table-column prop="username" label="姓名" style="width: 16%">
@@ -184,6 +196,12 @@
             </div>
           </el-tab-pane>
           <el-tab-pane label="部门笔试" name="2">
+            <div slot="label" style="overflow: visible"> 部门笔试
+              <div  v-if="formIsRead.DepartmentWrittenExamination!=0" style="display:inline-block;background:red;color: white;
+              position: absolute;right: -10px;top:-10px;height: 26px;width:26px;border-radius: 26px;opacity:0.9;line-height: 26px;font-size: 20px">
+                {{formIsRead.DepartmentWrittenExamination}}
+              </div>
+            </div>
             <div style="width:100%;margin: 0% auto 0 auto">
               <el-table :data="ResumesDepartmentWritten" stripe style="width: 100%" class="table0">
                 <el-table-column prop="username" label="姓名" style="width: 16%">
@@ -249,6 +267,12 @@
             </div>
           </el-tab-pane>
           <el-tab-pane label="部门面试" name="3">
+            <div slot="label" style="overflow: visible"> 部门面试
+              <div v-if="formIsRead.DepartmentInterview!=0" style="display:inline-block;background:red;color: white;
+              position: absolute;right: -10px;top:-10px;height: 26px;width:26px;border-radius: 26px;opacity:0.9;line-height: 26px;font-size: 20px">
+                {{formIsRead.DepartmentInterview}}
+              </div>
+            </div>
             <div style="width:100%;margin: 0% auto 0 auto">
               <el-table :data="ResumesDepartmentInterview" stripe style="width: 100%" class="table0">
                 <el-table-column prop="username" label="姓名" style="width: 16%">
@@ -314,6 +338,12 @@
             </div>
           </el-tab-pane>
           <el-tab-pane label="HR面试" name="4">
+            <div slot="label" style="overflow: visible"> HR面试
+              <div v-if="formIsRead.HRInterview!=0" style="display:inline-block;background:red;color: white;
+              position: absolute;right: -10px;top:-10px;height: 26px;width:26px;border-radius: 26px;opacity:0.9;line-height: 26px;font-size: 20px">
+                {{formIsRead.HRInterview}}
+              </div>
+            </div>
             <div style="width:100%;margin: 0% auto 0 auto">
               <el-table :data="ResumesHRinterview" stripe style="width: 100%" class="table0" ref="ResumesHRinterview">
                 <el-table-column prop="username" label="姓名" style="width: 16%">
@@ -379,6 +409,12 @@
             </div>
           </el-tab-pane>
           <el-tab-pane label="已通过" name="5">
+            <div slot="label" style="overflow: visible"> 已通过
+              <div v-if="formIsRead.Pass!=0" style="display:inline-block;background:red;color: white;
+              position: absolute;right: -10px;top:-10px;height: 26px;width:26px;border-radius: 26px;opacity:0.9;line-height: 26px;font-size: 20px">
+                {{formIsRead.Pass}}
+              </div>
+            </div>
             <div style="width:100%;margin: 0% auto 0% auto">
               <el-table :data="ResumesPassed" stripe style="width: 100%" class="table1">
                 <el-table-column prop="username" label="姓名" style="width: 16%">
@@ -433,6 +469,12 @@
             </div>
           </el-tab-pane>
           <el-tab-pane label="已回绝" name="6">
+            <div slot="label" style="overflow: visible"> 已回绝
+              <div v-if="formIsRead.Refuse!=0" style="display:inline-block;background:red;color: white;
+              position: absolute;right: -10px;top:-10px;height: 26px;width:26px;border-radius: 26px;opacity:0.9;line-height: 26px;font-size: 20px">
+                {{formIsRead.Refuse}}
+              </div>
+            </div>
             <div style="width:100%;margin: 0% auto 0% auto">
               <el-table
                 :data="ResumesRefuse"
@@ -513,8 +555,10 @@
   import ElIcon from '../../../../node_modules/element-ui/packages/icon/src/icon.vue'
   import ElRow from 'element-ui/packages/row/src/row'
   import ElCol from 'element-ui/packages/col/src/col'
+  import ElTabPane from '../../../../node_modules/element-ui/packages/tabs/src/tab-pane.vue'
   export default {
     components: {
+      ElTabPane,
       ElCol,
       ElRow,
       ElIcon,
@@ -569,6 +613,15 @@
         currentPageForResumeFirst:1,
         total4ResumesFirst:0,
         pageSize4ResumesFirst:10,
+        formIsRead:{
+          "ResumeReview": 0,
+          "HRFristReview": 0,
+          "DepartmentWrittenExamination": 0,
+          "DepartmentInterview": 0,
+          "HRInterview": 0,
+          "Pass": 0,
+          "Refuse": 0
+        },
         ResumesFirst:[
           {id:'',username:'',sex:'',highestEducation:'',deliverDate:'',auth:'',isSendEmail:'false',isRead:'true'}
         ],
@@ -712,6 +765,14 @@
         url:'/admin/position/'+_this.$route.query.id,
       }).then(function (response) {
         _this.$data.form=response.data;
+      })
+
+
+      this.$axios({
+        method:'get',
+        url:'/admin/getNotReadNum/'+_this.$route.query.id,
+      }).then(function (response) {
+        _this.$data.formIsRead=response.data;
       })
 
       this.$axios({         //获取已通过名单

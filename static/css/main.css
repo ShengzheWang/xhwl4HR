@@ -248,6 +248,9 @@ ol, ul {
 
 .el-tabs__item {
   font-size: 16px;
+  overflow: visible;
+  padding: 20px;
+  margin-top: 20px;
 }
 
 .input-date {
