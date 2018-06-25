@@ -241,29 +241,72 @@ export default {
     },
     handleSizeChange (val) {
       this.$data.pageSize = val
-      let _this=this
+      let _this=this;
+
+      let publish_date=this.$data.formSearch.publish_date;
+      let end_date=this.$data.formSearch.end_date;
+
+
+      if(this.$data.formSearch.publish_date) {
+        publish_date = this.$data.formSearch.publish_date.Format('yyyy-MM-dd');
+      }else{
+        publish_date='2000-01-01';
+      }
+
+      if(this.$data.formSearch.end_date) {
+        end_date = this.$data.formSearch.end_date.Format('yyyy-MM-dd');
+      }else{
+        end_date='2050-01-01';
+      }
+
+      if(this.$data.state1===''){
+        this.$data.formSearch.departmentName='';
+      }
+
       this.$axios({
-        method: 'post',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize,
-          page: _this.$data.currentPage
-        }),
-        url:'/admin/positions'
+        method:'post',
+        url:'/admin/searchPositionAfterDeadline?'+'publish_date='+publish_date+'&end_date='+end_date+
+        '&departmentName='+_this.$data.formSearch.departmentName+'&positionName='+_this.$data.formSearch.positionName,
+        data:_this.$qs.stringify({
+          page:_this.$data.currentPage,
+          size:_this.$data.pageSize
+        })
       }).then(function (response) {
         _this.$data.tableData=response.data.content;
         _this.$data.total=response.data.totalElements;
       })
     },
     handlePageChange (val) {
-      this.$data.currentPage = val
-      let _this=this
+      let _this=this;
+
+      let publish_date=this.$data.formSearch.publish_date;
+      let end_date=this.$data.formSearch.end_date;
+
+
+      if(this.$data.formSearch.publish_date) {
+        publish_date = this.$data.formSearch.publish_date.Format('yyyy-MM-dd');
+      }else{
+        publish_date='2000-01-01';
+      }
+
+      if(this.$data.formSearch.end_date) {
+        end_date = this.$data.formSearch.end_date.Format('yyyy-MM-dd');
+      }else{
+        end_date='2050-01-01';
+      }
+
+      if(this.$data.state1===''){
+        this.$data.formSearch.departmentName='';
+      }
+
       this.$axios({
-        method: 'post',
-        data: _this.$qs.stringify({
-          size: _this.$data.pageSize,
-          page: _this.$data.currentPage
-        }),
-        url:'/admin/positions'
+        method:'post',
+        url:'/admin/searchPositionAfterDeadline?'+'publish_date='+publish_date+'&end_date='+end_date+
+        '&departmentName='+_this.$data.formSearch.departmentName+'&positionName='+_this.$data.formSearch.positionName,
+        data:_this.$qs.stringify({
+          page:_this.$data.currentPage,
+          size:_this.$data.pageSize
+        })
       }).then(function (response) {
         _this.$data.tableData=response.data.content;
         _this.$data.total=response.data.totalElements;
