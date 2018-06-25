@@ -1437,6 +1437,7 @@
     -webkit-transform: rotate(30deg);;
     position: absolute;
     right: 0px;
+      top:0px;
     overflow: visible
     }
     .cell{

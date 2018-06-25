@@ -30,7 +30,7 @@
             <el-row>
               <el-col :span="6">
                 <p class="label">所属部门：</p>
-                <p class="info">{{departments[Number(form.department)].name}}</p>
+                <p class="info">{{departments[Number(form.department)-1].name}}</p>
               </el-col>
               <el-col :span="6">
                 <p class="label">工作类型：</p>
@@ -599,6 +599,17 @@
         font-size: 18px;
       }
 
+
+    }
+    .img-isRead {
+      z-index: 999;
+      width: 50px;
+      -moz-transform: rotate(10deg);
+      -webkit-transform: rotate(30deg);;
+      position: absolute;
+      right: 0px;
+      top:0px;
+      overflow: visible
     }
 
   }
