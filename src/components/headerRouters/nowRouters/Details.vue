@@ -30,7 +30,7 @@
             <el-row>
               <el-col :span="6">
                 <p class="label">所属部门：</p>
-                <p class="info">{{departments[Number(form.department)].name}}</p>
+                <p class="info">{{departments[Number(form.department)-1].name}}</p>
               </el-col>
               <el-col :span="6">
                 <p class="label">工作类型：</p>
@@ -159,9 +159,9 @@
                 </el-table-column>
                 <el-table-column label="发送通知" style="width:13%">
                   <template slot-scope="scope">
-                    <el-button size="middle" type="text" :disabled="scope.row.isSendEmail==='true'" @click="tell(scope.row,'ResumesHRFirst')">
-                      <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
-                      <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
+                    <el-button size="middle" type="text"  @click="tell(scope.row,'ResumesHRFirst')">
+                      <i class="icon iconfont icon-youxiang" style="opacity: 0.5" v-if="scope.row.isSendEmail==='true'"></i>
+                      <i class="icon iconfont icon-youxiang" v-else></i>
                     </el-button>
                     <img v-if="scope.row.isRead === 'false'" src="../../../../static/img/isread.png" class="img-isRead">
                   </template>
@@ -224,9 +224,9 @@
                 </el-table-column>
                 <el-table-column label="发送通知" style="width:13%">
                   <template slot-scope="scope">
-                    <el-button size="middle" type="text" :disabled="scope.row.isSendEmail==='true'" @click="tell(scope.row,'ResumesDepartmentWritten')">
-                      <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
-                      <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
+                    <el-button size="middle" type="text" @click="tell(scope.row,'ResumesDepartmentWritten')">
+                      <i class="icon iconfont icon-youxiang" style="opacity: 0.5" v-if="scope.row.isSendEmail==='true'"></i>
+                      <i class="icon iconfont icon-youxiang" v-else></i>
                     </el-button>
                     <img v-if="scope.row.isRead === 'false'" src="../../../../static/img/isread.png" class="img-isRead">
                   </template>
@@ -289,9 +289,9 @@
                 </el-table-column>
                 <el-table-column label="发送通知" style="width:13%">
                   <template slot-scope="scope">
-                    <el-button size="middle" type="text" :disabled="scope.row.isSendEmail==='true'" @click="tell(scope.row,'ResumesDepartmentInterview')">
-                      <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
-                      <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
+                    <el-button size="middle" type="text"  @click="tell(scope.row,'ResumesDepartmentInterview')">
+                      <i class="icon iconfont icon-youxiang" style="color:#009CFF" v-if="scope.row.isSendEmail==='true'"></i>
+                      <i class="icon iconfont icon-youxiang" v-else></i>
                     </el-button>
                     <img v-if="scope.row.isRead === 'false'" src="../../../../static/img/isread.png" class="img-isRead">
                   </template>
@@ -354,9 +354,9 @@
                 </el-table-column>
                 <el-table-column label="发送通知" style="width:13%">
                   <template slot-scope="scope">
-                    <el-button size="middle" type="text" :disabled="scope.row.isSendEmail==='true'" @click="tell(scope.row,'ResumesHRinterview')">
-                      <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
-                      <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
+                    <el-button size="middle" type="text"  @click="tell(scope.row,'ResumesHRinterview')">
+                      <i class="icon iconfont icon-youxiang" style="opacity: 0.5" v-if="scope.row.isSendEmail==='true'"></i>
+                      <i class="icon iconfont icon-youxiang" v-else></i>
                     </el-button>
                     <img v-if="scope.row.isRead === 'false'" src="../../../../static/img/isread.png" class="img-isRead">
                   </template>
@@ -408,9 +408,9 @@
                 </el-table-column>
                 <el-table-column label="发送通知" style="width:13%;">
                   <template slot-scope="scope">
-                    <el-button size="middle" type="text" :disabled="scope.row.isSendEmail==='true'" @click="tell(scope.row,'ResumesPassed')">
-                      <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
-                      <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
+                    <el-button size="middle" type="text"  @click="tell(scope.row,'ResumesPassed')">
+                      <i class="icon iconfont icon-youxiang" style="opacity: 0.5" v-if="scope.row.isSendEmail==='true'"></i>
+                      <i class="icon iconfont icon-youxiang" v-else></i>
                     </el-button>
                     <img v-if="scope.row.isRead === 'false'" src="../../../../static/img/isread.png" class="img-isRead">
                   </template>
@@ -475,9 +475,9 @@
                 </el-table-column>
                 <el-table-column label="发送通知" style="width:13%">
                   <template slot-scope="scope">
-                    <el-button size="middle" type="text" :disabled="scope.row.isSendEmail==='true'" @click="tell(scope.row,'ResumesRefuse')">
-                      <i class="icon iconfont icon-shibai" v-show="scope.row.isSendEmail==='true'"></i>
-                      <i class="icon iconfont icon-youxiang" v-show="scope.row.isSendEmail==='false'"></i>
+                    <el-button size="middle" type="text"  @click="tell(scope.row,'ResumesRefuse')">
+                      <i class="icon iconfont icon-youxiang" style="opacity: 0.5" v-if="scope.row.isSendEmail==='true'"></i>
+                      <i class="icon iconfont icon-youxiang" v-else></i>
                     </el-button>
                     <img v-if="scope.row.isRead === 'false'" src="../../../../static/img/isread.png" class="img-isRead">
                   </template>
