@@ -3,7 +3,7 @@
     <div class="block">
       <div style="width:90%;margin: 2% auto 0 auto">
         <div style="height: 60px"></div>
-        <el-form ref="formSearch" :model="formSearch" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">
+        <el-form ref="SearchConditions" :model="SearchConditions" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">
           <el-form-item >
             <el-col style="width: 38%">
               <el-date-picker type="date" prefix-icon="start-time-icon" class="start-time" placeholder="发布日期-起" v-model="SearchConditions.earlyDate" style="width: 100%;"></el-date-picker>
@@ -180,11 +180,12 @@ export default {
   watch:{ //从修改和新建职位的页面跳转回来时需要进行更新
       '$route':function () {
         let _this=this
+
         this.$axios({
           method: 'post',
           data: _this.$qs.stringify({
-            size: 20,
-            page: 1
+            size: this.$data.currentPage,
+            page: this.$data.pageSize
           }),
           url:'/admin/positions'
         }).then(function (response) {
@@ -196,11 +197,14 @@ export default {
   },
   created(){
     let _this=this
+    this.$data.currentPage=this.$route.query.page;
+    this.$data.pageSize=this.$route.query.size;
+    console.log(this.$route);
     this.$axios({
       method: 'post',
       data: _this.$qs.stringify({
-        size: 20,
-        page: 1
+        size: this.$data.pageSize,
+        page: this.$data.currentPage
       }),
       url:'/admin/positions'
     }).then(function (response) {
@@ -228,7 +232,7 @@ export default {
     SearchPositions(){
       let _this=this;
       this.$data.formSearch.earlyDate=this.$data.SearchConditions.earlyDate;
-      this.$data.formSearch.end_date=this.$data.SearchConditions.endDate;
+      this.$data.formSearch.lastDate=this.$data.SearchConditions.lastDate;
       this.$data.formSearch.department=this.$data.SearchConditions.department;
       this.$data.formSearch.positionName=this.$data.SearchConditions.positionName;
 
@@ -360,7 +364,7 @@ export default {
       // })
     },
     handleClick (row) {
-      this.$router.push({path:'/Details',query:{id:row.id}})
+      this.$router.push({path:'/Details',query:{id:row.id,page:this.$data.currentPage,size:this.$data.pageSize}})
 
     },
     handleSelect1(item) {       //部门选择

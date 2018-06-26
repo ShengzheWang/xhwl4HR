@@ -3,7 +3,7 @@
     <div class="block">
       <div style="width:90%;margin: 2% auto 0 auto">
         <div style="height: 60px"></div>
-        <el-form ref="formSearch" :model="formSearch" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">
+        <el-form ref="SearchConditions" :model="SearchConditions" label-width="0px" style="width: 100%;margin-left: 0%;display: inline-block">
           <el-form-item >
             <el-col style="width: 38%">
               <el-date-picker type="date" prefix-icon="start-time-icon" class="start-time" placeholder="发布日期-起" v-model="SearchConditions.publish_date" style="width: 100%;"></el-date-picker>
@@ -135,8 +135,8 @@ export default {
       tableData: [{positionName: '', department: '', workPlace: '', publishDate: '', deadline: '',recruitmentType:'',id:''
       }],
       formSearch:{
-        publish_date:'',
-        end_date:'',
+        publish_date:null,
+        end_date:null,
         departmentName:'',
         positionName:''
       },
@@ -173,7 +173,7 @@ export default {
         size: 20,
         page: 1
       }),
-      url:'/admin/PositionAfterDeadline/'
+      url:'/admin/PositionAfterDeadline'
     }).then(function (response) {
       _this.$data.tableData=response.data.content;
       _this.$data.loading = false
@@ -216,8 +216,8 @@ export default {
     searchPositions(){
         let _this=this;
 
-        this.$data.formSearch.earlyDate=this.$data.SearchConditions.earlyDate;
-        this.$data.formSearch.end_date=this.$data.SearchConditions.endDate;
+        this.$data.formSearch.publish_date=this.$data.SearchConditions.publish_date;
+        this.$data.formSearch.end_date=this.$data.SearchConditions.end_date;
         this.$data.formSearch.department=this.$data.SearchConditions.department;
         this.$data.formSearch.positionName=this.$data.SearchConditions.positionName;
 
